@@ -19,10 +19,6 @@ on:
   issue_comment:
     types: [created]
 
-concurrency:
-  group: claude-review-${{ github.event.pull_request.number || github.event.issue.number }}
-  cancel-in-progress: true
-
 permissions: {}
 
 jobs:
@@ -62,6 +58,12 @@ jobs:
   review:
     needs: target
     if: needs.target.outputs.review == 'true'
+    # A newer review of the same pull request cancels this one. This is set on
+    # the job, not the workflow, so other comments (including Claude's own
+    # review comment) don't cancel a review in progress.
+    concurrency:
+      group: claude-review-${{ needs.target.outputs.number }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     permissions:
       contents: read
