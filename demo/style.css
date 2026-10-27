@@ -61,8 +61,9 @@ h2 { font-size: 1.2rem; }
   border-bottom: 1px solid var(--border);
   background: var(--surface);
 }
-.brand { font-weight: 700; text-decoration: none; color: var(--text); }
-.brand span:first-child { color: var(--accent); }
+.brand { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 700; text-decoration: none; color: var(--text); }
+.brand-mark { width: 1.75rem; height: 1.75rem; flex: none; fill: none; stroke: currentColor; stroke-width: 5.5; stroke-linecap: round; stroke-linejoin: round; }
+.brand-mark .pulse { stroke: var(--accent); stroke-width: 4; }
 @media (max-width: 520px) { .brand-name { display: none; } }
 .site-header nav { display: flex; gap: 1rem; margin-left: auto; }
 .site-header nav a { text-decoration: none; color: var(--muted); }

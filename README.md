@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="site/brand/pwf-mark-on-dark.svg">
+  <img src="site/brand/pwf-mark.svg" width="72" height="72" alt="PWF logo">
+</picture>
+
 # Portable Workout Format (PWF)
 
 [![CI](https://github.com/portableworkoutformat/pwf/actions/workflows/ci.yml/badge.svg)](https://github.com/portableworkoutformat/pwf/actions/workflows/ci.yml)
@@ -82,7 +87,7 @@ PWF is meant to be a neutral format that no single vendor owns, with open tools 
 | `schema/pwf-0.1.schema.json` | JSON Schema (draft 2020-12) for a PWF document, served at its `$id`, https://portableworkout.org/schema/pwf-0.1.schema.json |
 | `conformance/` | Documents with the timelines a player must produce, and documents that must fail validation |
 | `skills/portable-workout-format/` | The Agent Skill: `SKILL.md`, the AI guide (`references/guide.md`, served as `llms-full.txt`) and `scripts/pwf.py` to check workouts and build play links |
-| `site/` | The website's home page and `llms.txt` |
+| `site/` | The website's home page, `llms.txt`, and the logo and icons in `site/brand/` |
 | `demo/` | The player and builder |
 | `lib/` | `timeline.js`, the draft expander that turns a document into the timeline one participant sees, and `validate.js`, which checks a document and explains each problem in plain words |
 | `tools/` | `check.mjs` runs the checks, `build.mjs` compiles the schema for the browser, `site.mjs` builds the website, `serve.mjs` serves it, `timeline.mjs` prints a timeline |

@@ -22,6 +22,9 @@ const types = {
   '.txt': 'text/plain; charset=utf-8',
   '.zip': 'application/zip',
   '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json',
 };
 
 createServer(async (req, res) => {
