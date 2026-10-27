@@ -1,4 +1,6 @@
 import { expandTimeline } from '../lib/timeline.js';
+import { describeProblems, validateDocument } from '../lib/validate.js';
+import { assistantButtons, changePrompt, copyText, fixPrompt } from './ai.js';
 import { formatDuration, stateFromDocument } from './model.js';
 import { encodeWorkout, workoutFromLocation } from './share.js';
 
@@ -22,6 +24,16 @@ let run = null;
 let muted = false;
 let audio = null;
 let wakeLock = null;
+let problems = '';
+let toastTimer = null;
+
+// A workout that fails validation, with its problems in plain words.
+class InvalidWorkout extends Error {
+  constructor(found) {
+    super(found.length === 1 ? 'This workout has a problem:' : `This workout has ${found.length} problems:`);
+    this.problems = found;
+  }
+}
 
 init();
 
@@ -39,7 +51,7 @@ async function init() {
       return;
     }
   } catch (error) {
-    showLoadError(error.message);
+    showLoadError(error);
   }
   show('load-screen');
 }
@@ -47,10 +59,16 @@ async function init() {
 async function loadFrom(read) {
   try {
     openDocument(await read());
-    history.replaceState(null, '', `#w=${await encodeWorkout(doc)}`);
+    // The full path, because /play/ sets <base> to the demo folder.
+    history.replaceState(null, '', `${location.pathname}#w=${await encodeWorkout(doc)}`);
   } catch (error) {
-    showLoadError(error instanceof SyntaxError ? 'That isn’t valid JSON.' : error.message);
+    showLoadError(error instanceof SyntaxError ? new Error(`That isn’t valid JSON: ${error.message}`) : error);
   }
+}
+
+// Reads pasted text, allowing for the code fences chat apps copy along with it.
+function parseWorkout(text) {
+  return JSON.parse(text.trim().replace(/^```[a-z]*\s*/i, '').replace(/```$/, ''));
 }
 
 // Checks a document enough to play it, then shows its overview.
@@ -59,13 +77,14 @@ function openDocument(candidate) {
     throw new Error('That isn’t a PWF document: it has no "pwf" version.');
   }
   if (candidate.pwf !== '0.1') throw new Error(`This player reads PWF 0.1, and this file is version ${candidate.pwf}.`);
-  if (!candidate.plan || typeof candidate.plan !== 'object') throw new Error('This workout has no plan.');
+  const checked = validateDocument(candidate);
+  if (!checked.valid) throw new InvalidWorkout(checked.problems);
   let expanded;
   try {
     expanded = expandTimeline(candidate);
   } catch (error) {
     const reason = error.message.replace(/^\/\S*: /, '');
-    throw new Error(`This demo can’t play this workout (${reason}).`);
+    throw new Error(`The player can’t play this workout (${reason}).`);
   }
   if (!expanded.segments.length) throw new Error('This workout has nothing to play.');
   doc = candidate;
@@ -102,6 +121,12 @@ function renderOverview() {
       : task ? taskItems(task).filter((item) => item.name !== 'Rest').map((item) => item.name) : [];
     for (const name of names) counts.set(name, (counts.get(name) ?? 0) + 1);
   }
+  const copyPrompt = el('button', { type: 'button' }, 'Copy prompt');
+  copyPrompt.addEventListener('click', async () => {
+    notify(await copyText(changePrompt(doc)) ? 'Copied. Paste it into any AI assistant.' : 'Your browser didn’t allow copying.');
+  });
+  $('ai-buttons').replaceChildren(...assistantButtons(() => changePrompt(doc), notify), copyPrompt);
+
   $('ov-exercises').replaceChildren(...[...counts].map(([name, n]) => el('li', {}, n > 1 ? `${name} × ${n}` : name)));
 
   try {
@@ -432,10 +457,32 @@ function show(id) {
   $('header').classList.toggle('hidden', id === 'run');
 }
 
-function showLoadError(text) {
-  $('load-error').textContent = text;
+function showLoadError(error) {
+  $('load-error-text').textContent = error.message;
+  const found = error.problems ?? [];
+  $('load-problems').replaceChildren(...found.map((p) => el('li', {}, el('code', {}, p.path || '(document)'), ` ${p.message}`)));
+  problems = found.length ? describeProblems(found) : error.message;
+  $('copy-problems').classList.remove('hidden');
   $('load-error').classList.remove('hidden');
   show('load-screen');
+}
+
+function notify(text) {
+  $('toast').textContent = text;
+  $('toast').classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('toast').classList.add('hidden'), 5000);
+}
+
+function saveFile() {
+  const blob = new Blob([`${JSON.stringify(doc, null, 2)}\n`], { type: 'application/json' });
+  const a = el('a', { href: URL.createObjectURL(blob), download: `${slug(doc.name)}.pwf.json` });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function slug(name) {
+  return name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'workout';
 }
 
 function openAnother() {
@@ -460,7 +507,23 @@ function wireEvents() {
     const file = e.dataTransfer.files[0];
     if (file) loadFrom(async () => JSON.parse(await file.text()));
   });
-  $('paste-load').addEventListener('click', () => loadFrom(async () => JSON.parse($('paste').value)));
+  $('paste-load').addEventListener('click', () => loadFrom(async () => parseWorkout($('paste').value)));
+  $('paste-clipboard').addEventListener('click', async () => {
+    try {
+      $('paste').value = await navigator.clipboard.readText();
+    } catch {
+      notify('Your browser didn’t allow reading the clipboard. Paste into the box instead.');
+      return;
+    }
+    loadFrom(async () => parseWorkout($('paste').value));
+  });
+  $('copy-problems').addEventListener('click', async () => {
+    notify(await copyText(fixPrompt(problems)) ? 'Copied. Paste it into your AI chat.' : 'Your browser didn’t allow copying.');
+  });
+  $('save').addEventListener('click', saveFile);
+  $('copy-json').addEventListener('click', async () => {
+    notify(await copyText(JSON.stringify(doc, null, 2)) ? 'JSON copied.' : 'Your browser didn’t allow copying.');
+  });
 
   $('start').addEventListener('click', start);
   $('load-another').addEventListener('click', openAnother);
@@ -494,6 +557,12 @@ function wireEvents() {
     else if (e.key === 'ArrowRight') goTo(run.index + 1);
     else if (e.key === 'ArrowLeft') back();
     else if (e.key === 'Enter' && timeline.segments[run.index].duration === null) goTo(run.index + 1);
+  });
+  // Following another workout link while the player is open only changes the
+  // fragment, so load it here. replaceState in loadFrom doesn't fire this.
+  window.addEventListener('hashchange', () => {
+    if (run) stop();
+    loadFrom(async () => (await workoutFromLocation()) ?? Promise.reject(new Error('This link doesn’t hold a workout.')));
   });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && run && run.pausedAt === null) keepAwake();

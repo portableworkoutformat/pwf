@@ -1,0 +1,15 @@
+{
+  "name": "pwf",
+  "description": "Portable Workout Format (PWF) tools for Claude Code",
+  "owner": {
+    "name": "The PWF Authors",
+    "email": "maintainers@portableworkout.org"
+  },
+  "plugins": [
+    {
+      "name": "pwf",
+      "source": "./",
+      "description": "Write, change, check and play workouts in the Portable Workout Format (PWF)"
+    }
+  ]
+}

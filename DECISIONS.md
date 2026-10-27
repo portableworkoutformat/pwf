@@ -63,8 +63,12 @@ All decided on 2026-10-27 unless noted.
 | --- | --- | --- |
 | D29 | The schema is strict: unknown fields are errors. Readers still ignore unknown fields | Catches typos such as `skipLastrest` when authoring, while keeping later versions readable |
 | D30 | The format is designed for AI authoring: the schema works as a structured-output schema, units are explicit, and validator errors say how to fix them | AI models increasingly write workouts |
-| D31 | The schema's `$id` is the placeholder `urn:pwf:schema:0.1` until the project has a home | Avoids claiming a domain nobody owns |
+| D31 | ~~The schema's `$id` is the placeholder `urn:pwf:schema:0.1` until the project has a home~~ | Superseded by D36 |
 | D32 | The check script turns off Ajv's `strictRequired` option | It rejects `required` inside `oneOf` branches, which the schema uses to mean "exactly one of these" |
+| D36 | The schema's `$id` is `https://portableworkout.org/schema/pwf-0.1.schema.json`, where the website serves it | The project now owns the domain, and tools can fetch the schema from its ID |
+| D37 | Using PWF through AI assistants is the main way in: the website and README lead with it. The AI guide (`llms-full.txt`) and an Agent Skill for Claude and ChatGPT live in the repo next to the spec, and CI validates every workout in the guide | Most people will first meet PWF by asking an AI for a workout. Keeping the guide beside the spec, and testing it, stops it drifting from the format |
+| D38 | A player link carries the whole workout in the URL fragment: `#w=z.` plus the compact JSON, compressed with raw DEFLATE and base64url-encoded. AIs build links with code, never by hand; without code they hand over the JSON to paste | Fragments never reach a server, so links need no backend and share nothing. Models can't compress or encode reliably in their heads |
+| D39 | The player checks every workout against the schema and the rules in SPEC.md section 11 before playing it, and lists problems in plain words that can be pasted back to the AI | Closes the loop when an AI writes an invalid workout |
 
 ## Limits
 
@@ -100,7 +104,7 @@ The reference validator will check these:
 
 - The expander doesn't support parallel lanes.
 - The expander needs fully timed content for fixed-length containers and stations, and applies a block's time cap only when its content is fully timed.
-- There is no validator yet with `{ path, code, message, fix }` errors. The check script reports raw Ajv errors.
+- `lib/validate.js` explains problems in plain words, with fixes for common mistakes, but its errors have no stable codes yet. The skill's Python script reports the `jsonschema` package's messages, and skips the schema check when that package isn't installed.
 - There is no strict variant of the schema for AI structured output yet.
 - Conformance cases don't yet cover parallel lanes, block time caps, notes and previews, `estimate` or documents with `loop`.
 

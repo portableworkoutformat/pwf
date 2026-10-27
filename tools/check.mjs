@@ -4,17 +4,23 @@
 //   expected file and the hand-calculated total in the manifest;
 // - every invalid case fails validation at the path the manifest names.
 // It also checks the demo's examples: each validates and survives a round
-// trip through the builder's model unchanged.
+// trip through the builder's model unchanged. And it checks the AI material:
+// every workout in the skill's guide validates and plays, the skill's schema
+// matches, its link script produces links the player opens, and the
+// browser validator (lib/validate.js) agrees with the schema on every case.
 //
 // `--write` regenerates the expected timelines from the draft expander.
 // Review every changed file by hand before committing it.
 
+import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { isDeepStrictEqual } from 'node:util';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { documentFromState, stateFromDocument } from '../demo/model.js';
+import { decodeWorkout } from '../demo/share.js';
 import { expandTimeline } from '../lib/timeline.js';
+import { validateDocument } from '../lib/validate.js';
 
 const root = new URL('../', import.meta.url);
 const load = (rel) => JSON.parse(readFileSync(new URL(rel, root), 'utf8'));
@@ -36,6 +42,7 @@ for (const c of manifest.cases) {
     fail(c.id, 'does not validate', validate.errors);
     continue;
   }
+  if (!validateDocument(doc).valid) fail(c.id, 'lib/validate.js rejects it', validateDocument(doc).problems);
   const timeline = expandTimeline(doc);
   if (timeline.totalSeconds !== c.totalSeconds) {
     fail(c.id, `total is ${timeline.totalSeconds}, manifest says ${c.totalSeconds}`);
@@ -55,6 +62,9 @@ for (const c of manifest.invalid) {
   } else if (!validate.errors.some((e) => e.instancePath === c.path)) {
     fail(c.id, `no error at ${JSON.stringify(c.path)}`, validate.errors);
   }
+  if (!validateDocument(doc).problems.some((p) => p.path === c.path)) {
+    fail(c.id, `lib/validate.js reports no problem at ${JSON.stringify(c.path)}`);
+  }
 }
 
 const examples = readdirSync(new URL('demo/examples/', root)).filter((f) => f.endsWith('.pwf.json'));
@@ -68,7 +78,42 @@ for (const file of examples) {
   }
 }
 
-const total = manifest.cases.length + manifest.invalid.length + examples.length;
+const skill = 'skills/portable-workout-format';
+const guide = readFileSync(new URL(`${skill}/references/guide.md`, root), 'utf8');
+const guideDocs = [...guide.matchAll(/```json\n([\s\S]*?)\n```/g)]
+  .map((m, i) => [`guide.md workout ${i + 1}`, JSON.parse(m[1])])
+  .filter(([, doc]) => doc.pwf);
+if (guideDocs.length < 10) fail('guide.md', `has ${guideDocs.length} complete workouts; expected at least 10`);
+for (const [id, doc] of guideDocs) {
+  if (!validate(doc)) {
+    fail(id, `"${doc.name}" does not validate`, validate.errors);
+  } else if (!validateDocument(doc).valid) {
+    fail(id, `"${doc.name}" fails lib/validate.js`, validateDocument(doc).problems);
+  } else {
+    expandTimeline(doc);
+  }
+}
+
+if (!isDeepStrictEqual(load(`${skill}/references/pwf-0.1.schema.json`), load('schema/pwf-0.1.schema.json'))) {
+  fail(`${skill}/references/pwf-0.1.schema.json`, 'differs from schema/pwf-0.1.schema.json; copy it over');
+}
+
+let linkChecked = 0;
+try {
+  execFileSync('python3', ['--version']);
+  for (const file of ['demo/examples/tabata.pwf.json', 'conformance/cases/011-stations-two-zones.pwf.json']) {
+    const link = execFileSync('python3', [`${skill}/scripts/pwf.py`, 'link', file], { cwd: root, encoding: 'utf8' }).trim();
+    const [base, data] = link.split('#w=');
+    if (base !== 'https://portableworkout.org/play/') fail(file, `pwf.py link points at ${base}`);
+    if (!isDeepStrictEqual(await decodeWorkout(data), load(file))) fail(file, 'the player decodes pwf.py\'s link differently');
+    linkChecked += 1;
+  }
+} catch (error) {
+  if (error.code === 'ENOENT') console.warn('python3 not found: skipped the skill\'s link script');
+  else fail('pwf.py link', error.message);
+}
+
+const total = manifest.cases.length + manifest.invalid.length + examples.length + guideDocs.length + linkChecked + 1;
 if (failures.length) {
   for (const f of failures) {
     console.error(`FAIL ${f.id}: ${f.message}`);

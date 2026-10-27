@@ -168,7 +168,8 @@ function wireEvents() {
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   });
   $('copy-link').addEventListener('click', async (e) => {
-    const url = new URL(`play.html#w=${await encodeWorkout(documentFromState(state))}`, location.href).href;
+    // Share the short /play/ address. document.baseURI is the demo folder.
+    const url = new URL(`../play/#w=${await encodeWorkout(documentFromState(state))}`, document.baseURI).href;
     try {
       await navigator.clipboard.writeText(url);
       flash(e.currentTarget, 'Link copied');
