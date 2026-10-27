@@ -3,13 +3,16 @@
   "version": "0.1.0-draft",
   "private": true,
   "license": "Apache-2.0",
-  "description": "Portable Workout Format (PWF) v0.1 draft: JSON Schema, conformance cases and tools",
+  "description": "Portable Workout Format (PWF) v0.1 draft: JSON Schema, conformance cases, tools, website and AI skill",
   "type": "module",
   "scripts": {
+    "build": "node tools/build.mjs",
     "check": "node tools/check.mjs",
+    "precheck": "npm run build",
     "write-timelines": "node tools/check.mjs --write",
     "timeline": "node tools/timeline.mjs",
-    "demo": "node tools/serve.mjs"
+    "site": "npm run build && node tools/site.mjs",
+    "demo": "npm run site && node tools/serve.mjs"
   },
   "devDependencies": {
     "ajv": "8.20.0",

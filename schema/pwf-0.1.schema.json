@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:pwf:schema:0.1",
+  "$id": "https://portableworkout.org/schema/pwf-0.1.schema.json",
   "title": "Portable Workout Format (PWF) document, version 0.1",
   "description": "One workout: what it is, how it runs and which exercises it uses. Draft for comment; anything may change before 1.0. This schema is strict so that authoring mistakes and typos are caught. Readers must still ignore fields they don't know.",
   "type": "object",

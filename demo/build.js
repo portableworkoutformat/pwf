@@ -12,7 +12,7 @@ import {
   problems,
   stateFromDocument,
 } from './model.js';
-import { encodeWorkout, workoutFromLocation } from './share.js';
+import { MAX_BYTES, encodeWorkout, workoutFromLocation } from './share.js';
 
 const DRAFT_KEY = 'pwf-demo-builder';
 const TEMPLATES = { tabata: 'Tabata', circuit: 'Bodyweight circuit', strength: 'Upper-body strength' };
@@ -150,6 +150,10 @@ function wireEvents() {
     const file = e.target.files[0];
     e.target.value = '';
     if (!file) return;
+    if (file.size > MAX_BYTES) {
+      showMessage('That file is larger than PWF allows (1 MiB).', true);
+      return;
+    }
     try {
       if (await load(JSON.parse(await file.text()))) render();
     } catch {
@@ -168,7 +172,8 @@ function wireEvents() {
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   });
   $('copy-link').addEventListener('click', async (e) => {
-    const url = new URL(`play.html#w=${await encodeWorkout(documentFromState(state))}`, location.href).href;
+    // Share the short /play/ address. document.baseURI is the demo folder.
+    const url = new URL(`../play/#w=${await encodeWorkout(documentFromState(state))}`, document.baseURI).href;
     try {
       await navigator.clipboard.writeText(url);
       flash(e.currentTarget, 'Link copied');

@@ -1,0 +1,12 @@
+{
+  "name": "pwf",
+  "description": "Write, change, check and play workouts in the Portable Workout Format (PWF)",
+  "version": "0.1.0",
+  "author": {
+    "name": "The PWF Authors",
+    "email": "maintainers@portableworkout.org"
+  },
+  "homepage": "https://portableworkout.org",
+  "repository": "https://github.com/portableworkoutformat/pwf",
+  "license": "Apache-2.0"
+}

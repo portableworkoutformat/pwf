@@ -62,7 +62,8 @@ h2 { font-size: 1.2rem; }
   background: var(--surface);
 }
 .brand { font-weight: 700; text-decoration: none; color: var(--text); }
-.brand span { color: var(--accent); }
+.brand span:first-child { color: var(--accent); }
+@media (max-width: 520px) { .brand-name { display: none; } }
 .site-header nav { display: flex; gap: 1rem; margin-left: auto; }
 .site-header nav a { text-decoration: none; color: var(--muted); }
 .site-header nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
@@ -239,3 +240,24 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .controls button { min-width: 6rem; }
 .finished { text-align: center; }
 .finished .total { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.drop.small { padding: 1rem; }
+.problems { margin: 0.5rem 0; padding-left: 1.2rem; }
+.problems li + li { margin-top: 0.3rem; }
+.problems code { font-size: 0.85em; }
+#copy-problems { margin-top: 0.25rem; }
+.ai-box { border-top: 1px solid var(--border); padding-top: 1rem; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  max-width: min(90vw, 32rem);
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  z-index: 10;
+}

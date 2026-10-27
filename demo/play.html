@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Play a workout · PWF demo</title>
+  <title>Play a workout · PWF</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header" id="header">
-    <a class="brand" href="./"><span>PWF</span> demo</a>
+    <a class="brand" href="../"><span>PWF</span> <span class="brand-name">Portable Workout Format</span></a>
     <nav>
+      <a href="../">Use with AI</a>
       <a href="build.html">Build</a>
       <a href="play.html" aria-current="page">Play</a>
       <a href="https://github.com/portableworkoutformat/pwf">GitHub</a>
@@ -19,24 +20,25 @@
   <main id="load-screen" class="hidden">
     <div class="card stack" style="max-width: 720px">
       <h1>Play a workout</h1>
-      <div id="drop" class="drop">
-        <p style="margin-top: 0">Drop a <code>.pwf.json</code> file here, or</p>
-        <button id="choose" type="button" class="primary">Choose a file</button>
+      <p class="muted" style="margin: 0">Paste the PWF JSON an AI wrote for you, open a <code>.pwf.json</code> file, or try an example.</p>
+      <textarea id="paste" rows="8" spellcheck="false" aria-label="PWF JSON" placeholder='{ "pwf": "0.1", "name": "…", "plan": { … } }'></textarea>
+      <div class="row">
+        <button id="paste-load" type="button" class="primary">▶ Open</button>
+        <button id="paste-clipboard" type="button">Paste from clipboard</button>
+        <button id="choose" type="button">Open a file</button>
         <input id="file" type="file" accept=".json,application/json" class="hidden">
       </div>
-      <details>
-        <summary>Paste PWF JSON</summary>
-        <div class="stack" style="margin-top: 0.5rem">
-          <textarea id="paste" rows="8" spellcheck="false" aria-label="PWF JSON"></textarea>
-          <button id="paste-load" type="button">Load</button>
-        </div>
-      </details>
+      <div id="load-error" class="notice error hidden" role="alert">
+        <p id="load-error-text" style="margin: 0"></p>
+        <ul id="load-problems" class="problems"></ul>
+        <button id="copy-problems" type="button" class="hidden">Copy the problems for your AI</button>
+      </div>
+      <div id="drop" class="drop small muted">Or drop a <code>.pwf.json</code> file here</div>
       <div>
         <h2>Examples</h2>
         <div id="examples" class="examples"></div>
       </div>
-      <p class="muted small">Or <a href="build.html">build your own</a>.</p>
-      <p id="load-error" class="notice error hidden" role="alert"></p>
+      <p class="muted small">No workout yet? <a href="../">Ask Claude or ChatGPT to write one</a>, or <a href="build.html">build your own</a>.</p>
     </div>
   </main>
 
@@ -62,7 +64,14 @@
       <div class="row">
         <button id="start" type="button" class="primary">▶ Start</button>
         <a id="edit" class="button hidden">Edit in builder</a>
+        <button id="save" type="button">Save .pwf.json</button>
+        <button id="copy-json" type="button">Copy JSON</button>
         <button id="load-another" type="button">Open another</button>
+      </div>
+      <div class="ai-box stack">
+        <h2 style="margin: 0">Change it with AI</h2>
+        <p class="muted small" style="margin: 0">Opens your assistant with this workout and the PWF guide, ready for your changes. The prompt is copied too.</p>
+        <div id="ai-buttons" class="row"></div>
       </div>
       <p class="muted small">Keys: Space pauses, Enter marks a step done, ← and → move between steps.</p>
     </div>
@@ -105,6 +114,8 @@
       </div>
     </div>
   </main>
+
+  <div id="toast" class="toast hidden" role="status"></div>
 
   <script type="module" src="play.js"></script>
 </body>

@@ -1,6 +1,6 @@
 # Conformance suite
 
-Each case pairs a document with the timeline a conforming player must produce for one participant. Invalid cases must fail validation at a given path.
+Each case pairs a document with the timeline a conforming player must produce for one participant. Invalid cases must fail validation at a given path. Most break the schema; those marked `"by": "validator"` in the manifest pass the schema but break a rule only a validator can check, such as the limits in SPEC.md section 10.
 
 | File | Contents |
 | --- | --- |
