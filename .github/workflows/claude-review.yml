@@ -1,0 +1,160 @@
+name: Claude review
+
+# Claude reviews every pull request and sorts its findings into blocking and
+# non-blocking. It posts them as one comment, and this workflow turns the
+# verdict into the `claude-review` commit status: success when nothing blocks
+# the merge, failure when something does. Branch protection requires it.
+#
+# Pull requests from forks get no secrets on `pull_request`, and this workflow
+# never runs a fork's code with secrets. A maintainer reviews a fork's pull
+# request by commenting `/review`, which runs from the default branch. The same
+# comment re-runs the review on any pull request.
+#
+# claude-code-action refuses to run on a pull request that changes this file,
+# so such a pull request gets no review and needs a maintainer to merge it.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  target:
+    if: >-
+      (github.event_name == 'pull_request' && !github.event.pull_request.draft) ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request &&
+       startsWith(github.event.comment.body, '/review') &&
+       contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      number: ${{ steps.pr.outputs.number }}
+      sha: ${{ steps.pr.outputs.sha }}
+      review: ${{ steps.pr.outputs.review }}
+    steps:
+      - name: Find the pull request to review
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+        run: |
+          sha=$(gh api "repos/$REPO/pulls/$NUMBER" --jq .head.sha)
+          fork=$(gh api "repos/$REPO/pulls/$NUMBER" --jq '.head.repo.full_name != .base.repo.full_name')
+          echo "number=$NUMBER" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT" = pull_request ] && [ "$fork" = true ]; then
+            echo "::notice::Pull request from a fork: a maintainer reviews it by commenting /review."
+            echo "review=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "review=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  review:
+    needs: target
+    if: needs.target.outputs.review == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+      statuses: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      PR: ${{ needs.target.outputs.number }}
+      SHA: ${{ needs.target.outputs.sha }}
+    steps:
+      - name: Mark the review as started
+        id: start
+        run: |
+          echo "time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          gh api "repos/$REPO/statuses/$SHA" -f state=pending -f context=claude-review \
+            -f description="Claude is reviewing" -f target_url="$GITHUB_SERVER_URL/$REPO/actions/runs/$GITHUB_RUN_ID"
+
+      # For a /review comment this checks out the default branch, never a fork's code.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Review the pull request
+        uses: anthropics/claude-code-action@8041f1d17e0e7d2f2cfe35002962e9f26237c0bb # v1.0.263
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: '--allowed-tools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Read,Glob,Grep"'
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ needs.target.outputs.number }}
+
+            Review this pull request to the Portable Workout Format (PWF) repository. PWF is an
+            open JSON format for workouts. SPEC.md is the specification, schema/pwf-0.1.schema.json
+            the JSON Schema, conformance/ the test suite, DECISIONS.md the decision record,
+            lib/timeline.js the draft timeline expander, and demo/ a small builder and player.
+
+            Check in particular that:
+            - SPEC.md, the schema, DECISIONS.md and the conformance cases agree. A field, default
+              or rule changed in one must change in the others.
+            - Any change to how a workout plays comes with a conformance case and a total worked
+              out by hand, and the expected timelines are right.
+            - Changes that break existing documents are called out, and DECISIONS.md records any
+              changed decision.
+            - The tools and demo treat PWF files as untrusted input: no markup injection, no
+              unbounded work, and the limits in SPEC.md section 10.
+            - The spec's wording is precise: MUST and SHOULD are used correctly, and nothing can be
+              read two ways by someone implementing it.
+
+            Before reviewing, read earlier reviews and the author's replies with
+            `gh pr view <number> --json comments,reviews`. On a re-review, focus on what changed
+            since the last review, and don't repeat a point the author has fixed, answered or
+            declined.
+
+            Sort your findings into **Blocking** and **Non-blocking**. Blocking means something that
+            shouldn't merge as it is: a contradiction between the spec, schema and tests; a timing
+            change without a conformance case; a bug in the tools or demo; a security hole; or a
+            breaking change that isn't recorded. Everything else is non-blocking: wording, style,
+            naming, docs and nice-to-haves. Blocking findings stop the merge, so only mark something
+            blocking if it should.
+
+            Read the diff with a plain `gh pr diff <number>` command. Don't redirect, pipe or combine
+            it with other commands. Use Read, Glob and Grep to look at files in the repository. For a
+            pull request from a fork, the checkout is the default branch, so the diff is the only
+            place to see the changes.
+
+            Post your review as one comment with `gh pr comment <number> --body "..."`, passing the
+            text directly. Don't create files or use command substitution. If there are no findings,
+            say so briefly. If a tool is blocked and you can't finish, post a short comment saying
+            what you couldn't check.
+
+            End the comment with exactly one of these two lines, on a line of its own:
+            <!-- review-verdict: ready -->
+            when there are no blocking findings, or
+            <!-- review-verdict: changes -->
+            when there is at least one blocking finding or you couldn't finish the review.
+
+      - name: Set the claude-review status
+        if: always()
+        env:
+          SINCE: ${{ steps.start.outputs.time }}
+        run: |
+          # The verdict in the last comment the review posted in this run.
+          verdict=$(gh api --paginate "repos/$REPO/issues/$PR/comments?since=$SINCE" \
+            --jq '.[] | select(.user.login == "claude[bot]") | .body' |
+            grep -o '<!-- review-verdict: [a-z]* -->' | tail -n 1 || true)
+          case "$verdict" in
+            *ready*) state=success; description="No blocking findings" ;;
+            *changes*) state=failure; description="Blocking findings: see the review comment" ;;
+            *) state=error; description="The review didn't finish. Comment /review to retry" ;;
+          esac
+          echo "Verdict: $state ($description)"
+          gh api "repos/$REPO/statuses/$SHA" -f state="$state" -f context=claude-review \
+            -f description="$description" -f target_url="$GITHUB_SERVER_URL/$REPO/actions/runs/$GITHUB_RUN_ID"
