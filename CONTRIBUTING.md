@@ -17,6 +17,15 @@ Thanks for helping shape the Portable Workout Format. PWF is a v0.1 draft, so th
 4. If your change alters a decision, update [DECISIONS.md](DECISIONS.md) in the same pull request.
 5. Sign off every commit (see below), then open a pull request.
 
+## Review
+
+Every pull request gets an automated review from Claude, which sorts its findings into **Blocking** and **Non-blocking**:
+
+- **Blocking** findings stop the merge until they're fixed, or until a maintainer agrees they don't apply. They cover things like the spec, schema and tests disagreeing, a timing change without a conformance case, a bug, or a security problem.
+- **Non-blocking** findings are suggestions. Take them or leave them, with a short reply if you decline one.
+
+Each new push is reviewed again. Pull requests from forks are reviewed once a maintainer comments `/review`, and maintainers can use the same comment to re-run a review. A maintainer also reads every pull request before merging.
+
 ## Sign off your commits
 
 PWF uses the [Developer Certificate of Origin](https://developercertificate.org) (DCO). Signing off a commit certifies that you wrote the change, or otherwise have the right to submit it under the project's licences. Add the sign-off with `git commit -s`, which appends a line like this:
