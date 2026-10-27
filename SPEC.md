@@ -363,7 +363,9 @@ PWF documents are shared between apps and MUST be treated as untrusted input. Va
 | Other text fields | 10,000 characters |
 | Time values | 0 to 86,400 seconds |
 
-- Renderers MUST build timelines as segments, never second by second, and MUST check these limits before expanding anything.
+- Nesting depth counts the plan as level 1. Each child, and a task's `clock`, is one level below its parent. Nodes are the plan and everything under it through `children` and `clock`.
+- Renderers MUST build timelines as segments, never second by second. They MUST check every limit except those on one pass of the timeline before expanding anything. Those two can only be checked while expanding, so renderers MUST stop expanding once a pass can no longer stay within them, and refuse the document.
+- Expanding makes segments before a fixed length or time cap cuts them (section 6, rules 7 and 8), so a renderer MAY refuse a document whose content passes the segment limit before it is cut short.
 - Renderers MUST NOT execute or inject markup from text fields.
 - Media URLs MUST use `https`. Loading them is OPTIONAL, and renderers MUST NOT send credentials with them.
 

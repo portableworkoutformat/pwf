@@ -27,7 +27,7 @@ Help me make a workout in the Portable Workout Format (PWF). First read https://
   /plugin install pwf --marketplace portableworkoutformat/pwf
   ```
 
-  Before Claude Code 2.1.275, add the marketplace first with `/plugin marketplace add portableworkoutformat/pwf`, then run `/plugin install pwf@pwf`.
+  If your version of Claude Code doesn't know `--marketplace`, add the marketplace first with `/plugin marketplace add portableworkoutformat/pwf`, then run `/plugin install pwf@pwf`.
 
 - **Any AI tool.** Point it at [`llms.txt`](https://portableworkout.org/llms.txt) or the full guide, [`llms-full.txt`](https://portableworkout.org/llms-full.txt).
 - **Coming soon: a PWF connector.** An MCP server that checks workouts and plays them inside the chat.
