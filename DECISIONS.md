@@ -25,6 +25,7 @@ All decided on 2026-10-27 unless noted.
 | D33 | PWF's sponsor and first integration partner is named publicly in the README | Be open about who funds PWF and implements it first |
 | D34 | The spec, schema, conformance suite and tools are licensed under Apache-2.0, and the exercise and equipment registries under CC0 1.0. Copyright is held by "The PWF Authors" | Apache-2.0's patent grant tells other apps the sponsor can't later make patent claims against them. CC0 lets any app embed the registries without credit. While contributors are few, moving the spec to the Community Specification License later stays easy |
 | D35 | The name is PWF, the Portable Workout Format. The version field is `pwf`, registry IDs start with `pwf:`, files end in `.pwf.json`, and the planned media type is `application/vnd.pwf+json`. Renamed from OWF on 2026-10-27 | "Portable" says what the format is for. It stays clearly separate from OpenWorkout's OWL, and the GitHub names and a .org domain looked free (see the candidates under Q13) |
+| D40 | For the limits, the plan is at nesting level 1, and each child or task `clock` is one level below its parent. Nodes are everything reached through `children` and `clock`. The limits on one pass are checked while expanding, and a renderer may refuse a document whose content passes the segment limit before a fixed length or time cap cuts it | Every validator must count the same way (conformance case `007-too-deep` depends on it), and the timeline limits can't be checked before expanding |
 
 ### Exercises and equipment
 
