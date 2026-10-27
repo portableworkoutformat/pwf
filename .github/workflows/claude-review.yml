@@ -10,8 +10,10 @@ name: Claude review
 # request by commenting `/review`, which runs from the default branch. The same
 # comment re-runs the review on any pull request.
 #
-# claude-code-action refuses to run on a pull request that changes this file,
-# so such a pull request gets no review and needs a maintainer to merge it.
+# Two kinds of pull request get no automatic review: claude-code-action refuses
+# to run on one that changes this file, and Dependabot's runs get no secrets.
+# Their `claude-review` status is an error that says why. A maintainer merges
+# them, or comments `/review`, which runs this file from the default branch.
 
 on:
   pull_request:
@@ -31,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
+      statuses: write
     outputs:
       number: ${{ steps.pr.outputs.number }}
       sha: ${{ steps.pr.outputs.sha }}
@@ -42,18 +45,37 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           EVENT: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
           NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
         run: |
           sha=$(gh api "repos/$REPO/pulls/$NUMBER" --jq .head.sha)
           fork=$(gh api "repos/$REPO/pulls/$NUMBER" --jq '.head.repo.full_name != .base.repo.full_name')
           echo "number=$NUMBER" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          if [ "$EVENT" = pull_request ] && [ "$fork" = true ]; then
-            echo "::notice::Pull request from a fork: a maintainer reviews it by commenting /review."
-            echo "review=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "review=true" >> "$GITHUB_OUTPUT"
+          review=true
+          reason=
+          if [ "$EVENT" = pull_request ]; then
+            # This file's path, from "owner/repo/path@ref".
+            workflow=${GITHUB_WORKFLOW_REF#"$REPO/"}
+            workflow=${workflow%@*}
+            files=$(gh api --paginate "repos/$REPO/pulls/$NUMBER/files" --jq '.[].filename')
+            if [ "$fork" = true ]; then
+              echo "::notice::Pull request from a fork: a maintainer reviews it by commenting /review."
+              review=false
+            elif [ "$ACTOR" = "dependabot[bot]" ]; then
+              reason="Dependabot runs can't use the Claude token"
+            elif grep -qxF "$workflow" <<< "$files"; then
+              reason="Claude can't review changes to its own workflow"
+            fi
           fi
+          if [ -n "$reason" ]; then
+            echo "::notice::No review: $reason."
+            review=false
+            gh api "repos/$REPO/statuses/$sha" -f state=error -f context=claude-review \
+              -f description="Not reviewed: $reason. A maintainer must merge it or comment /review" \
+              -f target_url="$GITHUB_SERVER_URL/$REPO/actions/runs/$GITHUB_RUN_ID"
+          fi
+          echo "review=$review" >> "$GITHUB_OUTPUT"
 
   review:
     needs: target
