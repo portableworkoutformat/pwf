@@ -13,7 +13,7 @@ PWF describes one workout as JSON, precisely enough that any app can play it wit
 1. Before writing your first workout in a conversation, read [references/guide.md](references/guide.md). It covers the format, patterns for common workout styles and the mistakes to avoid.
 2. Work out what the person wants. Ask at most one or two short questions, such as how long, what equipment and what level. Otherwise choose, and say what you assumed.
 3. Write the document to a file named after the workout, such as `tabata.pwf.json`.
-4. Check it with `python3 scripts/pwf.py check tabata.pwf.json`. Fix every problem it lists and check again until it prints `valid`.
+4. Check it with `python3 scripts/pwf.py check tabata.pwf.json`. Fix every problem it lists and check again until it prints `valid`. If it says `not checked`, the `jsonschema` package is missing: run `pip install jsonschema` and check again, or, if you can't, go through the guide's checklist before you continue.
 5. Build the link with `python3 scripts/pwf.py link tabata.pwf.json`.
 6. Reply with two or three lines on the structure and total time, the JSON in a code block and the link. Share the file too if you can.
 

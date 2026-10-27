@@ -1,0 +1,93 @@
+{
+  "pwf": "0.1",
+  "name": "Seventeen levels",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "children": [
+          {
+            "type": "block",
+            "children": [
+              {
+                "type": "block",
+                "children": [
+                  {
+                    "type": "block",
+                    "children": [
+                      {
+                        "type": "block",
+                        "children": [
+                          {
+                            "type": "block",
+                            "children": [
+                              {
+                                "type": "block",
+                                "children": [
+                                  {
+                                    "type": "block",
+                                    "children": [
+                                      {
+                                        "type": "block",
+                                        "children": [
+                                          {
+                                            "type": "block",
+                                            "children": [
+                                              {
+                                                "type": "block",
+                                                "children": [
+                                                  {
+                                                    "type": "block",
+                                                    "children": [
+                                                      {
+                                                        "type": "block",
+                                                        "children": [
+                                                          {
+                                                            "type": "block",
+                                                            "children": [
+                                                              {
+                                                                "type": "block",
+                                                                "children": [
+                                                                  {
+                                                                    "type": "exercise",
+                                                                    "exercise": {
+                                                                      "name": "Plank"
+                                                                    },
+                                                                    "end": {
+                                                                      "time": 30
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

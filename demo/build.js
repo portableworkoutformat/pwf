@@ -12,7 +12,7 @@ import {
   problems,
   stateFromDocument,
 } from './model.js';
-import { encodeWorkout, workoutFromLocation } from './share.js';
+import { MAX_BYTES, encodeWorkout, workoutFromLocation } from './share.js';
 
 const DRAFT_KEY = 'pwf-demo-builder';
 const TEMPLATES = { tabata: 'Tabata', circuit: 'Bodyweight circuit', strength: 'Upper-body strength' };
@@ -150,6 +150,10 @@ function wireEvents() {
     const file = e.target.files[0];
     e.target.value = '';
     if (!file) return;
+    if (file.size > MAX_BYTES) {
+      showMessage('That file is larger than PWF allows (1 MiB).', true);
+      return;
+    }
     try {
       if (await load(JSON.parse(await file.text()))) render();
     } catch {

@@ -1,0 +1,15 @@
+{
+  "pwf": "0.1",
+  "name": "Twenty-five hours",
+  "plan": {
+    "type": "block",
+    "rounds": 25,
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": { "name": "Walk" },
+        "end": { "time": 3600 }
+      }
+    ]
+  }
+}

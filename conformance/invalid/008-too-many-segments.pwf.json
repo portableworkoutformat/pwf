@@ -1,0 +1,21 @@
+{
+  "pwf": "0.1",
+  "name": "A million seconds",
+  "plan": {
+    "type": "block",
+    "rounds": 1000,
+    "children": [
+      {
+        "type": "block",
+        "rounds": 1000,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Jumping jacks" },
+            "end": { "time": 1 }
+          }
+        ]
+      }
+    ]
+  }
+}

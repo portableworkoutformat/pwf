@@ -2,7 +2,7 @@ import { expandTimeline } from '../lib/timeline.js';
 import { describeProblems, validateDocument } from '../lib/validate.js';
 import { assistantButtons, changePrompt, copyText, fixPrompt } from './ai.js';
 import { formatDuration, stateFromDocument } from './model.js';
-import { encodeWorkout, workoutFromLocation } from './share.js';
+import { MAX_BYTES, checkSize, encodeWorkout, workoutFromLocation } from './share.js';
 
 const EXAMPLES = [
   ['Tabata', 'examples/tabata.pwf.json'],
@@ -68,6 +68,7 @@ async function loadFrom(read) {
 
 // Reads pasted text, allowing for the code fences chat apps copy along with it.
 function parseWorkout(text) {
+  checkSize(text);
   return JSON.parse(text.trim().replace(/^```[a-z]*\s*/i, '').replace(/```$/, ''));
 }
 
@@ -467,6 +468,11 @@ function showLoadError(error) {
   show('load-screen');
 }
 
+async function readFile(file) {
+  if (file.size > MAX_BYTES) throw new Error('This file is larger than PWF allows (1 MiB).');
+  return parseWorkout(await file.text());
+}
+
 function notify(text) {
   $('toast').textContent = text;
   $('toast').classList.remove('hidden');
@@ -496,7 +502,7 @@ function wireEvents() {
   $('file').addEventListener('change', (e) => {
     const file = e.target.files[0];
     e.target.value = '';
-    if (file) loadFrom(async () => JSON.parse(await file.text()));
+    if (file) loadFrom(() => readFile(file));
   });
   const drop = $('drop');
   drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
@@ -505,7 +511,7 @@ function wireEvents() {
     e.preventDefault();
     drop.classList.remove('over');
     const file = e.dataTransfer.files[0];
-    if (file) loadFrom(async () => JSON.parse(await file.text()));
+    if (file) loadFrom(() => readFile(file));
   });
   $('paste-load').addEventListener('click', () => loadFrom(async () => parseWorkout($('paste').value)));
   $('paste-clipboard').addEventListener('click', async () => {
@@ -561,6 +567,7 @@ function wireEvents() {
   // Following another workout link while the player is open only changes the
   // fragment, so load it here. replaceState in loadFrom doesn't fire this.
   window.addEventListener('hashchange', () => {
+    if (!location.hash.startsWith('#w=')) return;
     if (run) stop();
     loadFrom(async () => (await workoutFromLocation()) ?? Promise.reject(new Error('This link doesn’t hold a workout.')));
   });

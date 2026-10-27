@@ -7,9 +7,12 @@ Usage:
 
 Use "-" instead of a file name to read the workout from standard input.
 
-Only the Python standard library is needed. The schema check also needs the
-jsonschema package (pip install jsonschema); without it, `check` runs the
-other checks and says the schema wasn't checked.
+Only the Python standard library is needed, except for the schema check,
+which needs the jsonschema package (pip install jsonschema). Without it,
+`check` runs the other checks, never prints "valid", and exits 2.
+
+The player also checks the limits on one pass of the timeline (24 hours and
+100,000 segments), which this script doesn't.
 """
 
 import base64
@@ -20,7 +23,11 @@ from pathlib import Path
 
 PLAYER = "https://portableworkout.org/play/"
 SCHEMA = Path(__file__).resolve().parent.parent / "references" / "pwf-0.1.schema.json"
-MAX_BYTES = 1024 * 1024  # SPEC.md section 10
+# SPEC.md section 10
+MAX_BYTES = 1024 * 1024
+MAX_DEPTH = 16
+MAX_NODES = 5000
+MAX_CHILDREN = 1000
 
 
 def load(name):
@@ -59,6 +66,32 @@ def schema_problems(doc):
             error = best_match(error.context)
         problems.append((pointer(error.absolute_path), error.message))
     return sorted(set(problems))
+
+
+def size_problems(doc):
+    """Nesting depth, node count and children per container, walked without
+    recursion and stopping at the first limit passed."""
+    if not isinstance(doc, dict):
+        return []
+    stack = [(doc.get("plan"), "/plan", 1)]
+    nodes = 0
+    while stack:
+        node, path, depth = stack.pop()
+        if not isinstance(node, dict):
+            continue
+        nodes += 1
+        if depth > MAX_DEPTH:
+            return [(path, f"is nested {depth} levels deep. PWF allows at most {MAX_DEPTH} levels.")]
+        if nodes > MAX_NODES:
+            return [("/plan", f"has more than {MAX_NODES:,} nodes, the most PWF allows.")]
+        if "clock" in node:
+            stack.append((node["clock"], f"{path}/clock", depth + 1))
+        children = node.get("children")
+        if isinstance(children, list):
+            if len(children) > MAX_CHILDREN:
+                return [(f"{path}/children", f"has {len(children)} children. PWF allows at most {MAX_CHILDREN:,}.")]
+            stack.extend((child, f"{path}/children/{i}", depth + 1) for i, child in enumerate(children))
+    return []
 
 
 def semantic_problems(doc):
@@ -120,16 +153,22 @@ def semantic_problems(doc):
 
 
 def check(doc):
-    schema = schema_problems(doc)
-    problems = (schema or []) + semantic_problems(doc)
+    problems = size_problems(doc)
+    schema = None
+    if not problems:
+        schema = schema_problems(doc)
+        problems = (schema or []) + semantic_problems(doc)
     for path, message in problems:
         print(f"{path or '(document)'}: {message}")
+    if problems:
+        return 1
     if schema is None:
-        print("Note: the JSON Schema wasn't checked because the jsonschema package isn't installed "
-              "(pip install jsonschema). The PWF player checks it when it opens the link.")
-    if not problems:
-        print("valid")
-    return 1 if problems else 0
+        print("not checked: the jsonschema package isn't installed, so the schema wasn't checked. "
+              "Run pip install jsonschema and check again. If you can't install it, go through the "
+              "guide's checklist; the PWF player checks the schema when it opens the link.")
+        return 2
+    print("valid")
+    return 0
 
 
 def main(argv):

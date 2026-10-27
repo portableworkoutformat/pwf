@@ -104,6 +104,24 @@
       "id": "006-registry-id-format",
       "description": "ref must be pwf: plus a kebab-case slug.",
       "path": "/exercises/bench/ref"
+    },
+    {
+      "id": "007-too-deep",
+      "description": "The plan is nested at most 16 levels deep, and this one has 17. The schema can't check it, so only a validator rejects it.",
+      "path": "/plan/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0/children/0",
+      "by": "validator"
+    },
+    {
+      "id": "008-too-many-segments",
+      "description": "One pass of the timeline has at most 100,000 segments, and this one would have a million. A validator must stop expanding it early.",
+      "path": "/plan",
+      "by": "validator"
+    },
+    {
+      "id": "009-longer-than-a-day",
+      "description": "One pass of the timeline lasts at most 24 hours, and this one lasts 25.",
+      "path": "/plan",
+      "by": "validator"
     }
   ]
 }

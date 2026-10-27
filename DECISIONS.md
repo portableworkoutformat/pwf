@@ -68,7 +68,7 @@ All decided on 2026-10-27 unless noted.
 | D36 | The schema's `$id` is `https://portableworkout.org/schema/pwf-0.1.schema.json`, where the website serves it | The project now owns the domain, and tools can fetch the schema from its ID |
 | D37 | Using PWF through AI assistants is the main way in: the website and README lead with it. The AI guide (`llms-full.txt`) and an Agent Skill for Claude and ChatGPT live in the repo next to the spec, and CI validates every workout in the guide | Most people will first meet PWF by asking an AI for a workout. Keeping the guide beside the spec, and testing it, stops it drifting from the format |
 | D38 | A player link carries the whole workout in the URL fragment: `#w=z.` plus the compact JSON, compressed with raw DEFLATE and base64url-encoded. AIs build links with code, never by hand; without code they hand over the JSON to paste | Fragments never reach a server, so links need no backend and share nothing. Models can't compress or encode reliably in their heads |
-| D39 | The player checks every workout against the schema and the rules in SPEC.md section 11 before playing it, and lists problems in plain words that can be pasted back to the AI | Closes the loop when an AI writes an invalid workout |
+| D39 | The player checks every workout before playing it: the schema, the limits in SPEC.md section 10, and the section 11 rules that don't need a timeline (keys, `id`s, ranges, `stations` only in group mode). It lists problems in plain words that can be pasted back to the AI. Links, pasted text and files are capped at 1 MiB before parsing, and links stop inflating at 1 MiB | Closes the loop when an AI writes an invalid workout, and keeps untrusted input bounded |
 
 ## Limits
 
@@ -78,13 +78,13 @@ These are normative in v0.1. Validators reject documents beyond them, and render
 
 | Limit | Value | Checked by |
 | --- | --- | --- |
-| File size | 1 MiB | Validator |
-| Nesting depth | 16 levels | Validator |
-| Nodes | 5,000 | Validator |
+| File size | 1 MiB | Whoever reads the file: the player, the builder and `pwf.py` |
+| Nesting depth | 16 levels | Validator: `lib/validate.js` and `pwf.py` |
+| Nodes | 5,000 | Validator: `lib/validate.js` and `pwf.py` |
 | `rounds`, `sets`, `rotations` | 1,000 each | Schema |
 | Children per container | 1,000 | Schema |
 | Parallel lanes | 10 | Schema |
-| One pass of the timeline | 24 hours and 100,000 segments | Validator |
+| One pass of the timeline | 24 hours and 100,000 segments | Expander (`lib/timeline.js`), reported by `lib/validate.js`. `pwf.py` doesn't check it |
 | `name` | 200 characters | Schema |
 | Other text fields | 10,000 characters | Schema |
 | Time values | 0 to 86,400 whole seconds | Schema |
@@ -93,7 +93,7 @@ These are normative in v0.1. Validators reject documents beyond them, and render
 
 ### Rules the schema can't express
 
-The reference validator will check these:
+`lib/validate.js` and the skill's `pwf.py` check all but the last. The expander reports the last when it can't work out a length, and the player then says it can't play the workout:
 
 - Only documents with `"mode": "group"` may contain `stations`.
 - Node `id`s are unique, and every exercise key, equipment key and `previews` id resolves.
@@ -104,7 +104,7 @@ The reference validator will check these:
 
 - The expander doesn't support parallel lanes.
 - The expander needs fully timed content for fixed-length containers and stations, and applies a block's time cap only when its content is fully timed.
-- `lib/validate.js` explains problems in plain words, with fixes for common mistakes, but its errors have no stable codes yet. The skill's Python script reports the `jsonschema` package's messages, and skips the schema check when that package isn't installed.
+- `lib/validate.js` explains problems in plain words, with fixes for common mistakes, but its errors have no stable codes yet. The skill's Python script reports the `jsonschema` package's messages. Without that package it skips the schema check and says so, never printing `valid`.
 - There is no strict variant of the schema for AI structured output yet.
 - Conformance cases don't yet cover parallel lanes, block time caps, notes and previews, `estimate` or documents with `loop`.
 

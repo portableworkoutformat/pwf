@@ -1,7 +1,9 @@
 name: Pages
 
 # Builds the website (npm run site) and publishes it to GitHub Pages at
-# https://portableworkout.org whenever main changes.
+# https://portableworkout.org whenever main changes. The custom domain is set
+# in the repository's Pages settings: deployments from Actions don't use a
+# CNAME file.
 
 on:
   push:
