@@ -1,0 +1,65 @@
+{
+  "pwf": "0.1",
+  "name": "AMRAP, EMOM and For Time",
+  "activity": "hiit",
+  "equipment": {
+    "kb": { "name": "Kettlebell", "ref": "pwf:kettlebell", "notes": "24 kg" },
+    "rower": { "name": "Rowing machine", "ref": "pwf:rower" },
+    "bar": { "name": "Pull-up bar", "ref": "pwf:pull-up-bar" }
+  },
+  "exercises": {
+    "pull-up": { "name": "Pull-up", "ref": "pwf:pull-up", "equipment": ["bar"] },
+    "push-up": { "name": "Push-up", "ref": "pwf:push-up" },
+    "air-squat": { "name": "Air squat", "ref": "pwf:air-squat" },
+    "burpee": { "name": "Burpee", "ref": "pwf:burpee" },
+    "goblet-squat": { "name": "Goblet squat", "ref": "pwf:goblet-squat", "equipment": ["kb"] },
+    "row": { "name": "Row", "ref": "pwf:row", "equipment": ["rower"] },
+    "kb-swing": { "name": "Kettlebell swing", "ref": "pwf:kettlebell-swing", "equipment": ["kb"] }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "task",
+        "format": "amrap",
+        "name": "12-minute AMRAP",
+        "rounds": "max",
+        "end": { "time": 720 },
+        "score": "rounds-reps",
+        "children": [
+          { "type": "exercise", "exercise": "pull-up", "end": { "reps": 5 } },
+          { "type": "exercise", "exercise": "push-up", "end": { "reps": 10 } },
+          { "type": "exercise", "exercise": "air-squat", "end": { "reps": 15 } }
+        ]
+      },
+      {
+        "type": "block",
+        "format": "emom",
+        "rounds": 5,
+        "children": [
+          {
+            "type": "task",
+            "end": { "time": 60 },
+            "children": [{ "type": "exercise", "exercise": "burpee", "end": { "reps": 12 } }]
+          },
+          {
+            "type": "task",
+            "end": { "time": 60 },
+            "children": [{ "type": "exercise", "exercise": "goblet-squat", "end": { "reps": 15 } }]
+          }
+        ]
+      },
+      {
+        "type": "task",
+        "format": "for-time",
+        "rounds": 3,
+        "timeCap": 900,
+        "score": "time",
+        "children": [
+          { "type": "exercise", "exercise": "row", "end": { "calories": 21 } },
+          { "type": "exercise", "exercise": "kb-swing", "end": { "reps": 15 } }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "pwf": "0.1",
+  "name": "Skipping with changing rests",
+  "equipment": {
+    "rope": { "name": "Skipping rope", "ref": "pwf:skipping-rope" }
+  },
+  "exercises": {
+    "skip": { "name": "Jump rope", "ref": "pwf:jump-rope", "equipment": ["rope"] }
+  },
+  "plan": {
+    "type": "block",
+    "rounds": 4,
+    "restBetweenRounds": [
+      { "time": 60 },
+      { "time": 90, "kind": "hydrate" }
+    ],
+    "skipLastRest": true,
+    "children": [
+      { "type": "exercise", "exercise": "skip", "end": { "time": 30 } },
+      { "type": "rest", "end": { "time": 15 } }
+    ]
+  }
+}

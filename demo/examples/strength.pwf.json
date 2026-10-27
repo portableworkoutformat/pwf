@@ -1,0 +1,57 @@
+{
+  "pwf": "0.1",
+  "name": "Upper-body strength",
+  "description": "Two supersets and a finisher. Finish your reps, tap Done, and the next step starts.",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Superset A",
+        "rounds": 3,
+        "restBetweenRounds": { "time": 90 },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Bench press", "ref": "pwf:bench-press" },
+            "end": { "reps": 8 }
+          },
+          {
+            "type": "exercise",
+            "exercise": { "name": "Dumbbell row", "ref": "pwf:dumbbell-row" },
+            "end": { "reps": 10 }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Superset B",
+        "rounds": 3,
+        "restBetweenRounds": { "time": 60 },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Dumbbell shoulder press", "ref": "pwf:dumbbell-shoulder-press" },
+            "end": { "reps": 10 }
+          },
+          {
+            "type": "exercise",
+            "exercise": { "name": "Pull-up", "ref": "pwf:pull-up" },
+            "end": { "reps": 6 }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Finisher",
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Push-up", "ref": "pwf:push-up" },
+            "end": { "time": 60 }
+          }
+        ]
+      }
+    ]
+  }
+}

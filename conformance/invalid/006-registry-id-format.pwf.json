@@ -1,0 +1,8 @@
+{
+  "pwf": "0.1",
+  "name": "A registry ID that isn't one",
+  "exercises": {
+    "bench": { "name": "Bench press", "ref": "bench press" }
+  },
+  "plan": { "type": "exercise", "exercise": "bench", "end": { "reps": 8 } }
+}

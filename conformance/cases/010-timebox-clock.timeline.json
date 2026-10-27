@@ -1,0 +1,75 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 420,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 120,
+      "type": "work",
+      "end": {
+        "time": 120
+      },
+      "path": "/plan/clock/children/0",
+      "task": "/plan",
+      "iteration": {
+        "/plan/clock": 1
+      }
+    },
+    {
+      "start": 120,
+      "duration": 30,
+      "type": "rest",
+      "from": "node",
+      "kind": "hydrate",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/clock/children/1",
+      "task": "/plan",
+      "iteration": {
+        "/plan/clock": 1
+      }
+    },
+    {
+      "start": 150,
+      "duration": 120,
+      "type": "work",
+      "end": {
+        "time": 120
+      },
+      "path": "/plan/clock/children/0",
+      "task": "/plan",
+      "iteration": {
+        "/plan/clock": 2
+      }
+    },
+    {
+      "start": 270,
+      "duration": 30,
+      "type": "rest",
+      "from": "node",
+      "kind": "hydrate",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/clock/children/1",
+      "task": "/plan",
+      "iteration": {
+        "/plan/clock": 2
+      }
+    },
+    {
+      "start": 300,
+      "duration": 120,
+      "type": "work",
+      "end": {
+        "time": 120
+      },
+      "path": "/plan/clock/children/0",
+      "task": "/plan",
+      "iteration": {
+        "/plan/clock": 3
+      }
+    }
+  ]
+}

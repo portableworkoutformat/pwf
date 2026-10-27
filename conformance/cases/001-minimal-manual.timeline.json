@@ -1,0 +1,30 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": null,
+  "segments": [
+    {
+      "start": 0,
+      "duration": null,
+      "type": "exercise",
+      "exercise": {
+        "name": "Squats"
+      },
+      "end": {
+        "manual": true
+      },
+      "path": "/plan/children/0"
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": {
+        "name": "Lunges"
+      },
+      "end": {
+        "manual": true
+      },
+      "path": "/plan/children/1"
+    }
+  ]
+}

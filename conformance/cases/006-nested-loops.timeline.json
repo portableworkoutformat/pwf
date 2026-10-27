@@ -1,0 +1,438 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 520,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 20,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 30,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 50,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 60,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 80,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 90,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 110,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 120,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 5
+      }
+    },
+    {
+      "start": 140,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 5
+      }
+    },
+    {
+      "start": 150,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 6
+      }
+    },
+    {
+      "start": 170,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 6
+      }
+    },
+    {
+      "start": 180,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 7
+      }
+    },
+    {
+      "start": 200,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 7
+      }
+    },
+    {
+      "start": 210,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 1,
+        "/plan/children/0": 8
+      }
+    },
+    {
+      "start": 230,
+      "duration": 60,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 290,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 310,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 320,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 340,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 350,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 370,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 380,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 400,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 410,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 5
+      }
+    },
+    {
+      "start": 430,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 5
+      }
+    },
+    {
+      "start": 440,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 6
+      }
+    },
+    {
+      "start": 460,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 6
+      }
+    },
+    {
+      "start": 470,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 7
+      }
+    },
+    {
+      "start": 490,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 7
+      }
+    },
+    {
+      "start": 500,
+      "duration": 20,
+      "type": "work",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan": 2,
+        "/plan/children/0": 8
+      }
+    }
+  ]
+}

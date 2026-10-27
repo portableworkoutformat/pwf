@@ -1,0 +1,56 @@
+{
+  "pwf": "0.1",
+  "name": "Two-zone class",
+  "mode": "group",
+  "equipment": {
+    "kb": { "name": "Kettlebell", "ref": "pwf:kettlebell" },
+    "rower": { "name": "Rowing machine", "ref": "pwf:rower" }
+  },
+  "exercises": {
+    "kb-swing": { "name": "Kettlebell swing", "ref": "pwf:kettlebell-swing" },
+    "row": { "name": "Row", "ref": "pwf:row" },
+    "goblet-squat": { "name": "Goblet squat", "ref": "pwf:goblet-squat" },
+    "push-up": { "name": "Push-up", "ref": "pwf:push-up" }
+  },
+  "plan": {
+    "type": "stations",
+    "transition": { "time": 30, "kind": "hydrate" },
+    "skipLastRest": true,
+    "children": [
+      {
+        "type": "stations",
+        "name": "Zone A",
+        "transition": { "time": 15 },
+        "children": [
+          {
+            "type": "exercise", "name": "Station 1", "exercise": "kb-swing",
+            "equipment": ["kb"], "capacity": 4,
+            "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 }
+          },
+          {
+            "type": "exercise", "name": "Station 2", "exercise": "row",
+            "equipment": ["rower"], "capacity": 4,
+            "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 }
+          }
+        ]
+      },
+      {
+        "type": "stations",
+        "name": "Zone B",
+        "transition": { "time": 15 },
+        "children": [
+          {
+            "type": "exercise", "name": "Station 3", "exercise": "goblet-squat",
+            "equipment": ["kb"], "capacity": 4,
+            "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 }
+          },
+          {
+            "type": "exercise", "name": "Station 4", "exercise": "push-up",
+            "capacity": 4,
+            "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 }
+          }
+        ]
+      }
+    ]
+  }
+}

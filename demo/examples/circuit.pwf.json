@@ -1,0 +1,50 @@
+{
+  "pwf": "0.1",
+  "name": "Bodyweight circuit",
+  "description": "Three rounds of four moves, 40 seconds on and 20 seconds off, with a minute between rounds. No equipment needed.",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Get ready",
+        "children": [
+          { "type": "rest", "kind": "prepare", "end": { "time": 10 } }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Circuit",
+        "rounds": 3,
+        "restBetweenRounds": { "time": 60 },
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Air squat", "ref": "pwf:air-squat" },
+            "end": { "time": 40 },
+            "rest": { "time": 20 }
+          },
+          {
+            "type": "exercise",
+            "exercise": { "name": "Push-up", "ref": "pwf:push-up" },
+            "end": { "time": 40 },
+            "rest": { "time": 20 }
+          },
+          {
+            "type": "exercise",
+            "exercise": { "name": "Reverse lunge", "ref": "pwf:reverse-lunge" },
+            "end": { "time": 40 },
+            "rest": { "time": 20 }
+          },
+          {
+            "type": "exercise",
+            "exercise": { "name": "Plank", "ref": "pwf:plank" },
+            "end": { "time": 40 },
+            "rest": { "time": 20 }
+          }
+        ]
+      }
+    ]
+  }
+}

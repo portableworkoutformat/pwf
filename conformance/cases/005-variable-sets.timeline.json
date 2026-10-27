@@ -1,0 +1,73 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 125,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "burpee",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 40,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 60,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "burpee",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 2
+      }
+    },
+    {
+      "start": 90,
+      "duration": 15,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 2
+      }
+    },
+    {
+      "start": 105,
+      "duration": 20,
+      "type": "exercise",
+      "exercise": "burpee",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 3
+      }
+    }
+  ]
+}

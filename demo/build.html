@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build a workout · PWF demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./"><span>PWF</span> demo</a>
+    <nav>
+      <a href="build.html" aria-current="page">Build</a>
+      <a href="play.html">Play</a>
+      <a href="https://github.com/portableworkoutformat/pwf">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <div class="builder">
+      <div class="stack">
+        <div class="card stack">
+          <div class="row" style="justify-content: space-between">
+            <h1>Build a workout</h1>
+            <div class="row">
+              <select id="template" aria-label="Start from a template">
+                <option value="">Start from…</option>
+              </select>
+              <button id="open-file" type="button">Open file</button>
+              <button id="new" type="button">New</button>
+              <input id="file" type="file" accept=".json,application/json" class="hidden">
+            </div>
+          </div>
+          <div>
+            <label for="name">Name</label>
+            <input id="name" placeholder="e.g. Lunchtime HIIT" maxlength="200">
+          </div>
+          <div>
+            <label for="description">Description</label>
+            <textarea id="description" rows="2" placeholder="What the workout is and who it's for"></textarea>
+          </div>
+        </div>
+        <p id="message" class="notice hidden" role="status"></p>
+        <div id="sections" class="stack"></div>
+        <button id="add-section" type="button">+ Add section</button>
+      </div>
+      <aside class="summary card stack" aria-label="Summary">
+        <div>
+          <div class="muted small">Total time</div>
+          <div id="total" class="total">0:00</div>
+          <div id="total-note" class="muted small"></div>
+        </div>
+        <div id="problems-box" class="notice hidden">
+          <ul id="problems" class="small" style="margin: 0; padding-left: 1.1rem"></ul>
+        </div>
+        <div class="stack">
+          <button id="try" type="button" class="primary" style="width: 100%">▶ Try it in the player</button>
+          <button id="export" type="button" style="width: 100%">Download .pwf.json</button>
+          <button id="copy-link" type="button" style="width: 100%">Copy share link</button>
+        </div>
+        <details>
+          <summary class="small">PWF JSON</summary>
+          <pre id="json"></pre>
+        </details>
+      </aside>
+    </div>
+  </main>
+  <datalist id="exercise-names"></datalist>
+  <script type="module" src="build.js"></script>
+</body>
+</html>

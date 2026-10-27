@@ -1,0 +1,4 @@
+{
+  "pwf": "0.1",
+  "plan": { "type": "rest", "end": { "time": 10 } }
+}

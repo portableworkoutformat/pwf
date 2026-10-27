@@ -1,0 +1,28 @@
+{
+  "pwf": "0.1",
+  "name": "Timeboxed finisher",
+  "exercises": {
+    "burpee": { "name": "Burpee", "ref": "pwf:burpee" },
+    "air-squat": { "name": "Air squat", "ref": "pwf:air-squat" }
+  },
+  "plan": {
+    "type": "task",
+    "format": "timebox",
+    "name": "Finisher",
+    "rounds": "max",
+    "score": "rounds-reps",
+    "clock": {
+      "type": "block",
+      "rounds": 3,
+      "skipLastRest": true,
+      "children": [
+        { "type": "work", "end": { "time": 120 } },
+        { "type": "rest", "kind": "hydrate", "end": { "time": 30 } }
+      ]
+    },
+    "children": [
+      { "type": "exercise", "exercise": "burpee", "end": { "reps": 5 } },
+      { "type": "exercise", "exercise": "air-squat", "end": { "reps": 10 } }
+    ]
+  }
+}

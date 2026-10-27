@@ -1,0 +1,32 @@
+{
+  "pwf": "0.1",
+  "name": "Bodyweight circuit",
+  "activity": "hiit",
+  "level": "beginner",
+  "exercises": {
+    "squat": { "name": "Air squat", "ref": "pwf:air-squat" },
+    "pushup": { "name": "Push-up", "ref": "pwf:push-up" },
+    "lunge": { "name": "Reverse lunge", "ref": "pwf:reverse-lunge" },
+    "plank": { "name": "Plank", "ref": "pwf:plank" }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      { "type": "rest", "kind": "prepare", "end": { "time": 10 } },
+      {
+        "type": "block",
+        "format": "circuit",
+        "rounds": 3,
+        "restBetweenRounds": { "time": 60 },
+        "skipLastRest": true,
+        "defaults": { "end": { "time": 40 }, "rest": { "time": 20 } },
+        "children": [
+          { "type": "exercise", "exercise": "squat" },
+          { "type": "exercise", "exercise": "pushup" },
+          { "type": "exercise", "exercise": "lunge", "side": "alternating" },
+          { "type": "exercise", "exercise": "plank" }
+        ]
+      }
+    ]
+  }
+}

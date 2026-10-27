@@ -1,0 +1,9 @@
+{
+  "pwf": "0.1",
+  "name": "rounds max with nothing to stop it",
+  "plan": {
+    "type": "block",
+    "rounds": "max",
+    "children": [{ "type": "work", "end": { "time": 30 } }]
+  }
+}

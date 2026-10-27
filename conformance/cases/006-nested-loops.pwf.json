@@ -1,0 +1,21 @@
+{
+  "pwf": "0.1",
+  "name": "Two Tabatas",
+  "plan": {
+    "type": "block",
+    "rounds": 2,
+    "restBetweenRounds": { "time": 60 },
+    "skipLastRest": true,
+    "children": [
+      {
+        "type": "block",
+        "format": "tabata",
+        "rounds": 8,
+        "children": [
+          { "type": "work", "end": { "time": 20 } },
+          { "type": "rest", "end": { "time": 10 } }
+        ]
+      }
+    ]
+  }
+}

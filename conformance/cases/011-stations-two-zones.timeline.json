@@ -1,0 +1,206 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 480,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0/children/0": 1
+      }
+    },
+    {
+      "start": 45,
+      "duration": 15,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "cue": "stay",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0/children/0": 1
+      }
+    },
+    {
+      "start": 60,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0/children/0": 2
+      }
+    },
+    {
+      "start": 105,
+      "duration": 15,
+      "type": "rest",
+      "from": "transition",
+      "kind": "transition",
+      "cue": "move",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/0"
+    },
+    {
+      "start": 120,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "row",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0/children/1": 1
+      }
+    },
+    {
+      "start": 165,
+      "duration": 15,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "cue": "stay",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0/children/1": 1
+      }
+    },
+    {
+      "start": 180,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "row",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0/children/1": 2
+      }
+    },
+    {
+      "start": 225,
+      "duration": 30,
+      "type": "rest",
+      "from": "transition",
+      "kind": "hydrate",
+      "cue": "move-zone",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan"
+    },
+    {
+      "start": 255,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "goblet-squat",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1/children/0": 1
+      }
+    },
+    {
+      "start": 300,
+      "duration": 15,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "cue": "stay",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1/children/0": 1
+      }
+    },
+    {
+      "start": 315,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "goblet-squat",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1/children/0": 2
+      }
+    },
+    {
+      "start": 360,
+      "duration": 15,
+      "type": "rest",
+      "from": "transition",
+      "kind": "transition",
+      "cue": "move",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/1"
+    },
+    {
+      "start": 375,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "push-up",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1/children/1": 1
+      }
+    },
+    {
+      "start": 420,
+      "duration": 15,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "cue": "stay",
+      "end": {
+        "time": 15
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1/children/1": 1
+      }
+    },
+    {
+      "start": 435,
+      "duration": 45,
+      "type": "exercise",
+      "exercise": "push-up",
+      "end": {
+        "time": 45
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1/children/1": 2
+      }
+    }
+  ]
+}

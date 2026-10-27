@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play a workout · PWF demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header" id="header">
+    <a class="brand" href="./"><span>PWF</span> demo</a>
+    <nav>
+      <a href="build.html">Build</a>
+      <a href="play.html" aria-current="page">Play</a>
+      <a href="https://github.com/portableworkoutformat/pwf">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="load-screen" class="hidden">
+    <div class="card stack" style="max-width: 720px">
+      <h1>Play a workout</h1>
+      <div id="drop" class="drop">
+        <p style="margin-top: 0">Drop a <code>.pwf.json</code> file here, or</p>
+        <button id="choose" type="button" class="primary">Choose a file</button>
+        <input id="file" type="file" accept=".json,application/json" class="hidden">
+      </div>
+      <details>
+        <summary>Paste PWF JSON</summary>
+        <div class="stack" style="margin-top: 0.5rem">
+          <textarea id="paste" rows="8" spellcheck="false" aria-label="PWF JSON"></textarea>
+          <button id="paste-load" type="button">Load</button>
+        </div>
+      </details>
+      <div>
+        <h2>Examples</h2>
+        <div id="examples" class="examples"></div>
+      </div>
+      <p class="muted small">Or <a href="build.html">build your own</a>.</p>
+      <p id="load-error" class="notice error hidden" role="alert"></p>
+    </div>
+  </main>
+
+  <main id="overview" class="hidden">
+    <div class="card stack" style="max-width: 720px">
+      <div id="ov-kicker" class="muted small"></div>
+      <h1 id="ov-name"></h1>
+      <p id="ov-description" class="details" style="color: inherit"></p>
+      <div>
+        <div class="muted small">Total time</div>
+        <div id="ov-total" class="total" style="font-size: 2.2rem; font-weight: 700"></div>
+        <div id="ov-total-note" class="muted small"></div>
+      </div>
+      <p id="ov-group" class="notice hidden"></p>
+      <div id="ov-equipment-box" class="hidden">
+        <h2>Equipment</h2>
+        <p id="ov-equipment"></p>
+      </div>
+      <div>
+        <h2>Exercises</h2>
+        <ul id="ov-exercises" class="overview-list"></ul>
+      </div>
+      <div class="row">
+        <button id="start" type="button" class="primary">▶ Start</button>
+        <a id="edit" class="button hidden">Edit in builder</a>
+        <button id="load-another" type="button">Open another</button>
+      </div>
+      <p class="muted small">Keys: Space pauses, Enter marks a step done, ← and → move between steps.</p>
+    </div>
+  </main>
+
+  <div id="run" class="run hidden">
+    <div class="run-top">
+      <span id="run-title" class="title"></span>
+      <span id="run-clock" class="clock"></span>
+      <button id="exit" type="button" class="icon" aria-label="Stop the workout" title="Stop">✕</button>
+    </div>
+    <div class="progress"><div id="run-progress"></div></div>
+    <div class="run-main">
+      <div id="run-kicker" class="kicker"></div>
+      <div id="run-name" class="step-name" aria-live="polite"></div>
+      <div id="run-timer" class="timer"></div>
+      <div id="run-goal" class="goal"></div>
+      <ul id="run-task" class="task-list"></ul>
+      <div id="run-details" class="details"></div>
+      <button id="done" type="button" class="primary done-button hidden">Done ✓</button>
+    </div>
+    <div id="run-next" class="next"></div>
+    <div class="controls">
+      <button id="back" type="button">⏮ Back</button>
+      <button id="pause" type="button">⏸ Pause</button>
+      <button id="skip" type="button">Skip ⏭</button>
+      <button id="mute" type="button" aria-pressed="false">🔊 Sound on</button>
+    </div>
+  </div>
+
+  <main id="finished" class="hidden">
+    <div class="card finished stack" style="max-width: 520px; margin: 0 auto">
+      <h1>Workout complete</h1>
+      <div id="fin-name" class="muted"></div>
+      <div id="fin-time" class="total"></div>
+      <div class="row" style="justify-content: center">
+        <button id="again" type="button" class="primary">Play again</button>
+        <button id="fin-another" type="button">Open another</button>
+        <a href="build.html" class="button">Build your own</a>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="play.js"></script>
+</body>
+</html>

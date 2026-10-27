@@ -1,0 +1,33 @@
+{
+  "pwf": "0.1",
+  "name": "Fixed-length blocks",
+  "equipment": {
+    "kb": { "name": "Kettlebell", "ref": "pwf:kettlebell" },
+    "rower": { "name": "Rowing machine", "ref": "pwf:rower" }
+  },
+  "exercises": {
+    "kb-swing": { "name": "Kettlebell swing", "ref": "pwf:kettlebell-swing", "equipment": ["kb"] },
+    "row": { "name": "Row", "ref": "pwf:row", "equipment": ["rower"] }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "rounds": "max",
+        "end": { "time": 270 },
+        "children": [
+          { "type": "exercise", "exercise": "kb-swing", "end": { "time": 40 } },
+          { "type": "rest", "end": { "time": 20 } }
+        ]
+      },
+      {
+        "type": "block",
+        "end": { "time": 120 },
+        "children": [
+          { "type": "exercise", "exercise": "row", "end": { "time": 60 } }
+        ]
+      }
+    ]
+  }
+}

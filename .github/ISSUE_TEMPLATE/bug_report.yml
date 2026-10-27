@@ -1,0 +1,28 @@
+name: Bug report
+description: Something in the schema, tools or conformance suite is wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: document
+    attributes:
+      label: PWF document
+      description: The smallest document that shows the problem, if there is one.
+      render: json
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Validator errors, timeline output or logs.
+      render: text
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: The commit of this repo you used, if you know it.

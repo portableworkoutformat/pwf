@@ -1,0 +1,56 @@
+{
+  "pwf": "0.1",
+  "name": "Lower-body strength",
+  "activity": "strength",
+  "goals": ["strength"],
+  "level": "intermediate",
+  "equipment": {
+    "barbell": { "name": "Olympic barbell", "ref": "pwf:barbell" },
+    "rack": { "name": "Squat rack", "ref": "pwf:squat-rack" },
+    "dumbbells": { "name": "Dumbbells", "ref": "pwf:dumbbell", "quantity": 2, "notes": "10 to 20 kg" },
+    "bench": { "name": "Flat bench", "ref": "pwf:flat-bench" }
+  },
+  "exercises": {
+    "back-squat": { "name": "Barbell back squat", "ref": "pwf:back-squat", "equipment": ["barbell", "rack"] },
+    "rdl": { "name": "Romanian deadlift", "ref": "pwf:romanian-deadlift", "equipment": ["barbell"] },
+    "split-squat": { "name": "Bulgarian split squat", "ref": "pwf:bulgarian-split-squat", "equipment": ["dumbbells", "bench"] }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": "back-squat",
+        "sets": [
+          { "end": { "reps": 5 }, "target": { "load": { "percent1RM": 70 } } },
+          { "end": { "reps": 5 }, "target": { "load": { "percent1RM": 75 } } },
+          { "end": { "reps": "max" }, "target": { "load": { "percent1RM": 80 } } }
+        ],
+        "rest": { "time": 180 }
+      },
+      {
+        "type": "block",
+        "format": "superset",
+        "rounds": 3,
+        "restBetweenRounds": { "time": 90 },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": "rdl",
+            "label": "A1",
+            "end": { "reps": { "min": 8, "max": 10 } },
+            "target": { "load": { "value": 60, "unit": "kg" }, "tempo": "3-1-1-0" }
+          },
+          {
+            "type": "exercise",
+            "exercise": "split-squat",
+            "label": "A2",
+            "side": "each",
+            "end": { "reps": 10 },
+            "target": { "rir": 2 }
+          }
+        ]
+      }
+    ]
+  }
+}

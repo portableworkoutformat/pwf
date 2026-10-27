@@ -1,0 +1,802 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pwf:schema:0.1",
+  "title": "Portable Workout Format (PWF) document, version 0.1",
+  "description": "One workout: what it is, how it runs and which exercises it uses. Draft for comment; anything may change before 1.0. This schema is strict so that authoring mistakes and typos are caught. Readers must still ignore fields they don't know.",
+  "type": "object",
+  "required": ["pwf", "name", "plan"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Optional URI of this schema, for editors and tools."
+    },
+    "pwf": {"const": "0.1", "description": "Format version."},
+    "name": {"$ref": "#/$defs/name", "description": "Title shown to people."},
+    "plan": {"$ref": "#/$defs/node", "description": "The root node of the workout."},
+    "mode": {
+      "enum": ["individual", "group"],
+      "default": "individual",
+      "description": "individual: everyone does the same thing at every moment, whether one person or a class following along. group: people can do different things at once, such as rotating between stations. Only group workouts may contain stations."
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "Stable identifier for sharing and de-duplication, such as a URL or a urn:uuid."
+    },
+    "description": {"$ref": "#/$defs/text", "description": "What the workout is. CommonMark without raw HTML."},
+    "activity": {
+      "enum": ["strength", "hiit", "run", "cycle", "row", "swim", "yoga", "mobility", "mixed", "other"],
+      "description": "Main activity."
+    },
+    "goals": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/label"},
+      "maxItems": 20,
+      "uniqueItems": true,
+      "description": "Open list. Suggested values: strength, hypertrophy, power, endurance, conditioning, mobility, skill, recovery."
+    },
+    "level": {"enum": ["beginner", "intermediate", "advanced"], "description": "Intended level."},
+    "equipment": {
+      "$ref": "#/$defs/equipmentMap",
+      "description": "Equipment definitions keyed by a local name. Together they are the kit list."
+    },
+    "tags": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/label"},
+      "maxItems": 50,
+      "uniqueItems": true,
+      "description": "Free-text labels."
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+      "description": "BCP 47 tag for the document's text, such as en or pt-BR. One language per file."
+    },
+    "authors": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {"name": {"$ref": "#/$defs/name"}, "url": {"$ref": "#/$defs/uri"}},
+        "additionalProperties": false
+      },
+      "description": "Who wrote the workout."
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "SPDX license identifier or expression, such as CC-BY-4.0."
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {"$ref": "#/$defs/uri", "description": "Where the workout was published."},
+        "derivedFrom": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "The id or URL of the workout this one was adapted from."
+        }
+      },
+      "additionalProperties": false
+    },
+    "created": {"type": "string", "format": "date-time", "description": "RFC 3339 timestamp."},
+    "updated": {"type": "string", "format": "date-time", "description": "RFC 3339 timestamp."},
+    "exercises": {"$ref": "#/$defs/exerciseMap", "description": "Exercise definitions keyed by a local name."},
+    "loop": {
+      "type": "boolean",
+      "default": false,
+      "description": "true repeats the whole plan until stopped, for gym screens."
+    },
+    "extensions": {"$ref": "#/$defs/extensions"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$",
+      "description": "A local key: letters, digits, underscore, dot and hyphen, up to 64 characters."
+    },
+    "name": {"type": "string", "minLength": 1, "maxLength": 200},
+    "label": {"type": "string", "minLength": 1, "maxLength": 200},
+    "text": {"type": "string", "maxLength": 10000},
+    "uri": {"type": "string", "format": "uri", "maxLength": 2000},
+    "httpsUrl": {"type": "string", "pattern": "^https://[^\\s]+$", "maxLength": 2000},
+    "seconds": {"type": "integer", "minimum": 0, "maximum": 86400, "description": "Whole seconds."},
+    "count": {"type": "integer", "minimum": 1, "maximum": 1000},
+    "registryId": {
+      "type": "string",
+      "pattern": "^pwf:[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "A core registry ID: pwf: plus a lower-case kebab-case slug. IDs are unique across the exercise and equipment registries."
+    },
+    "ids": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[a-z0-9]+(-[a-z0-9]+)*)*$"},
+      "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 200},
+      "maxProperties": 20,
+      "description": "IDs in other vocabularies, keyed by namespace: fit, healthconnect, or a vendor's reverse-DNS name such as com.cloudfit."
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[a-z0-9]+(-[a-z0-9]+)*)+$"},
+      "description": "Vendor data under reverse-DNS keys, such as com.cloudfit. Extensions never change playback."
+    },
+    "media": {
+      "type": "object",
+      "required": ["type", "url"],
+      "properties": {
+        "type": {"enum": ["image", "video"]},
+        "url": {"$ref": "#/$defs/httpsUrl"},
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "SPDX license identifier."
+        },
+        "caption": {"$ref": "#/$defs/label"}
+      },
+      "additionalProperties": false
+    },
+    "mediaList": {"type": "array", "items": {"$ref": "#/$defs/media"}, "maxItems": 20},
+    "exerciseDefinition": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name",
+          "description": "What people see, in any language. Always enough to run the workout."
+        },
+        "ref": {"$ref": "#/$defs/registryId"},
+        "ids": {"$ref": "#/$defs/ids"},
+        "equipment": {"$ref": "#/$defs/equipmentRefs"},
+        "description": {"$ref": "#/$defs/text"},
+        "instructions": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/text"},
+          "maxItems": 50,
+          "description": "Coaching steps, in order."
+        },
+        "media": {"$ref": "#/$defs/mediaList"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": false
+    },
+    "exerciseMap": {
+      "type": "object",
+      "propertyNames": {"$ref": "#/$defs/key"},
+      "additionalProperties": {"$ref": "#/$defs/exerciseDefinition"},
+      "maxProperties": 1000
+    },
+    "exerciseRef": {
+      "oneOf": [{"$ref": "#/$defs/key"}, {"$ref": "#/$defs/exerciseDefinition"}],
+      "description": "A key into the document's exercises, or an inline definition such as { \"name\": \"Tyre flip\" }."
+    },
+    "equipmentDefinition": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"$ref": "#/$defs/name", "description": "What people see. Always enough on its own."},
+        "ref": {"$ref": "#/$defs/registryId"},
+        "ids": {"$ref": "#/$defs/ids"},
+        "quantity": {"$ref": "#/$defs/count", "default": 1, "description": "How many one person needs."},
+        "notes": {
+          "$ref": "#/$defs/label",
+          "description": "Sizes and weights, such as \"16 kg or 24 kg\" or \"50 cm\"."
+        },
+        "optional": {
+          "type": "boolean",
+          "default": false,
+          "description": "true when the workout runs without it."
+        },
+        "media": {"$ref": "#/$defs/mediaList"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "additionalProperties": false
+    },
+    "equipmentMap": {
+      "type": "object",
+      "propertyNames": {"$ref": "#/$defs/key"},
+      "additionalProperties": {"$ref": "#/$defs/equipmentDefinition"},
+      "maxProperties": 200
+    },
+    "equipmentRef": {
+      "oneOf": [{"$ref": "#/$defs/key"}, {"$ref": "#/$defs/equipmentDefinition"}],
+      "description": "A key into the document's equipment, or an inline definition."
+    },
+    "equipmentRefs": {"type": "array", "items": {"$ref": "#/$defs/equipmentRef"}, "maxItems": 50},
+    "range": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {"min": {"type": "number"}, "max": {"type": "number"}},
+      "additionalProperties": false
+    },
+    "intRange": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {"min": {"type": "integer", "minimum": 0}, "max": {"type": "integer", "minimum": 0}},
+      "additionalProperties": false
+    },
+    "distance": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "exclusiveMinimum": 0},
+        "unit": {"enum": ["m", "km", "mi", "yd"]}
+      },
+      "additionalProperties": false
+    },
+    "quantity": {
+      "type": "object",
+      "required": ["unit"],
+      "properties": {
+        "value": {"type": "number"},
+        "min": {"type": "number"},
+        "max": {"type": "number"},
+        "unit": {"type": "string"}
+      },
+      "oneOf": [
+        {"required": ["value"], "not": {"anyOf": [{"required": ["min"]}, {"required": ["max"]}]}},
+        {"required": ["min", "max"], "not": {"required": ["value"]}}
+      ],
+      "description": "A value or a min-max range, with a unit."
+    },
+    "endCore": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "$ref": "#/$defs/seconds",
+          "description": "Ends after this many seconds. The renderer advances automatically."
+        },
+        "reps": {
+          "oneOf": [
+            {"type": "integer", "minimum": 1, "maximum": 10000},
+            {"$ref": "#/$defs/intRange"},
+            {"const": "max"}
+          ],
+          "description": "Ends when the athlete, or a rep-counting sensor, completes the reps. \"max\" means as many as possible."
+        },
+        "distance": {
+          "$ref": "#/$defs/distance",
+          "description": "Ends at this distance, by GPS or a machine, otherwise when the athlete moves on."
+        },
+        "calories": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 100000,
+          "description": "Ends at this many calories on a machine, otherwise when the athlete moves on."
+        },
+        "heartRateBelow": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 250,
+          "description": "Ends when heart rate falls below this many bpm."
+        },
+        "manual": {"const": true, "description": "Ends when the athlete moves on."},
+        "timeCap": {
+          "$ref": "#/$defs/seconds",
+          "description": "Ends the step early at this many seconds. Not allowed with time."
+        },
+        "estimate": {
+          "$ref": "#/$defs/seconds",
+          "description": "Expected seconds, for duration estimates only. A renderer never moves on because an estimate ran out. Not allowed with time."
+        }
+      },
+      "oneOf": [
+        {"required": ["time"]},
+        {"required": ["reps"]},
+        {"required": ["distance"]},
+        {"required": ["calories"]},
+        {"required": ["heartRateBelow"]},
+        {"required": ["manual"]}
+      ],
+      "dependentSchemas": {"time": {"not": {"anyOf": [{"required": ["timeCap"]}, {"required": ["estimate"]}]}}}
+    },
+    "end": {
+      "type": "object",
+      "$ref": "#/$defs/endCore",
+      "unevaluatedProperties": false,
+      "description": "How a step ends: exactly one of time, reps, distance, calories, heartRateBelow or manual. A step with no end waits for the athlete to move on."
+    },
+    "restKind": {
+      "enum": ["rest", "recovery", "transition", "hydrate", "prepare"],
+      "default": "rest",
+      "description": "prepare is a get-ready period."
+    },
+    "restSpec": {
+      "type": "object",
+      "$ref": "#/$defs/endCore",
+      "properties": {"kind": {"$ref": "#/$defs/restKind"}},
+      "unevaluatedProperties": false,
+      "description": "A rest: an end condition plus an optional kind, such as { \"time\": 30, \"kind\": \"hydrate\" }."
+    },
+    "restSpecOrList": {
+      "oneOf": [
+        {"$ref": "#/$defs/restSpec"},
+        {"type": "array", "items": {"$ref": "#/$defs/restSpec"}, "minItems": 1, "maxItems": 1000}
+      ],
+      "description": "One rest used for every gap, or a list with one entry per gap, in order. A shorter list repeats from the start."
+    },
+    "containerEnd": {
+      "type": "object",
+      "required": ["time"],
+      "properties": {
+        "time": {"$ref": "#/$defs/seconds", "description": "The container lasts exactly this many seconds."}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "reps": {
+          "oneOf": [{"type": "integer", "minimum": 1, "maximum": 10000}, {"$ref": "#/$defs/intRange"}],
+          "description": "A rep goal inside a timed step."
+        },
+        "load": {"$ref": "#/$defs/load"},
+        "rpe": {
+          "oneOf": [{"type": "number", "minimum": 1, "maximum": 10}, {"$ref": "#/$defs/range"}],
+          "description": "Rate of perceived exertion, 1 to 10."
+        },
+        "rir": {
+          "oneOf": [{"type": "integer", "minimum": 0, "maximum": 20}, {"$ref": "#/$defs/intRange"}],
+          "description": "Reps in reserve."
+        },
+        "tempo": {
+          "type": "string",
+          "pattern": "^[0-9X]{1,2}-[0-9X]{1,2}-[0-9X]{1,2}-[0-9X]{1,2}$",
+          "description": "Seconds lowering, pausing, lifting and pausing, such as 3-1-X-0. X means explosive."
+        },
+        "heartRate": {
+          "oneOf": [
+            {"type": "number", "minimum": 30, "maximum": 250},
+            {"$ref": "#/$defs/range"},
+            {
+              "type": "object",
+              "required": ["zone"],
+              "properties": {
+                "zone": {
+                  "oneOf": [{"type": "integer", "minimum": 1, "maximum": 5}, {"$ref": "#/$defs/intRange"}]
+                }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "description": "bpm, a bpm range, or a zone from 1 to 5."
+        },
+        "power": {
+          "oneOf": [
+            {"type": "number", "minimum": 0},
+            {"$ref": "#/$defs/range"},
+            {
+              "type": "object",
+              "required": ["percentFTP"],
+              "properties": {
+                "percentFTP": {
+                  "oneOf": [
+                    {"type": "number", "exclusiveMinimum": 0, "maximum": 300},
+                    {"$ref": "#/$defs/range"}
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "description": "Watts, a watt range, or a percentage of FTP."
+        },
+        "pace": {
+          "type": "object",
+          "$ref": "#/$defs/quantity",
+          "properties": {"unit": {"enum": ["s/km", "s/mi", "s/500m", "s/100m"]}},
+          "unevaluatedProperties": false
+        },
+        "speed": {
+          "type": "object",
+          "$ref": "#/$defs/quantity",
+          "properties": {"unit": {"enum": ["km/h", "mph", "m/s"]}},
+          "unevaluatedProperties": false
+        },
+        "cadence": {
+          "type": "object",
+          "$ref": "#/$defs/quantity",
+          "properties": {"unit": {"enum": ["rpm", "spm"]}},
+          "unevaluatedProperties": false
+        },
+        "incline": {
+          "type": "object",
+          "$ref": "#/$defs/quantity",
+          "properties": {"unit": {"enum": ["%"]}},
+          "unevaluatedProperties": false
+        },
+        "resistance": {
+          "type": "object",
+          "$ref": "#/$defs/quantity",
+          "properties": {"unit": {"enum": ["level", "%"]}},
+          "unevaluatedProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "What to aim for. Any number can be a single value or a { min, max } range."
+    },
+    "load": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"oneOf": [{"type": "number", "exclusiveMinimum": 0}, {"$ref": "#/$defs/range"}]},
+            "unit": {"enum": ["kg", "lb"]}
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["percent1RM"],
+          "properties": {
+            "percent1RM": {
+              "oneOf": [{"type": "number", "exclusiveMinimum": 0, "maximum": 200}, {"$ref": "#/$defs/range"}]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["bodyweight"],
+          "properties": {"bodyweight": {"const": true}},
+          "additionalProperties": false
+        }
+      ],
+      "description": "A weight in kg or lb, a percentage of one-rep max, or bodyweight."
+    },
+    "side": {
+      "enum": ["both", "each", "left", "right", "alternating"],
+      "default": "both",
+      "description": "each plays every set once per side, left then right."
+    },
+    "phase": {"enum": ["warmup", "work", "recovery", "cooldown"], "default": "work"},
+    "rounds": {
+      "oneOf": [{"$ref": "#/$defs/count"}, {"const": "max"}],
+      "default": 1,
+      "description": "Total number of plays, not extra repeats. \"max\" repeats until the container's time is up."
+    },
+    "sets": {
+      "oneOf": [
+        {"$ref": "#/$defs/count"},
+        {"type": "array", "items": {"$ref": "#/$defs/setOverride"}, "minItems": 1, "maxItems": 1000}
+      ],
+      "default": 1,
+      "description": "A count of identical sets, or one entry per set overriding end, target and rest."
+    },
+    "setOverride": {
+      "type": "object",
+      "properties": {
+        "end": {"$ref": "#/$defs/end"},
+        "target": {"$ref": "#/$defs/target"},
+        "rest": {"$ref": "#/$defs/restSpec"}
+      },
+      "additionalProperties": false
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "end": {"$ref": "#/$defs/end"},
+        "rest": {"$ref": "#/$defs/restSpec"},
+        "sets": {"$ref": "#/$defs/sets"},
+        "target": {"$ref": "#/$defs/target"},
+        "side": {"$ref": "#/$defs/side"}
+      },
+      "additionalProperties": false,
+      "description": "Applies to every exercise step below this container that doesn't set the field. The nearest ancestor wins."
+    },
+    "alternative": {
+      "type": "object",
+      "required": ["exercise"],
+      "properties": {
+        "label": {"$ref": "#/$defs/label"},
+        "exercise": {"$ref": "#/$defs/exerciseRef"},
+        "end": {"$ref": "#/$defs/end"},
+        "target": {"$ref": "#/$defs/target"},
+        "equipment": {"$ref": "#/$defs/equipmentRefs"}
+      },
+      "additionalProperties": false
+    },
+    "display": {
+      "type": "object",
+      "properties": {
+        "layout": {"enum": ["single", "list", "grid"]},
+        "upNext": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20,
+          "description": "How many upcoming exercises to show."
+        },
+        "showTimer": {"type": "boolean"},
+        "timerStyle": {"enum": ["countdown", "countup"]}
+      },
+      "additionalProperties": false,
+      "description": "Presentation hints. They never change timing, and renderers may ignore them."
+    },
+    "format": {
+      "enum": [
+        "straight-sets",
+        "superset",
+        "giant-set",
+        "circuit",
+        "intervals",
+        "tabata",
+        "emom",
+        "amrap",
+        "for-time",
+        "chipper",
+        "ladder",
+        "pyramid",
+        "stations",
+        "flow",
+        "timebox",
+        "steady-state",
+        "other"
+      ],
+      "description": "A label for display and search. Renderers never infer behaviour from it."
+    },
+    "nodeList": {"type": "array", "items": {"$ref": "#/$defs/node"}, "maxItems": 1000},
+    "node": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"enum": ["exercise", "work", "rest", "note", "block", "task", "stations", "parallel"]}
+      },
+      "allOf": [
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "exercise"}}},
+          "then": {"$ref": "#/$defs/exerciseStep"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "work"}}},
+          "then": {"$ref": "#/$defs/workStep"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "rest"}}},
+          "then": {"$ref": "#/$defs/restStep"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "note"}}},
+          "then": {"$ref": "#/$defs/noteStep"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "block"}}},
+          "then": {"$ref": "#/$defs/block"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "task"}}},
+          "then": {"$ref": "#/$defs/task"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "stations"}}},
+          "then": {"$ref": "#/$defs/stations"}
+        },
+        {
+          "if": {"required": ["type"], "properties": {"type": {"const": "parallel"}}},
+          "then": {"$ref": "#/$defs/parallel"}
+        }
+      ]
+    },
+    "nodeCommon": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/key",
+          "description": "Unique in the document. Used by note previews and for edits by ID."
+        },
+        "name": {
+          "$ref": "#/$defs/label",
+          "description": "A name to show, such as \"Circuit A\" or, for a station, \"Station 3\"."
+        },
+        "notes": {"$ref": "#/$defs/text", "description": "Coaching notes. CommonMark without raw HTML."},
+        "display": {"$ref": "#/$defs/display"},
+        "equipment": {
+          "$ref": "#/$defs/equipmentRefs",
+          "description": "On an exercise step, the equipment it uses when the exercise allows several. On a station, the equipment the station holds."
+        },
+        "capacity": {
+          "$ref": "#/$defs/count",
+          "description": "People per station. Only meaningful on a direct child of stations."
+        },
+        "loop": {
+          "type": "boolean",
+          "default": false,
+          "description": "Repeat this lane until the primary lane ends. Only meaningful on a lane of parallel."
+        },
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "exerciseStep": {
+      "type": "object",
+      "required": ["type", "exercise"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "exercise"},
+        "exercise": {"$ref": "#/$defs/exerciseRef"},
+        "end": {"$ref": "#/$defs/end"},
+        "target": {"$ref": "#/$defs/target"},
+        "sets": {"$ref": "#/$defs/sets"},
+        "rest": {
+          "$ref": "#/$defs/restSpec",
+          "description": "The rest after each set, including the last unless skipLastRest is true."
+        },
+        "skipLastRest": {
+          "type": "boolean",
+          "default": false,
+          "description": "true drops the rest after the final set."
+        },
+        "side": {"$ref": "#/$defs/side"},
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "A short display label, such as A1."
+        },
+        "phase": {"$ref": "#/$defs/phase"},
+        "alternatives": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/alternative"},
+          "maxItems": 10,
+          "description": "Scaled or substitute versions. The main version plays by default."
+        }
+      },
+      "unevaluatedProperties": false
+    },
+    "workStep": {
+      "type": "object",
+      "required": ["type"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "work"},
+        "end": {"$ref": "#/$defs/end"},
+        "label": {"type": "string", "minLength": 1, "maxLength": 40},
+        "phase": {"$ref": "#/$defs/phase"}
+      },
+      "unevaluatedProperties": false,
+      "description": "A work phase with no set exercise, for timer-only workouts and task clocks."
+    },
+    "restStep": {
+      "type": "object",
+      "required": ["type"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "rest"},
+        "kind": {"$ref": "#/$defs/restKind"},
+        "end": {"$ref": "#/$defs/end"}
+      },
+      "unevaluatedProperties": false
+    },
+    "noteStep": {
+      "type": "object",
+      "required": ["type"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "note"},
+        "text": {"$ref": "#/$defs/text"},
+        "media": {"$ref": "#/$defs/mediaList"},
+        "previews": {
+          "oneOf": [
+            {"$ref": "#/$defs/key"},
+            {"type": "array", "items": {"$ref": "#/$defs/key"}, "minItems": 1, "maxItems": 100}
+          ],
+          "description": "The id of one or more nodes whose exercises this note previews."
+        },
+        "end": {"$ref": "#/$defs/end"}
+      },
+      "unevaluatedProperties": false,
+      "description": "Shows text or media: a briefing, a whiteboard, a cue, or a preview of upcoming exercises."
+    },
+    "block": {
+      "type": "object",
+      "required": ["type", "children"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "block"},
+        "children": {"type": "array", "$ref": "#/$defs/nodeList", "minItems": 1},
+        "rounds": {"$ref": "#/$defs/rounds"},
+        "restBetweenRounds": {
+          "$ref": "#/$defs/restSpecOrList",
+          "description": "Plays between rounds in place of any rest that ends the round. Never after the last round."
+        },
+        "skipLastRest": {
+          "type": "boolean",
+          "default": false,
+          "description": "true drops a rest that would be the block's final segment, however deeply nested."
+        },
+        "end": {"$ref": "#/$defs/containerEnd"},
+        "timeCap": {
+          "$ref": "#/$defs/seconds",
+          "description": "Ends the block when its content completes or at the cap, whichever comes first."
+        },
+        "defaults": {"$ref": "#/$defs/defaults"},
+        "format": {"$ref": "#/$defs/format"}
+      },
+      "if": {"required": ["rounds"], "properties": {"rounds": {"const": "max"}}},
+      "then": {"required": ["end"]},
+      "unevaluatedProperties": false,
+      "description": "Plays its children in order, guiding the athlete through each one."
+    },
+    "task": {
+      "type": "object",
+      "required": ["type"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "task"},
+        "children": {
+          "$ref": "#/$defs/nodeList",
+          "description": "The list the athlete works through at their own pace."
+        },
+        "rounds": {"$ref": "#/$defs/rounds"},
+        "end": {"$ref": "#/$defs/containerEnd"},
+        "timeCap": {"$ref": "#/$defs/seconds"},
+        "clock": {
+          "$ref": "#/$defs/block",
+          "description": "A block of work and rest steps that runs the task's clock. Not allowed with end."
+        },
+        "score": {
+          "enum": ["time", "rounds-reps", "reps", "load", "none"],
+          "default": "none",
+          "description": "What to record."
+        },
+        "defaults": {"$ref": "#/$defs/defaults"},
+        "format": {"$ref": "#/$defs/format"}
+      },
+      "not": {"required": ["clock", "end"]},
+      "if": {"required": ["rounds"], "properties": {"rounds": {"const": "max"}}},
+      "then": {"anyOf": [{"required": ["end"]}, {"required": ["clock"]}]},
+      "unevaluatedProperties": false,
+      "description": "A self-paced list the athlete works through against one clock."
+    },
+    "stations": {
+      "type": "object",
+      "required": ["type", "children"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "stations"},
+        "children": {
+          "type": "array",
+          "$ref": "#/$defs/nodeList",
+          "minItems": 1,
+          "description": "The stations, in rotation order. Each must have a fixed duration."
+        },
+        "rotations": {"$ref": "#/$defs/count", "default": 1, "description": "Full cycles through all stations."},
+        "transition": {
+          "$ref": "#/$defs/restSpecOrList",
+          "description": "Plays after each station period except the last, in place of any rest that ends the station. Its kind defaults to transition."
+        },
+        "skipLastRest": {"type": "boolean", "default": false},
+        "format": {"$ref": "#/$defs/format"}
+      },
+      "unevaluatedProperties": false,
+      "description": "Stations that different people use at the same time, rotating between them. Group workouts only."
+    },
+    "parallel": {
+      "type": "object",
+      "required": ["type", "children"],
+      "$ref": "#/$defs/nodeCommon",
+      "properties": {
+        "type": {"const": "parallel"},
+        "children": {
+          "type": "array",
+          "$ref": "#/$defs/nodeList",
+          "minItems": 1,
+          "maxItems": 10,
+          "description": "Lanes that start together: screens, tracks or partners."
+        },
+        "primary": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9,
+          "default": 0,
+          "description": "Index of the lane whose end ends the node."
+        }
+      },
+      "unevaluatedProperties": false
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "pwf": "0.1",
+  "name": "Two stations, two rotations",
+  "mode": "group",
+  "exercises": {
+    "wall-ball": { "name": "Wall ball", "ref": "pwf:wall-ball" },
+    "box-step": { "name": "Box step-up", "ref": "pwf:box-step-up" }
+  },
+  "plan": {
+    "type": "stations",
+    "rotations": 2,
+    "transition": [
+      { "time": 15 },
+      { "time": 30, "kind": "hydrate" }
+    ],
+    "skipLastRest": true,
+    "children": [
+      {
+        "type": "block",
+        "name": "Station A",
+        "children": [
+          { "type": "exercise", "exercise": "wall-ball", "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 } }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Station B",
+        "children": [
+          { "type": "exercise", "exercise": "box-step", "sets": 2, "end": { "time": 45 }, "rest": { "time": 15 } }
+        ]
+      }
+    ]
+  }
+}

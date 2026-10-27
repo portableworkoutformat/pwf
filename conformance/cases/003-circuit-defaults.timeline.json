@@ -1,0 +1,330 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 790,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "prepare",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0"
+    },
+    {
+      "start": 10,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "squat",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 50,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 70,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "pushup",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 110,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 130,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "lunge",
+      "side": "alternating",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 170,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 190,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "plank",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/3",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 230,
+      "duration": 60,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 290,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "squat",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 330,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 350,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "pushup",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 390,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 410,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "lunge",
+      "side": "alternating",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 450,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 470,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "plank",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/3",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 510,
+      "duration": 60,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 570,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "squat",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 610,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 630,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "pushup",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 670,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 690,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "lunge",
+      "side": "alternating",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 730,
+      "duration": 20,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/1/children/2",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 750,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "plank",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/1/children/3",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    }
+  ]
+}

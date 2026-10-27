@@ -1,0 +1,100 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 330,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "skip",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 30,
+      "duration": 60,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 90,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "skip",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 2
+      }
+    },
+    {
+      "start": 120,
+      "duration": 90,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "hydrate",
+      "end": {
+        "time": 90
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 2
+      }
+    },
+    {
+      "start": 210,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "skip",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 3
+      }
+    },
+    {
+      "start": 240,
+      "duration": 60,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 3
+      }
+    },
+    {
+      "start": 300,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "skip",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 4
+      }
+    }
+  ]
+}

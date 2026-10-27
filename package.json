@@ -1,0 +1,18 @@
+{
+  "name": "pwf",
+  "version": "0.1.0-draft",
+  "private": true,
+  "license": "Apache-2.0",
+  "description": "Portable Workout Format (PWF) v0.1 draft: JSON Schema, conformance cases and tools",
+  "type": "module",
+  "scripts": {
+    "check": "node tools/check.mjs",
+    "write-timelines": "node tools/check.mjs --write",
+    "timeline": "node tools/timeline.mjs",
+    "demo": "node tools/serve.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  }
+}

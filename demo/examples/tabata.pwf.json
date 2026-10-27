@@ -1,0 +1,31 @@
+{
+  "pwf": "0.1",
+  "name": "Tabata",
+  "description": "Eight rounds of 20 seconds all-out and 10 seconds rest.",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Get ready",
+        "children": [
+          { "type": "rest", "kind": "prepare", "end": { "time": 10 } }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Tabata",
+        "rounds": 8,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": { "name": "Burpee", "ref": "pwf:burpee" },
+            "end": { "time": 20 },
+            "rest": { "time": 10 }
+          }
+        ]
+      }
+    ]
+  }
+}

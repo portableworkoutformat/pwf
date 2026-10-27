@@ -1,0 +1,10 @@
+{
+  "pwf": "0.1",
+  "name": "A step with two end conditions",
+  "plan": {
+    "type": "block",
+    "children": [
+      { "type": "exercise", "exercise": { "name": "Squats" }, "end": { "time": 30, "reps": 10 } }
+    ]
+  }
+}

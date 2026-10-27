@@ -1,0 +1,109 @@
+{
+  "pwf": "0.1",
+  "cases": [
+    {
+      "id": "001-minimal-manual",
+      "description": "Only required fields. Steps with no end wait for the athlete.",
+      "rules": [1, 2],
+      "totalSeconds": null
+    },
+    {
+      "id": "002-interval-loop",
+      "description": "1 min work, 30 s rest, x5 with no final rest: once as a block loop, once as sets. 420 s each.",
+      "rules": [3, 5, 6],
+      "totalSeconds": 840
+    },
+    {
+      "id": "003-circuit-defaults",
+      "description": "Defaults, a get-ready rest, rest between rounds replacing the round's last rest, and skipLastRest. 10 + 280 + 280 + 220.",
+      "rules": [5, 6, 12],
+      "totalSeconds": 790
+    },
+    {
+      "id": "004-strength-sets-sides",
+      "description": "Rep-based sets with per-set targets, rest after every set, a superset with one side at a time, and a rest between rounds appended when no rest ends the round.",
+      "rules": [2, 3, 4, 5],
+      "totalSeconds": null
+    },
+    {
+      "id": "005-variable-sets",
+      "description": "Per-set end and rest, with the final rest skipped. 40 + 20 + 30 + 15 + 20.",
+      "rules": [3, 6],
+      "totalSeconds": 125
+    },
+    {
+      "id": "006-nested-loops",
+      "description": "Two Tabatas. The outer loop's rest and skip act on the inner loop's last rest. 240 - 10 + 60 + 240 - 10.",
+      "rules": [5, 6],
+      "totalSeconds": 520
+    },
+    {
+      "id": "007-round-rest-list",
+      "description": "restBetweenRounds as a list of two, repeating: 60, 90, 60. 4 x 30 + 60 + 90 + 60.",
+      "rules": [5, 6],
+      "totalSeconds": 330
+    },
+    {
+      "id": "008-tasks",
+      "description": "A 12-minute AMRAP, a 10-minute alternating EMOM and a capped For Time. The For Time has no fixed length.",
+      "rules": [7, 9],
+      "totalSeconds": null
+    },
+    {
+      "id": "009-fixed-length",
+      "description": "rounds max cut off at 270 s mid-exercise, then a 120 s block padded with 60 s of rest.",
+      "rules": [7],
+      "totalSeconds": 390
+    },
+    {
+      "id": "010-timebox-clock",
+      "description": "A self-paced list run by a clock of 3 x (120 s work, 30 s water), final rest skipped.",
+      "rules": [6, 9],
+      "totalSeconds": 420
+    },
+    {
+      "id": "011-stations-two-zones",
+      "description": "Group workout: two zones of two stations, 15 s moves inside a zone, a 30 s water break between zones. 255 + 225.",
+      "rules": [10],
+      "totalSeconds": 480
+    },
+    {
+      "id": "012-transition-list",
+      "description": "Two stations, two rotations, transitions [15 s, 30 s water] used in turn. 120 + 135 + 120 + 105.",
+      "rules": [6, 10],
+      "totalSeconds": 480
+    }
+  ],
+  "invalid": [
+    {
+      "id": "001-missing-name",
+      "description": "name is required.",
+      "path": ""
+    },
+    {
+      "id": "002-rounds-string",
+      "description": "rounds must be a whole number or \"max\", not a string number.",
+      "path": "/plan/rounds"
+    },
+    {
+      "id": "003-two-end-conditions",
+      "description": "A step has exactly one end condition.",
+      "path": "/plan/children/0/end"
+    },
+    {
+      "id": "004-max-without-end",
+      "description": "rounds \"max\" on a block needs end.time.",
+      "path": "/plan"
+    },
+    {
+      "id": "005-typo-field",
+      "description": "Unknown fields are errors in the schema, so typos such as skipLastrest are caught.",
+      "path": "/plan"
+    },
+    {
+      "id": "006-registry-id-format",
+      "description": "ref must be pwf: plus a kebab-case slug.",
+      "path": "/exercises/bench/ref"
+    }
+  ]
+}

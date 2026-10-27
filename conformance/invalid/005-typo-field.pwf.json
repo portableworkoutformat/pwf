@@ -1,0 +1,13 @@
+{
+  "pwf": "0.1",
+  "name": "A misspelt field",
+  "plan": {
+    "type": "block",
+    "rounds": 3,
+    "skipLastrest": true,
+    "children": [
+      { "type": "work", "end": { "time": 30 } },
+      { "type": "rest", "end": { "time": 10 } }
+    ]
+  }
+}

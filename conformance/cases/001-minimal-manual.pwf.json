@@ -1,0 +1,11 @@
+{
+  "pwf": "0.1",
+  "name": "Quick legs",
+  "plan": {
+    "type": "block",
+    "children": [
+      { "type": "exercise", "exercise": { "name": "Squats" } },
+      { "type": "exercise", "exercise": { "name": "Lunges" } }
+    ]
+  }
+}

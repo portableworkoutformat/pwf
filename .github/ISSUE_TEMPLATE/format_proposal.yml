@@ -1,0 +1,41 @@
+name: Format proposal
+description: Propose a change or addition to the PWF format
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: Changes to the format affect every app that implements PWF, so we agree the design here before anyone writes a pull request.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workout, or part of one, can't be described or run today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: The fields, node types or timing rules you'd add or change.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: A PWF document that uses the proposal, and how it should play.
+      render: json
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: compatibility
+    attributes:
+      label: Does this break existing documents?
+      options:
+        - No, it only adds to the format
+        - Yes
+        - Not sure
+    validations:
+      required: true

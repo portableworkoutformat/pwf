@@ -1,0 +1,247 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": null,
+  "segments": [
+    {
+      "start": 0,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "back-squat",
+      "end": {
+        "reps": 5
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": 180,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 180
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "back-squat",
+      "end": {
+        "reps": 5
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": 180,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 180
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "back-squat",
+      "end": {
+        "reps": "max"
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": null,
+      "duration": 180,
+      "type": "rest",
+      "from": "rest",
+      "kind": "rest",
+      "end": {
+        "time": 180
+      },
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "rdl",
+      "end": {
+        "reps": {
+          "min": 8,
+          "max": 10
+        }
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "left",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "right",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": 90,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 90
+      },
+      "path": "/plan/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "rdl",
+      "end": {
+        "reps": {
+          "min": 8,
+          "max": 10
+        }
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "left",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "right",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": 90,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 90
+      },
+      "path": "/plan/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "rdl",
+      "end": {
+        "reps": {
+          "min": 8,
+          "max": 10
+        }
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "left",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": null,
+      "duration": null,
+      "type": "exercise",
+      "exercise": "split-squat",
+      "side": "right",
+      "end": {
+        "reps": 10
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    }
+  ]
+}

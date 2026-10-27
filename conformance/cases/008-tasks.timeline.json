@@ -1,0 +1,145 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": null,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 720,
+      "type": "task",
+      "end": {
+        "time": 720
+      },
+      "path": "/plan/children/0"
+    },
+    {
+      "start": 720,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 780,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 1
+      }
+    },
+    {
+      "start": 840,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 900,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 2
+      }
+    },
+    {
+      "start": 960,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 1020,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 3
+      }
+    },
+    {
+      "start": 1080,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 4
+      }
+    },
+    {
+      "start": 1140,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 4
+      }
+    },
+    {
+      "start": 1200,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0",
+      "iteration": {
+        "/plan/children/1": 5
+      }
+    },
+    {
+      "start": 1260,
+      "duration": 60,
+      "type": "task",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/1",
+      "iteration": {
+        "/plan/children/1": 5
+      }
+    },
+    {
+      "start": 1320,
+      "duration": null,
+      "type": "task",
+      "end": {
+        "manual": true,
+        "timeCap": 900
+      },
+      "path": "/plan/children/2"
+    }
+  ]
+}

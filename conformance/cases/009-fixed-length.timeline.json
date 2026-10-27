@@ -1,0 +1,149 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 390,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 40,
+      "duration": 20,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0": 1
+      }
+    },
+    {
+      "start": 60,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 100,
+      "duration": 20,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0": 2
+      }
+    },
+    {
+      "start": 120,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 160,
+      "duration": 20,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0": 3
+      }
+    },
+    {
+      "start": 180,
+      "duration": 40,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 40
+      },
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 220,
+      "duration": 20,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 20
+      },
+      "path": "/plan/children/0/children/1",
+      "iteration": {
+        "/plan/children/0": 4
+      }
+    },
+    {
+      "start": 240,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": "kb-swing",
+      "end": {
+        "time": 40
+      },
+      "cut": true,
+      "path": "/plan/children/0/children/0",
+      "iteration": {
+        "/plan/children/0": 5
+      }
+    },
+    {
+      "start": 270,
+      "duration": 60,
+      "type": "exercise",
+      "exercise": "row",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1/children/0"
+    },
+    {
+      "start": 330,
+      "duration": 60,
+      "type": "rest",
+      "from": "fill",
+      "kind": "rest",
+      "end": {
+        "time": 60
+      },
+      "path": "/plan/children/1"
+    }
+  ]
+}

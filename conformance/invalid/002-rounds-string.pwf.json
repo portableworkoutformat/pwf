@@ -1,0 +1,9 @@
+{
+  "pwf": "0.1",
+  "name": "Rounds written as a string",
+  "plan": {
+    "type": "block",
+    "rounds": "3",
+    "children": [{ "type": "work", "end": { "time": 30 } }]
+  }
+}

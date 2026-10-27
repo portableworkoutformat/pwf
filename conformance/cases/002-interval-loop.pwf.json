@@ -1,0 +1,32 @@
+{
+  "pwf": "0.1",
+  "name": "Work 60 s, rest 30 s, five times",
+  "equipment": {
+    "air-bike": { "name": "Air bike", "ref": "pwf:air-bike" }
+  },
+  "exercises": {
+    "sprint": { "name": "Bike sprint", "ref": "pwf:bike-sprint", "equipment": ["air-bike"] }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "rounds": 5,
+        "skipLastRest": true,
+        "children": [
+          { "type": "work", "end": { "time": 60 } },
+          { "type": "rest", "end": { "time": 30 } }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": "sprint",
+        "sets": 5,
+        "end": { "time": 60 },
+        "rest": { "time": 30 },
+        "skipLastRest": true
+      }
+    ]
+  }
+}

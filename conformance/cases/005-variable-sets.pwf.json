@@ -1,0 +1,17 @@
+{
+  "pwf": "0.1",
+  "name": "Descending burpee sets",
+  "exercises": {
+    "burpee": { "name": "Burpee", "ref": "pwf:burpee" }
+  },
+  "plan": {
+    "type": "exercise",
+    "exercise": "burpee",
+    "sets": [
+      { "end": { "time": 40 }, "rest": { "time": 20 } },
+      { "end": { "time": 30 }, "rest": { "time": 15 } },
+      { "end": { "time": 20 }, "rest": { "time": 10 } }
+    ],
+    "skipLastRest": true
+  }
+}
