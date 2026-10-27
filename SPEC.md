@@ -93,7 +93,7 @@ An exercise definition describes one exercise. Steps refer to a definition by it
 | --- | --- | --- |
 | `name` | Yes | What people see, in the document's language. A renderer MUST be able to show and play the workout using the name alone |
 | `ref` | No | A core registry ID (section 3.3) |
-| `ids` | No | IDs in other vocabularies, keyed by namespace: `fit`, `healthconnect`, or a vendor's reverse-DNS name such as `com.cloudfit` |
+| `ids` | No | IDs in other vocabularies, keyed by namespace: `fit`, `healthconnect`, or a vendor's reverse-DNS name such as `com.example` |
 | `equipment` | No | The equipment it usually uses, as equipment references |
 | `description` | No | CommonMark |
 | `instructions` | No | Coaching steps, in order |
@@ -334,7 +334,7 @@ A task without a clock is one segment. A task with a clock produces its clock's 
 
 ### 9.1 Extensions
 
-`extensions` MAY appear on the document, an exercise or equipment definition, or any node. It is an object keyed by reverse-DNS names, such as `com.cloudfit`.
+`extensions` MAY appear on the document, an exercise or equipment definition, or any node. It is an object keyed by reverse-DNS names, such as `com.example`.
 
 - Extensions MUST NOT change playback. Anything that changes the timeline belongs in the core format.
 - Renderers MUST ignore extensions they don't know, and SHOULD keep them when re-saving a document.

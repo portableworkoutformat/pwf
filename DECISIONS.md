@@ -20,9 +20,9 @@ All decided on 2026-10-27 unless noted.
 | D8 | Nothing is implicit: a renderer plays only what the file contains and adds no get-ready time, rests or countdowns that take time | Two apps must produce the same timeline from the same file |
 | D9 | Times are whole seconds | Enough for the workouts considered so far. Allowing decimals later won't break existing files |
 | D10 | One language per file | Simple. Translations can be added later without breaking files |
-| D11 | Extensions live under reverse-DNS keys (`com.cloudfit`) and never change playback | Vendors keep their data without forking the format |
+| D11 | Extensions live under reverse-DNS keys (such as `com.example`) and never change playback | Vendors keep their data without forking the format |
 | D12 | The project lives in its own repo, separate from any vendor's codebase | It is meant to become a neutral industry format |
-| D33 | CloudFit is named publicly as PWF's sponsor and integration partner | Be open about who funds PWF and implements it first |
+| D33 | PWF's sponsor and first integration partner is named publicly in the README | Be open about who funds PWF and implements it first |
 | D34 | The spec, schema, conformance suite and tools are licensed under Apache-2.0, and the exercise and equipment registries under CC0 1.0. Copyright is held by "The PWF Authors" | Apache-2.0's patent grant tells other apps the sponsor can't later make patent claims against them. CC0 lets any app embed the registries without credit. While contributors are few, moving the spec to the Community Specification License later stays easy |
 | D35 | The name is PWF, the Portable Workout Format. The version field is `pwf`, registry IDs start with `pwf:`, files end in `.pwf.json`, and the planned media type is `application/vnd.pwf+json`. Renamed from OWF on 2026-10-27 | "Portable" says what the format is for. It stays clearly separate from OpenWorkout's OWL, and the GitHub names and a .org domain looked free (see the candidates under Q13) |
 
@@ -42,9 +42,9 @@ All decided on 2026-10-27 unless noted.
 | --- | --- | --- |
 | D18 | Loops are a `block` with `rounds`, which counts total plays, not extra repeats: `5` plays five times. `sets` loops a single exercise | Avoids the "repeat 1 means play twice" ambiguity |
 | D19 | `rounds: "max"` needs a fixed length: `end.time` on a block, or `end.time` or a `clock` on a task | Otherwise it never ends |
-| D20 | `restBetweenRounds` plays in place of any rest that ends the round, and never after the last round | "20 s off, 60 s between rounds" never stacks into 80 s. Matches CloudFit circuits |
+| D20 | `restBetweenRounds` plays in place of any rest that ends the round, and never after the last round | "20 s off, 60 s between rounds" never stacks into 80 s. It matches how coaches describe circuits |
 | D21 | `skipLastRest` works on every container and on an exercise with sets. It drops a rest that would be the final segment, however deeply nested. It defaults to `false` | A very common case, and one flag on the outer loop is enough |
-| D22 | `restBetweenRounds` and `transition` take one value for every gap, or a list with one entry per gap, in order. A shorter list repeats from the start | Covers "60, 90, 120 s" rests and "15 s moves, 60 s water after each circuit". Also covers CloudFit's multi-lap zones |
+| D22 | `restBetweenRounds` and `transition` take one value for every gap, or a list with one entry per gap, in order. A shorter list repeats from the start | Covers "60, 90, 120 s" rests and "15 s moves, 60 s water after each circuit" |
 | D23 | A transition's `kind` defaults to `transition`; every other rest's defaults to `rest` | A player can label the move without extra fields |
 | D24 | Keep the `defaults` shorthand. The reference library expands it into the normal form | Shorter files for people and AI; renderers can work on the normal form only |
 
@@ -110,16 +110,15 @@ The reference validator will check these:
 | --- | --- | --- |
 | Q1 | Registry granularity: one ID per movement with equipment as an attribute (D17), or one ID per variant, as FIT does? | Affects the registry, not the schema |
 | Q2 | Task clocks: does progress carry across work phases (the draft), or reset at each one? | Needed before more task conformance cases |
-| Q3 | Parallel lanes: cut other lanes off when the primary ends (the draft), or require equal lengths? | Check what CloudFit's TV does with tracks of different lengths |
+| Q3 | Parallel lanes: cut other lanes off when the primary ends (the draft), or require equal lengths? | Check what existing multi-screen players do with lanes of different lengths |
 | Q4 | Results: should a companion format for scores and actual reps and loads come before 1.0, or after? | |
 | Q5 | Programs: write a companion format for multi-week plans, or align with openweight's Program schema? | |
 | Q6 | Text notation: add a compact notation such as `3 × (40 s squat / 20 s rest)` that compiles to PWF? | For people typing workouts and for chat |
 | Q7 | Partner and team workouts ("you go, I go", split reps): model them in v0.2? | Stations don't cover them |
 | Q8 | Registry seeds: who picks the first ~150 exercises and ~60 pieces of equipment, and from which sources? | |
 | Q9 | ~~Licences~~ | Decided: see D34 |
-| Q10 | ~~CloudFit's role~~ | Decided: see D33 |
+| Q10 | ~~The sponsor's role~~ | Decided: see D33 |
 | Q11 | Registration: when to register the `.pwf.json` extension and an `application/vnd.pwf+json` media type? | Needed before 1.0 |
-| Q12 | Does CloudFit intend its three-lap zone drink-break placement (after every third zone)? | A transition list matches it either way; this is a question for CloudFit |
 | Q13 | ~~Keep the OWF name or rename?~~ | Decided: renamed to PWF (D35). Background, found 2026-10-27: the `open-workout` GitHub org (openworkout.org, created April 2026) builds an open-source workout tracker and OWL, an "Open Workout Language" for workout programs including EMOM, AMRAP and For Time, with its own spec and conformance suite. `openworkoutformat.org` and `.com` were registered in March 2026 by an unknown party, with no site. Free: GitHub `openworkoutformat` and `open-workout-format`, and `openworkoutformat.dev` |
 | Q14 | Contact OpenWorkout? | OWL is a language for writing multi-week programs; PWF is a format for running one session. OWL could compile to PWF, which would make OpenWorkout a second implementer |
 

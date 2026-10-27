@@ -118,12 +118,12 @@
       "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[a-z0-9]+(-[a-z0-9]+)*)*$"},
       "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 200},
       "maxProperties": 20,
-      "description": "IDs in other vocabularies, keyed by namespace: fit, healthconnect, or a vendor's reverse-DNS name such as com.cloudfit."
+      "description": "IDs in other vocabularies, keyed by namespace: fit, healthconnect, or a vendor's reverse-DNS name such as com.example."
     },
     "extensions": {
       "type": "object",
       "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[a-z0-9]+(-[a-z0-9]+)*)+$"},
-      "description": "Vendor data under reverse-DNS keys, such as com.cloudfit. Extensions never change playback."
+      "description": "Vendor data under reverse-DNS keys, such as com.example. Extensions never change playback."
     },
     "media": {
       "type": "object",

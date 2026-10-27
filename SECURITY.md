@@ -7,7 +7,7 @@ PWF files are shared between apps, so every renderer and tool treats them as unt
 Please report security issues privately, not in a public issue:
 
 - Use GitHub's private vulnerability reporting: open the **Security** tab and choose **Report a vulnerability**.
-- Or email security@portableworkout.org.
+- Or email maintainers@portableworkout.org.
 
 We'll acknowledge a report within 7 days and keep you updated until it's resolved.
 
