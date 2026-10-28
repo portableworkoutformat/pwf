@@ -202,4 +202,4 @@ Copyright 2026 The PWF Authors.
 - The specification, schema, conformance suite, AI guide, skill, website and tools are licensed under the [Apache License 2.0](LICENSE).
 - The exercise and equipment registries, still to come, are dedicated to the public domain under [CC0 1.0](LICENSES/CC0-1.0.txt), so any app can embed them without credit.
 - Workouts written in PWF carry whatever licence their author sets in the `license` field.
-- The photo in `site/img/` is © CloudFit and isn't covered by these licences. See [NOTICE](NOTICE).
+- The photo in `site/img/` is an Adobe Stock image licensed to CloudFit. It isn't covered by these licences and can't be reused. See [NOTICE](NOTICE).
