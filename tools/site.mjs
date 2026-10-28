@@ -52,7 +52,7 @@ const filters = ['All', ...groups].map((group, i) =>
 let home = readFileSync(new URL('site/index.html', root), 'utf8');
 for (const [marker, html] of [['<!-- example filters -->', filters.join('\n        ')], ['<!-- examples -->', cards.join('\n        ')]]) {
   if (!home.includes(marker)) throw new Error(`site/index.html has no ${marker}`);
-  home = home.replace(marker, html);
+  home = home.replace(marker, () => html);
 }
 writeFileSync(at('index.html'), home);
 cpSync(new URL('skills/portable-workout-format/references/guide.md', root), at('llms-full.txt'));

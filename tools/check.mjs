@@ -102,7 +102,13 @@ for (const [id, doc] of guideDocs) {
 // The workouts in the website's examples gallery: each validates and plays,
 // examples.json lists exactly the files in examples/, and the README's
 // table links to each one.
-const gallery = load('examples/examples.json').examples.map((e) => e.file);
+const galleryEntries = load('examples/examples.json').examples;
+for (const entry of galleryEntries) {
+  for (const field of ['file', 'discipline', 'group']) {
+    if (typeof entry[field] !== 'string' || !entry[field]) fail('examples/examples.json', `an entry has no ${field}`, entry);
+  }
+}
+const gallery = galleryEntries.map((e) => e.file);
 const galleryFiles = readdirSync(new URL('examples/', root)).filter((f) => f.endsWith('.pwf.json'));
 const readme = readFileSync(new URL('README.md', root), 'utf8');
 for (const file of galleryFiles.filter((f) => !gallery.includes(f))) fail(`examples/${file}`, 'is missing from examples/examples.json');
