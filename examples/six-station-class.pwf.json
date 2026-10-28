@@ -1,0 +1,86 @@
+{
+  "pwf": "0.1",
+  "name": "Six-station circuit class",
+  "description": "A group class: everyone works at a station for 45 seconds, then moves on. Two laps of six stations.",
+  "mode": "group",
+  "activity": "hiit",
+  "level": "intermediate",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "group-class",
+    "circuit"
+  ],
+  "plan": {
+    "type": "stations",
+    "rotations": 2,
+    "transition": {
+      "time": 15
+    },
+    "skipLastRest": true,
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Kettlebell swing"
+        },
+        "end": {
+          "time": 45
+        },
+        "name": "Station 1"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Rowing machine"
+        },
+        "end": {
+          "time": 45
+        },
+        "name": "Station 2"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Box step-up"
+        },
+        "end": {
+          "time": 45
+        },
+        "side": "alternating",
+        "name": "Station 3"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Battle ropes"
+        },
+        "end": {
+          "time": 45
+        },
+        "name": "Station 4"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Medicine ball slam"
+        },
+        "end": {
+          "time": 45
+        },
+        "name": "Station 5"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Plank"
+        },
+        "end": {
+          "time": 45
+        },
+        "name": "Station 6"
+      }
+    ]
+  }
+}

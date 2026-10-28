@@ -1,0 +1,81 @@
+{
+  "pwf": "0.1",
+  "name": "Rowing 5 × 500 m",
+  "description": "Five hard 500 m pieces on the rowing machine with two minutes’ rest between them.",
+  "activity": "row",
+  "level": "intermediate",
+  "goals": [
+    "endurance"
+  ],
+  "tags": [
+    "rowing",
+    "erg"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy row"
+        },
+        "end": {
+          "time": 300
+        },
+        "phase": "warmup",
+        "target": {
+          "cadence": {
+            "value": 20,
+            "unit": "spm"
+          }
+        }
+      },
+      {
+        "type": "block",
+        "format": "intervals",
+        "rounds": 5,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Row"
+            },
+            "end": {
+              "distance": {
+                "value": 500,
+                "unit": "m"
+              },
+              "estimate": 120
+            },
+            "target": {
+              "pace": {
+                "min": 115,
+                "max": 120,
+                "unit": "s/500m"
+              },
+              "cadence": {
+                "value": 28,
+                "unit": "spm"
+              }
+            },
+            "rest": {
+              "time": 120,
+              "kind": "recovery"
+            }
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy row"
+        },
+        "end": {
+          "time": 300
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

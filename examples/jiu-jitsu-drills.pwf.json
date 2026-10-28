@@ -1,0 +1,116 @@
+{
+  "pwf": "0.1",
+  "name": "Jiu-jitsu movement drills",
+  "description": "Solo movement drills for grappling: hip escapes, bridges and stand-ups, done as timed rounds across the mat.",
+  "activity": "mixed",
+  "level": "beginner",
+  "goals": [
+    "skill",
+    "mobility"
+  ],
+  "tags": [
+    "jiu-jitsu",
+    "grappling",
+    "martial-arts"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Movement drills",
+        "defaults": {
+          "rest": {
+            "time": 15,
+            "kind": "transition"
+          }
+        },
+        "rounds": 2,
+        "restBetweenRounds": {
+          "time": 60
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Hip escape (shrimp)"
+            },
+            "end": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Bridge and roll"
+            },
+            "end": {
+              "time": 60
+            },
+            "side": "alternating"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Technical stand-up"
+            },
+            "end": {
+              "reps": 10
+            },
+            "side": "each"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sit-out"
+            },
+            "end": {
+              "time": 45
+            },
+            "side": "alternating"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Forward roll"
+            },
+            "end": {
+              "reps": 6
+            },
+            "side": "each"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Backward roll"
+            },
+            "end": {
+              "reps": 6
+            },
+            "side": "each"
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Neck bridge"
+        },
+        "end": {
+          "time": 30
+        },
+        "notes": "Keep the weight on your feet; go only as far as feels comfortable."
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Butterfly stretch"
+        },
+        "end": {
+          "time": 60
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

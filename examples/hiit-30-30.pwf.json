@@ -1,0 +1,83 @@
+{
+  "pwf": "0.1",
+  "name": "30/30 HIIT",
+  "description": "Eight bodyweight moves, 30 seconds on and 30 off, twice through. No equipment.",
+  "activity": "hiit",
+  "level": "intermediate",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "hiit",
+    "bodyweight"
+  ],
+  "plan": {
+    "type": "block",
+    "format": "intervals",
+    "rounds": 2,
+    "restBetweenRounds": {
+      "time": 60,
+      "kind": "hydrate"
+    },
+    "skipLastRest": true,
+    "defaults": {
+      "end": {
+        "time": 30
+      },
+      "rest": {
+        "time": 30
+      }
+    },
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "High knees"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Squat jump"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Push-up"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Skater hops"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Plank shoulder taps"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Burpee"
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Reverse lunge"
+        },
+        "side": "alternating"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Bicycle crunch"
+        }
+      }
+    ]
+  }
+}

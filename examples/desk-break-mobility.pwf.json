@@ -1,0 +1,108 @@
+{
+  "pwf": "0.1",
+  "name": "Desk-break mobility",
+  "description": "Eight minutes to loosen your neck, back and hips after a long sit. No equipment, and you can stay in work clothes.",
+  "activity": "mobility",
+  "level": "beginner",
+  "goals": [
+    "mobility"
+  ],
+  "tags": [
+    "mobility",
+    "stretching",
+    "no-equipment"
+  ],
+  "plan": {
+    "type": "block",
+    "format": "flow",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Neck circles"
+        },
+        "end": {
+          "time": 30
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Shoulder rolls"
+        },
+        "end": {
+          "time": 30
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Cat-cow"
+        },
+        "end": {
+          "time": 45
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Thread the needle"
+        },
+        "end": {
+          "time": 30
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Thoracic rotation"
+        },
+        "end": {
+          "time": 30
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Hip flexor stretch"
+        },
+        "end": {
+          "time": 45
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Hamstring stretch"
+        },
+        "end": {
+          "time": 30
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Deep squat hold"
+        },
+        "end": {
+          "time": 45
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Standing side bend"
+        },
+        "end": {
+          "time": 20
+        },
+        "side": "each"
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "pwf": "0.1",
+  "name": "Chipper for time",
+  "description": "Work down the list once, as fast as you can with good form. Stop at 20 minutes if you haven’t finished.",
+  "activity": "hiit",
+  "level": "advanced",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "for-time",
+    "functional-fitness"
+  ],
+  "plan": {
+    "type": "task",
+    "format": "chipper",
+    "timeCap": 1200,
+    "score": "time",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Row"
+        },
+        "end": {
+          "distance": {
+            "value": 500,
+            "unit": "m"
+          }
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Box jump"
+        },
+        "end": {
+          "reps": 40
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Kettlebell swing"
+        },
+        "end": {
+          "reps": 30
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Walking lunge"
+        },
+        "end": {
+          "reps": 20
+        },
+        "side": "alternating"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Push-up"
+        },
+        "end": {
+          "reps": 10
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Row"
+        },
+        "end": {
+          "distance": {
+            "value": 500,
+            "unit": "m"
+          }
+        }
+      }
+    ]
+  }
+}

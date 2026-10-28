@@ -1,0 +1,68 @@
+{
+  "pwf": "0.1",
+  "name": "First run: walk-run intervals",
+  "description": "Walk briskly to warm up, then run for one minute and walk for 90 seconds, eight times over. Made for your very first run.",
+  "activity": "run",
+  "level": "beginner",
+  "goals": [
+    "endurance"
+  ],
+  "tags": [
+    "running",
+    "beginner"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Brisk walk"
+        },
+        "end": {
+          "time": 300
+        },
+        "phase": "warmup"
+      },
+      {
+        "type": "block",
+        "format": "intervals",
+        "rounds": 8,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Run"
+            },
+            "end": {
+              "time": 60
+            },
+            "target": {
+              "rpe": 6
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Walk"
+            },
+            "end": {
+              "time": 90
+            },
+            "phase": "recovery"
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy walk"
+        },
+        "end": {
+          "time": 300
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

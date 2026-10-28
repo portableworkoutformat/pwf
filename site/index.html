@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portable Workout Format (PWF)</title>
-  <meta name="description" content="An open format for workouts. Ask Claude or ChatGPT for a workout in plain words, then play it, share it and change it.">
+  <title>Portable Workout Format (PWF): an open format for defining workouts</title>
+  <meta name="description" content="An open format for defining workouts. Build, share and run any workout, from yoga and strength to boxing and running, in any app, by hand or with AI.">
   <link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Portable Workout Format">
   <meta property="og:title" content="Portable Workout Format (PWF)">
-  <meta property="og:description" content="An open format for workouts. Ask Claude or ChatGPT for a workout in plain words, then play it, share it and change it.">
+  <meta property="og:description" content="An open format for defining workouts. Build, share and run any workout, from yoga and strength to boxing and running, in any app, by hand or with AI.">
   <meta property="og:url" content="https://portableworkout.org/">
   <meta property="og:image" content="https://portableworkout.org/brand/pwf-social.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
-  <meta property="og:image:alt" content="The PWF logo, a heartbeat in curly braces, with the words: Workouts your AI can write and any app can play.">
+  <meta property="og:image:alt" content="The PWF logo, a heartbeat in curly braces, with the words: An open format for defining workouts.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1e1e1c" media="(prefers-color-scheme: dark)">
@@ -22,16 +22,61 @@
   <link rel="icon" href="brand/pwf-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" as="image" href="img/hero-gym.webp" imagesrcset="img/hero-gym-900.webp 900w, img/hero-gym.webp 1779w" imagesizes="100vw">
   <link rel="stylesheet" href="demo/style.css">
   <style>
-    main { max-width: 960px; }
-    section { margin-top: 3.5rem; }
-    .lead { font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; margin: 1.5rem 0 1rem; max-width: 16ch; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    main { max-width: 1040px; }
+    section { margin-top: 4.5rem; scroll-margin-top: 1rem; }
+    h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); letter-spacing: -0.01em; }
+    .section-lead { font-size: 1.1rem; max-width: 42rem; margin: 0 0 1.5rem; color: var(--muted); }
+
+    .masthead { margin: 0; position: relative; isolation: isolate; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .masthead::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("img/hero-gym.webp") center 35% / cover no-repeat; filter: grayscale(1) contrast(1.05); }
+    .masthead::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(100deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 90%, transparent) 40%, color-mix(in srgb, var(--bg) 72%, transparent) 100%); }
+    .masthead-inner { max-width: 1040px; margin: 0 auto; padding: clamp(3rem, 9vw, 6rem) 1rem clamp(2.5rem, 7vw, 4.5rem); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 0 1rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+    .lead { font-size: clamp(2.3rem, 6.5vw, 4rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; margin: 0 0 1.2rem; max-width: 14ch; }
     .lead em { font-style: normal; color: var(--accent); }
-    .intro { font-size: 1.15rem; max-width: 38rem; margin: 0 0 1.5rem; }
+    .intro { font-size: clamp(1.1rem, 2.2vw, 1.3rem); max-width: 36rem; margin: 0 0 1.75rem; }
     .cta { display: flex; flex-wrap: wrap; gap: 0.6rem; }
     .cta .button { font-size: 1.05rem; padding: 0.7rem 1.2rem; }
-    .fine { margin-top: 0.75rem; }
+    .masthead .cta .button:not(.primary) { background: color-mix(in srgb, var(--surface) 85%, transparent); }
+    .disciplines { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin: 2.25rem 0 0; padding: 0; list-style: none; font-size: 0.95rem; font-weight: 600; color: var(--muted); }
+    .disciplines li { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .disciplines li::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--accent); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .grid .card p { margin: 0 0 0.75rem; }
+    .grid .card p:last-child { margin-bottom: 0; }
+    .problem { border-top: 3px solid var(--accent); }
+    .problem h3 { margin-bottom: 0.4rem; }
+    .answer { margin-top: 1rem; padding: 1.5rem; }
+    .answer h3 { font-size: 1.25rem; }
+    .ticks { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1rem 2rem; }
+    .ticks li { position: relative; padding-left: 1.6rem; }
+    .ticks li::before { content: ""; position: absolute; left: 0; top: 0.3em; width: 1rem; height: 1rem; border-radius: 50%; background: var(--rest) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 0.8rem no-repeat; }
+    .ticks strong { display: block; }
+
+    .filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .chip { border-radius: 999px; padding: 0.35rem 0.9rem; font-size: 0.9rem; }
+    .chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+    .examples { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .example { display: flex; flex-direction: column; }
+    .example[hidden] { display: none; }
+    .examples.collapsed .example:nth-child(n+10) { display: none; }
+    .more-examples { text-align: center; margin: 1.25rem 0 0; }
+    .example h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .example p { margin: 0 0 0.6rem; }
+    .example .meta { margin-top: auto; color: var(--muted); font-weight: 600; }
+    .example .actions { display: flex; gap: 0.5rem; margin: 0.25rem 0 0; }
+    .tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 0.4rem; }
+
+    pre { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.45; margin: 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+
     .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; counter-reset: step; padding: 0; list-style: none; }
     .steps li { counter-increment: step; }
     .steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--accent); color: var(--accent-text); font-weight: 700; margin-bottom: 0.6rem; }
@@ -39,16 +84,24 @@
     .steps p { margin: 0; }
     .asks { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
     .asks li { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.85rem; font-size: 0.95rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-    .grid .card p { margin: 0 0 0.75rem; }
-    .grid .card p:last-child { margin-bottom: 0; }
-    .tag { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }
-    pre { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.45; margin: 0; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+    .fine { margin-top: 0.75rem; }
+    .subhead { margin-top: 2.5rem; }
+    a.card { text-decoration: none; color: inherit; transition: border-color 0.15s; }
+    a.card:hover { border-color: var(--accent); }
     .links { padding-left: 1.2rem; margin: 0; }
     .links li + li { margin-top: 0.4rem; }
-    footer { border-top: 1px solid var(--border); margin-top: 4rem; padding-top: 1.5rem; }
+
+    .faq { display: grid; gap: 0.6rem; }
+    .faq details { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0 1rem; }
+    .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.9rem 0; font-weight: 600; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 1.3rem; font-weight: 400; color: var(--muted); line-height: 1; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details > :not(summary) { margin: 0 0 1rem; }
+
+    footer { border-top: 1px solid var(--border); margin-top: 5rem; padding-top: 1.5rem; display: grid; gap: 1rem; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
+    footer p { margin: 0; }
     @media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -56,20 +109,103 @@
   <header class="site-header">
     <a class="brand" href="./"><svg class="brand-mark" viewBox="2 2 60 60" aria-hidden="true"><path d="M16 12H13C10.52 12 8.5 14.02 8.5 16.5V26.5C8.5 29.8 6.5 32 5 32C6.5 32 8.5 34.2 8.5 37.5V47.5C8.5 49.98 10.52 52 13 52H16M48 12H51C53.48 12 55.5 14.02 55.5 16.5V26.5C55.5 29.8 57.5 32 59 32C57.5 32 55.5 34.2 55.5 37.5V47.5C55.5 49.98 53.48 52 51 52H48"/><path class="pulse" d="M16 32.5L22.55 32.5L26.91 18.5L33.45 46.5L39.27 23.6L42.91 32.5L48 32.5"/></svg><span>PWF</span> <span class="brand-name">Portable Workout Format</span></a>
     <nav>
-      <a href="play/">Play</a>
-      <a href="build/">Build</a>
-      <a href="https://github.com/portableworkoutformat/pwf">GitHub</a>
+      <a href="play/"><svg class="nav-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.3-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z"/></svg>Play</a>
+      <a href="build/"><svg class="nav-icon" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="9" width="6.2" height="5.6" rx="1.3"/><rect x="8.8" y="9" width="6.2" height="5.6" rx="1.3"/><rect x="4.9" y="1.6" width="6.2" height="5.6" rx="1.3"/></svg>Build</a>
+      <a href="https://github.com/portableworkoutformat/pwf"><svg class="nav-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</a>
     </nav>
   </header>
 
-  <main>
-    <h1 class="lead">Workouts your AI can write <em>and any app can play</em>.</h1>
-    <p class="intro">The Portable Workout Format (PWF) is an open format for workouts. Describe a workout to Claude or ChatGPT in plain words, then play it with timers, share it, and ask for changes.</p>
-    <div class="cta" id="start"></div>
-    <p class="muted small fine">The button opens a new chat with a short prompt that points your assistant at the PWF guide. The prompt is copied too, in case it isn’t filled in. Using another assistant? Copy the prompt and paste it in.</p>
+  <section class="masthead" aria-labelledby="top">
+    <div class="masthead-inner">
+      <p class="eyebrow">Portable Workout Format</p>
+      <h1 class="lead" id="top">An open format for <em>defining workouts</em>.</h1>
+      <p class="intro">Write a workout down once, then build on it, share it and run it anywhere. A yoga flow, 5 × 5 squats, boxing rounds or a track session: one small file describes it exactly, and every PWF app plays it the same way.</p>
+      <div class="cta">
+        <a class="button primary" href="#examples">Browse examples</a>
+        <a class="button" href="play/">Open the player</a>
+        <a class="button" href="#ai">Make one with AI</a>
+      </div>
+      <ul class="disciplines" aria-label="Some of the workouts PWF describes">
+        <li>Yoga</li><li>Pilates</li><li>Strength</li><li>HIIT</li><li>Boxing</li><li>Martial arts</li><li>Running</li><li>Cycling</li><li>Rowing</li><li>Swimming</li><li>Mobility</li><li>Group classes</li>
+      </ul>
+    </div>
+  </section>
 
-    <section aria-labelledby="how">
-      <h2 id="how">How it works</h2>
+  <main>
+    <section aria-labelledby="why">
+      <h2 id="why">Why a workout format?</h2>
+      <p class="section-lead">Workouts are everywhere: in coaching notes, on gym whiteboards, in forum posts and videos, and now in AI chats. But there’s no standard way to write one down so that an app can run it.</p>
+      <div class="grid">
+        <div class="card problem">
+          <h3>Sharing means retyping</h3>
+          <p class="muted">Post a workout, send it to a friend or answer a question online, and it travels as text or a screenshot. To run it, someone copies it into an app by hand, one exercise and one timer at a time.</p>
+        </div>
+        <div class="card problem">
+          <h3>Every app has its own format</h3>
+          <p class="muted">Coaches rebuild the same session in every app they use, and gyms can’t take their library with them. A workout made in one app can’t be played in another.</p>
+        </div>
+        <div class="card problem">
+          <h3>AI writes workouts nobody can run</h3>
+          <p class="muted">Ask an AI for a workout and you get a wall of text, laid out differently every time. There’s no consistent way to build a workout with AI and then actually do it, with timers and rounds.</p>
+        </div>
+      </div>
+      <div class="card answer">
+        <h3>PWF is one open file for any workout</h3>
+        <ul class="ticks">
+          <li><strong>Precise enough to run</strong>Every timing rule is written down and tested, so a workout plays the same in every app, second for second.</li>
+          <li><strong>Easy to share</strong>A workout is a small file or a link. Post it, send it or attach it, and anyone can open it and press play.</li>
+          <li><strong>Made for people and AI</strong>Readable JSON with plain exercise names, and a guide that teaches AI assistants to write it reliably.</li>
+          <li><strong>Open to everyone</strong>Free to use and build on, developed in the open, and not owned by any one app.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="examples">
+      <h2 id="examples">Examples</h2>
+      <p class="section-lead">One format for every kind of workout. Press Play to run one in your browser, or open its JSON to see how it’s written.</p>
+      <div class="filters" role="group" aria-label="Show examples by type">
+        <!-- example filters -->
+      </div>
+      <ul class="examples" id="example-list">
+        <!-- examples -->
+      </ul>
+      <p class="more-examples hidden"><button type="button" id="show-all"></button></p>
+    </section>
+
+    <section aria-labelledby="what">
+      <h2 id="what">What a PWF workout looks like</h2>
+      <div class="split">
+        <div>
+          <p>A PWF workout is a JSON file. It says what to do, in what order, and when each step ends: after a time, a number of reps, a distance, some calories, or when you’re done.</p>
+          <p>It can also say what to aim for, such as a weight, a pace, a heart rate or a power, and how hard it should feel. Exercises are plain names, so nothing breaks when an app doesn’t know one.</p>
+          <p>This is Tabata: eight rounds of 20 seconds on, 10 off.</p>
+          <p><a class="button primary" id="play-tabata" href="play/"><svg class="nav-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.3-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z"/></svg>Play this workout</a></p>
+        </div>
+<pre id="tabata"><code>{
+  "pwf": "0.1",
+  "name": "Tabata",
+  "plan": {
+    "type": "block",
+    "rounds": 8,
+    "skipLastRest": true,
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": { "name": "Burpee" },
+        "end": { "time": 20 },
+        "rest": { "time": 10 }
+      }
+    ]
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <section aria-labelledby="ai">
+      <h2 id="ai">Make workouts with AI</h2>
+      <p class="section-lead">Describe a workout in plain words. Your AI writes it in PWF and gives you a link that plays it. Ask for changes as you go.</p>
+      <div class="cta" id="start"></div>
+      <p class="muted small fine">The button opens a new chat with a short prompt that points your assistant at the PWF guide. The prompt is copied too, in case it isn’t filled in. Using another assistant? Copy the prompt and paste it in.</p>
       <ol class="steps">
         <li class="card">
           <h3>Start a chat</h3>
@@ -87,17 +223,15 @@
       <p class="muted">Things to ask for:</p>
       <ul class="asks">
         <li>20-minute Tabata, no equipment</li>
+        <li>45-minute vinyasa flow for runners</li>
         <li>Upper body, dumbbells, 3 × 8 to 12</li>
-        <li>12-minute EMOM: swings, then burpees</li>
+        <li>Six 3-minute boxing rounds</li>
         <li>6 × 400 m run repeats, 90 s recovery</li>
-        <li>Beginner full body with a warm-up and stretch</li>
         <li>Group class: 6 stations, 45 on, 15 off</li>
       </ul>
-    </section>
 
-    <section aria-labelledby="every-time">
-      <h2 id="every-time">Make your assistant fluent in PWF</h2>
-      <p class="muted">The button above works in any chat. To have PWF ready every time, add it to your assistant.</p>
+      <h3 class="subhead" id="fluent">Make your assistant fluent in PWF</h3>
+      <p class="muted">The buttons above work in any chat. To have PWF ready every time, add it to your assistant.</p>
       <div class="grid">
         <div class="card">
           <span class="tag">Claude and ChatGPT</span>
@@ -121,45 +255,17 @@
       </div>
     </section>
 
-    <section aria-labelledby="no-ai">
-      <h2 id="no-ai">No AI? No problem</h2>
+    <section aria-labelledby="browser">
+      <h2 id="browser">Play and build in your browser</h2>
       <div class="grid">
-        <a class="card" href="play/" style="text-decoration: none; color: inherit">
+        <a class="card" href="play/">
           <h3>Play a workout</h3>
-          <p class="muted">Open a <code>.pwf.json</code> file, paste one, or try Tabata, a circuit, strength sets, AMRAP and EMOM examples.</p>
+          <p class="muted">Open a link, paste a workout or open a <code>.pwf.json</code> file. The player runs the timers, counts the rounds and shows what’s next, on a phone, a laptop or a TV.</p>
         </a>
-        <a class="card" href="build/" style="text-decoration: none; color: inherit">
+        <a class="card" href="build/">
           <h3>Build one by hand</h3>
-          <p class="muted">Sections, rounds, timed or rep-based exercises and rests. Export the file or play it straight away.</p>
+          <p class="muted">Sections, rounds, timed or rep-based exercises and rests. Save the file, share a link, or play it straight away.</p>
         </a>
-      </div>
-    </section>
-
-    <section aria-labelledby="what">
-      <h2 id="what">What a PWF workout looks like</h2>
-      <div class="split">
-        <div>
-          <p>A PWF workout is a JSON file. It says what to do, in what order, and when each step ends: after a time, a number of reps, a distance, or when you’re done.</p>
-          <p>Every app that plays PWF follows the same timing rules, so a workout plays the same everywhere. Exercises are plain names, so nothing breaks when an app doesn’t know one.</p>
-          <p>This is Tabata: eight rounds of 20 seconds on, 10 off.</p>
-        </div>
-<pre><code>{
-  "pwf": "0.1",
-  "name": "Tabata",
-  "plan": {
-    "type": "block",
-    "rounds": 8,
-    "skipLastRest": true,
-    "children": [
-      {
-        "type": "exercise",
-        "exercise": { "name": "Burpee" },
-        "end": { "time": 20 },
-        "rest": { "time": 10 }
-      }
-    ]
-  }
-}</code></pre>
       </div>
     </section>
 
@@ -170,13 +276,66 @@
         <li><a href="https://github.com/portableworkoutformat/pwf/blob/main/SPEC.md">Specification</a> (also as <a href="spec.md">plain Markdown</a>)</li>
         <li><a href="schema/pwf-0.1.schema.json">JSON Schema</a></li>
         <li><a href="https://github.com/portableworkoutformat/pwf/tree/main/conformance">Conformance suite</a>: workouts and the exact timelines they must produce</li>
+        <li><a href="https://github.com/portableworkoutformat/pwf/tree/main/examples">Example workouts</a>, the same ones shown above</li>
         <li><a href="llms.txt"><code>llms.txt</code></a> and <a href="llms-full.txt"><code>llms-full.txt</code></a> for AI tools</li>
         <li><a href="https://github.com/portableworkoutformat/pwf">Source, issues and discussions</a></li>
       </ul>
     </section>
 
+    <section aria-labelledby="faq">
+      <h2 id="faq">Questions and answers</h2>
+      <div class="faq">
+        <details open>
+          <summary>What kinds of workouts can PWF describe?</summary>
+          <p>All of them: that’s the aim. PWF covers strength training with sets, reps and loads; HIIT, Tabata, EMOM, AMRAP and For Time; yoga flows and Pilates; boxing and martial-arts rounds; running, cycling, rowing and swimming with distances and pace, heart-rate or power targets; mobility and stretching; and group classes where people move between stations.</p>
+          <p>If you find a workout PWF can’t describe, <a href="https://github.com/portableworkoutformat/pwf/issues">open an issue</a>. That’s how the format gets better.</p>
+        </details>
+        <details>
+          <summary>Is PWF free to use?</summary>
+          <p>Yes. The specification, schema and tools are open source under the Apache License 2.0, and the exercise and equipment lists, when they’re published, will be in the public domain. There’s nothing to pay and nothing to sign up for.</p>
+        </details>
+        <details>
+          <summary>Do I need AI to use PWF?</summary>
+          <p>No. You can build a workout by hand in the <a href="build/">builder</a>, write the JSON yourself, or export it from any app that supports PWF. AI just makes it quick: describe what you want and get a workout you can play.</p>
+        </details>
+        <details>
+          <summary>How do I play a workout?</summary>
+          <p>Open a player link, or open the <a href="play/">player</a> and paste the workout or open its file. The player runs the timers, counts the rounds and shows what’s coming next. It works in any modern browser on a phone, a laptop or a TV.</p>
+        </details>
+        <details>
+          <summary>Does a workout link send my data anywhere?</summary>
+          <p>No. The whole workout is in the part of the link after the <code>#</code>, which browsers never send to a server. The player runs entirely in your browser.</p>
+        </details>
+        <details>
+          <summary>Which apps support PWF?</summary>
+          <p>PWF is a new draft. CloudFit, which sponsors the project, is the first app adding support, and the player and builder on this site are open source. If you make a fitness app, the specification, schema and conformance suite are ready for you, and we’d like to hear from you.</p>
+        </details>
+        <details>
+          <summary>How is PWF different from FIT, ZWO or Apple WorkoutKit?</summary>
+          <p>Each of those covers part of the picture. Garmin FIT and Zwift’s ZWO files describe timed endurance intervals, but not strength sets or group classes. Apple WorkoutKit and Android Health Connect are platform APIs rather than files you can share. Strength apps track sets and reps but have no timing. PWF covers all of these in one file, with timing rules precise enough that every app plays a workout the same way.</p>
+        </details>
+        <details>
+          <summary>Can PWF record my results?</summary>
+          <p>Not yet. Version 0.1 describes the workout itself. Results, multi-week programs and athlete profiles are left for later versions, so the first one stays small enough to finish and implement.</p>
+        </details>
+        <details>
+          <summary>Who decides how PWF changes?</summary>
+          <p>Changes start as proposals on <a href="https://github.com/portableworkoutformat/pwf/issues">GitHub</a>, and every decision is recorded in the open in <a href="https://github.com/portableworkoutformat/pwf/blob/main/DECISIONS.md">DECISIONS.md</a>. PWF is sponsored by CloudFit, but it’s meant to be a neutral format that no single company owns.</p>
+        </details>
+      </div>
+    </section>
+
     <footer class="muted small">
-      <p>The specification, schema and code are licensed under Apache-2.0, and the exercise and equipment registries under CC0. PWF is sponsored by <a href="https://cloudfit.tv">CloudFit</a>, its first integration partner.</p>
+      <nav aria-label="More">
+        <a href="#examples">Examples</a>
+        <a href="play/">Player</a>
+        <a href="build/">Builder</a>
+        <a href="https://github.com/portableworkoutformat/pwf/blob/main/SPEC.md">Specification</a>
+        <a href="schema/pwf-0.1.schema.json">Schema</a>
+        <a href="https://github.com/portableworkoutformat/pwf">GitHub</a>
+        <a href="mailto:maintainers@portableworkout.org">Contact</a>
+      </nav>
+      <p>The specification, schema and code are licensed under Apache-2.0. PWF is sponsored by <a href="https://cloudfit.tv">CloudFit</a>, its first integration partner. Hero photo © CloudFit.</p>
     </footer>
   </main>
 
@@ -184,6 +343,7 @@
 
   <script type="module">
     import { assistantButtons, copyText, startPrompt } from './demo/ai.js';
+    import { encodeWorkout } from './demo/share.js';
 
     let timer = null;
     const notify = (text) => {
@@ -204,6 +364,32 @@
         notify(await copyText(startPrompt()) ? 'Copied. Paste it into any AI assistant.' : 'Your browser didn’t allow copying.');
       });
     }
+
+    // Show the first nine examples until someone asks for more or picks a type.
+    const list = document.getElementById('example-list');
+    const more = document.querySelector('.more-examples');
+    const showAll = () => { list.classList.remove('collapsed'); more.classList.add('hidden'); };
+    if (list.children.length > 9) {
+      list.classList.add('collapsed');
+      more.classList.remove('hidden');
+      document.getElementById('show-all').textContent = `Show all ${list.children.length} examples`;
+      document.getElementById('show-all').addEventListener('click', showAll);
+    }
+
+    // Show the examples of one type.
+    const chips = document.querySelectorAll('.chip');
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        showAll();
+        for (const other of chips) other.setAttribute('aria-pressed', String(other === chip));
+        for (const card of document.querySelectorAll('#example-list .example')) {
+          card.hidden = Boolean(chip.dataset.group) && card.dataset.group !== chip.dataset.group;
+        }
+      });
+    }
+
+    const tabata = JSON.parse(document.getElementById('tabata').textContent);
+    document.getElementById('play-tabata').href = `play/#w=${await encodeWorkout(tabata)}`;
   </script>
 </body>
 </html>

@@ -1,0 +1,174 @@
+{
+  "pwf": "0.1",
+  "name": "Boxing bag rounds",
+  "description": "Six three-minute rounds on the heavy bag, each with its own combination, and a minute’s rest between rounds.",
+  "activity": "mixed",
+  "level": "intermediate",
+  "goals": [
+    "conditioning",
+    "skill"
+  ],
+  "tags": [
+    "boxing",
+    "heavy-bag"
+  ],
+  "equipment": {
+    "bag": {
+      "name": "Heavy bag"
+    },
+    "gloves": {
+      "name": "Boxing gloves"
+    },
+    "rope": {
+      "name": "Skipping rope"
+    }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Warm-up",
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Skipping rope"
+            },
+            "end": {
+              "time": 180
+            },
+            "phase": "warmup"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Shadow boxing"
+            },
+            "end": {
+              "time": 120
+            },
+            "phase": "warmup"
+          }
+        ]
+      },
+      {
+        "type": "rest",
+        "end": {
+          "time": 60
+        },
+        "kind": "prepare"
+      },
+      {
+        "type": "block",
+        "name": "Bag rounds",
+        "format": "intervals",
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Jab, cross"
+            },
+            "end": {
+              "time": 180
+            },
+            "notes": "Snap the jab back to your guard.",
+            "rest": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Jab, cross, hook"
+            },
+            "end": {
+              "time": 180
+            },
+            "notes": "Turn the hips into the hook.",
+            "rest": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Double jab, cross"
+            },
+            "end": {
+              "time": 180
+            },
+            "rest": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Jab, cross, hook, cross"
+            },
+            "end": {
+              "time": 180
+            },
+            "rest": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Slip, slip, cross, hook"
+            },
+            "end": {
+              "time": 180
+            },
+            "notes": "Slip outside the jab, then counter.",
+            "rest": {
+              "time": 60
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Freestyle, all out"
+            },
+            "end": {
+              "time": 180
+            },
+            "notes": "Everything you have for the last round.",
+            "rest": {
+              "time": 60
+            }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Finisher",
+        "rounds": 2,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Push-up"
+            },
+            "end": {
+              "reps": 20
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sit-up"
+            },
+            "end": {
+              "reps": 20
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

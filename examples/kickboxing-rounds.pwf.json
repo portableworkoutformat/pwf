@@ -1,0 +1,149 @@
+{
+  "pwf": "0.1",
+  "name": "Kickboxing conditioning",
+  "description": "Five two-minute rounds of kicks, knees and elbows, each followed by 30 seconds of sprawls.",
+  "activity": "mixed",
+  "level": "intermediate",
+  "goals": [
+    "conditioning",
+    "skill"
+  ],
+  "tags": [
+    "kickboxing",
+    "muay-thai",
+    "martial-arts"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Shadow kickboxing"
+        },
+        "end": {
+          "time": 180
+        },
+        "phase": "warmup"
+      },
+      {
+        "type": "block",
+        "name": "Kicks",
+        "rounds": 2,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Round kick"
+            },
+            "end": {
+              "time": 60
+            },
+            "side": "each",
+            "notes": "Kick through the target and return to guard."
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sprawl"
+            },
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "rest",
+            "end": {
+              "time": 30
+            }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Clinch and combinations",
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Knee strikes"
+            },
+            "end": {
+              "time": 120
+            },
+            "side": "alternating"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sprawl"
+            },
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "rest",
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Elbow strikes"
+            },
+            "end": {
+              "time": 120
+            },
+            "side": "alternating"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sprawl"
+            },
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "rest",
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Teep and cross combinations"
+            },
+            "end": {
+              "time": 120
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sprawl"
+            },
+            "end": {
+              "time": 30
+            }
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Hip flexor stretch"
+        },
+        "end": {
+          "time": 30
+        },
+        "side": "each",
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

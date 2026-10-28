@@ -1,0 +1,83 @@
+{
+  "pwf": "0.1",
+  "name": "Tempo run",
+  "description": "Twenty minutes at a comfortably hard pace, between an easy warm-up and cool-down. Paces suit a runner with a 22-minute 5K.",
+  "activity": "run",
+  "level": "intermediate",
+  "goals": [
+    "endurance"
+  ],
+  "tags": [
+    "running",
+    "tempo"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy run"
+        },
+        "end": {
+          "time": 600
+        },
+        "phase": "warmup",
+        "target": {
+          "heartRate": {
+            "zone": 2
+          }
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Strides"
+        },
+        "end": {
+          "time": 20
+        },
+        "sets": 4,
+        "rest": {
+          "time": 40,
+          "kind": "recovery"
+        },
+        "skipLastRest": true
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Tempo run"
+        },
+        "end": {
+          "time": 1200
+        },
+        "target": {
+          "pace": {
+            "min": 270,
+            "max": 280,
+            "unit": "s/km"
+          },
+          "heartRate": {
+            "zone": 4
+          }
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy run"
+        },
+        "end": {
+          "time": 600
+        },
+        "phase": "cooldown",
+        "target": {
+          "heartRate": {
+            "zone": 2
+          }
+        }
+      }
+    ]
+  }
+}

@@ -86,6 +86,7 @@ PWF is meant to be a neutral format that no single vendor owns, with open tools 
 | [DECISIONS.md](DECISIONS.md) | Decisions made so far, format limits and open questions |
 | `schema/pwf-0.1.schema.json` | JSON Schema (draft 2020-12) for a PWF document, served at its `$id`, https://portableworkout.org/schema/pwf-0.1.schema.json |
 | `conformance/` | Documents with the timelines a player must produce, and documents that must fail validation |
+| `examples/` | Example workouts for the website's gallery, from yoga and Pilates to strength, boxing, running and group classes |
 | `skills/portable-workout-format/` | The Agent Skill: `SKILL.md`, the AI guide (`references/guide.md`, served as `llms-full.txt`) and `scripts/pwf.py` to check workouts and build play links |
 | `site/` | The website's home page, `llms.txt`, and the logo and icons in `site/brand/` |
 | `demo/` | The player and builder |
