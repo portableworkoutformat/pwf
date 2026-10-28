@@ -100,12 +100,15 @@ for (const [id, doc] of guideDocs) {
 }
 
 // The workouts in the website's examples gallery: each validates and plays,
-// and examples.json lists exactly the files in examples/.
+// examples.json lists exactly the files in examples/, and the README's
+// table links to each one.
 const gallery = load('examples/examples.json').examples.map((e) => e.file);
 const galleryFiles = readdirSync(new URL('examples/', root)).filter((f) => f.endsWith('.pwf.json'));
+const readme = readFileSync(new URL('README.md', root), 'utf8');
 for (const file of galleryFiles.filter((f) => !gallery.includes(f))) fail(`examples/${file}`, 'is missing from examples/examples.json');
 for (const file of gallery) {
   const id = `examples/${file}`;
+  if (!readme.includes(`(${id})`)) fail(id, 'is missing from the examples table in README.md');
   if (!galleryFiles.includes(file)) {
     fail(id, 'is listed in examples/examples.json but does not exist');
   } else if (!validate(load(id))) {
