@@ -4,7 +4,8 @@
 //   expected file and the hand-calculated total in the manifest;
 // - every invalid case fails validation at the path the manifest names.
 // It also checks the demo's examples: each validates and survives a round
-// trip through the builder's model unchanged. And it checks the AI material:
+// trip through the builder's model unchanged. The website's example workouts
+// in examples/ each validate and play. And it checks the AI material:
 // every workout in the skill's guide validates and plays, the skill's schema
 // matches, its link script produces links the player opens, and the
 // browser validator (lib/validate.js) agrees with the schema on every case.
@@ -98,6 +99,33 @@ for (const [id, doc] of guideDocs) {
   }
 }
 
+// The workouts in the website's examples gallery: each validates and plays,
+// examples.json lists exactly the files in examples/, and the README's
+// table links to each one.
+const galleryEntries = load('examples/examples.json').examples;
+for (const entry of galleryEntries) {
+  for (const field of ['file', 'discipline', 'group']) {
+    if (typeof entry[field] !== 'string' || !entry[field]) fail('examples/examples.json', `an entry has no ${field}`, entry);
+  }
+}
+const gallery = galleryEntries.map((e) => e.file);
+const galleryFiles = readdirSync(new URL('examples/', root)).filter((f) => f.endsWith('.pwf.json'));
+const readme = readFileSync(new URL('README.md', root), 'utf8');
+for (const file of galleryFiles.filter((f) => !gallery.includes(f))) fail(`examples/${file}`, 'is missing from examples/examples.json');
+for (const file of gallery) {
+  const id = `examples/${file}`;
+  if (!readme.includes(`(${id})`)) fail(id, 'is missing from the examples table in README.md');
+  if (!galleryFiles.includes(file)) {
+    fail(id, 'is listed in examples/examples.json but does not exist');
+  } else if (!validate(load(id))) {
+    fail(id, 'does not validate', validate.errors);
+  } else if (!validateDocument(load(id)).valid) {
+    fail(id, 'fails lib/validate.js', validateDocument(load(id)).problems);
+  } else {
+    expandTimeline(load(id));
+  }
+}
+
 // Two more checks: the skill's copy of the schema, and the node limit, which
 // would need a large file to test as a conformance case.
 const extraChecks = 2;
@@ -136,7 +164,7 @@ try {
   else fail('pwf.py link', error.message);
 }
 
-const total = manifest.cases.length + manifest.invalid.length + examples.length + guideDocs.length + linkChecked + extraChecks;
+const total = manifest.cases.length + manifest.invalid.length + examples.length + guideDocs.length + gallery.length + linkChecked + extraChecks;
 if (failures.length) {
   for (const f of failures) {
     console.error(`FAIL ${f.id}: ${f.message}`);

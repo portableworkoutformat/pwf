@@ -1,0 +1,95 @@
+{
+  "pwf": "0.1",
+  "name": "20-minute EMOM",
+  "description": "Every minute on the minute for 20 minutes, rotating through four stations. Whatever is left of each minute is your rest.",
+  "activity": "hiit",
+  "level": "intermediate",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "emom",
+    "functional-fitness"
+  ],
+  "plan": {
+    "type": "block",
+    "format": "emom",
+    "rounds": 5,
+    "children": [
+      {
+        "type": "task",
+        "end": {
+          "time": 60
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Row"
+            },
+            "end": {
+              "calories": 12
+            }
+          }
+        ]
+      },
+      {
+        "type": "task",
+        "end": {
+          "time": 60
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Wall ball"
+            },
+            "end": {
+              "reps": 15
+            },
+            "target": {
+              "load": {
+                "value": 9,
+                "unit": "kg"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "task",
+        "end": {
+          "time": 60
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Burpee"
+            },
+            "end": {
+              "reps": 10
+            }
+          }
+        ]
+      },
+      {
+        "type": "task",
+        "end": {
+          "time": 60
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Kettlebell swing"
+            },
+            "end": {
+              "reps": 15
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

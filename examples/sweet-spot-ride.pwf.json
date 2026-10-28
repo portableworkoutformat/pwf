@@ -1,0 +1,84 @@
+{
+  "pwf": "0.1",
+  "name": "Sweet spot ride",
+  "description": "Three ten-minute efforts just under threshold on an indoor bike, with five easy minutes between them.",
+  "activity": "cycle",
+  "level": "intermediate",
+  "goals": [
+    "endurance"
+  ],
+  "tags": [
+    "cycling",
+    "indoor",
+    "power"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy spin"
+        },
+        "end": {
+          "time": 600
+        },
+        "phase": "warmup",
+        "target": {
+          "power": {
+            "percentFTP": 55
+          },
+          "cadence": {
+            "value": 90,
+            "unit": "rpm"
+          }
+        }
+      },
+      {
+        "type": "block",
+        "format": "intervals",
+        "rounds": 3,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sweet spot"
+            },
+            "end": {
+              "time": 600
+            },
+            "target": {
+              "power": {
+                "percentFTP": 90
+              },
+              "cadence": {
+                "value": 90,
+                "unit": "rpm"
+              }
+            },
+            "rest": {
+              "time": 300,
+              "kind": "recovery"
+            }
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy spin"
+        },
+        "end": {
+          "time": 300
+        },
+        "phase": "cooldown",
+        "target": {
+          "power": {
+            "percentFTP": 50
+          }
+        }
+      }
+    ]
+  }
+}

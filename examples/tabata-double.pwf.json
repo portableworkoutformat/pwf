@@ -1,0 +1,68 @@
+{
+  "pwf": "0.1",
+  "name": "Double Tabata",
+  "description": "Two classic Tabatas: eight rounds of 20 seconds flat out and 10 seconds rest, with a minute between them.",
+  "activity": "hiit",
+  "level": "advanced",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "tabata",
+    "hiit"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Tabata 1",
+        "format": "tabata",
+        "rounds": 8,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Burpee"
+            },
+            "end": {
+              "time": 20
+            },
+            "rest": {
+              "time": 10
+            }
+          }
+        ]
+      },
+      {
+        "type": "rest",
+        "end": {
+          "time": 60
+        },
+        "kind": "hydrate"
+      },
+      {
+        "type": "block",
+        "name": "Tabata 2",
+        "format": "tabata",
+        "rounds": 8,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Squat jump"
+            },
+            "end": {
+              "time": 20
+            },
+            "rest": {
+              "time": 10
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "examples": [
+    {
+      "file": "sun-salutations.pwf.json",
+      "discipline": "Yoga",
+      "group": "Mind and body"
+    },
+    {
+      "file": "strength-5x5.pwf.json",
+      "discipline": "Strength",
+      "group": "Strength"
+    },
+    {
+      "file": "boxing-bag-rounds.pwf.json",
+      "discipline": "Boxing",
+      "group": "Combat sports"
+    },
+    {
+      "file": "first-run.pwf.json",
+      "discipline": "Running",
+      "group": "Endurance"
+    },
+    {
+      "file": "hiit-30-30.pwf.json",
+      "discipline": "HIIT",
+      "group": "HIIT and conditioning"
+    },
+    {
+      "file": "pilates-mat-core.pwf.json",
+      "discipline": "Pilates",
+      "group": "Mind and body"
+    },
+    {
+      "file": "sweet-spot-ride.pwf.json",
+      "discipline": "Cycling",
+      "group": "Endurance"
+    },
+    {
+      "file": "kickboxing-rounds.pwf.json",
+      "discipline": "Kickboxing",
+      "group": "Combat sports"
+    },
+    {
+      "file": "six-station-class.pwf.json",
+      "discipline": "Group class",
+      "group": "Group classes"
+    },
+    {
+      "file": "swim-1500.pwf.json",
+      "discipline": "Swimming",
+      "group": "Endurance"
+    },
+    {
+      "file": "emom-20.pwf.json",
+      "discipline": "EMOM",
+      "group": "HIIT and conditioning"
+    },
+    {
+      "file": "dumbbell-strength-conditioning.pwf.json",
+      "discipline": "Strength and conditioning",
+      "group": "Strength"
+    },
+    {
+      "file": "jiu-jitsu-drills.pwf.json",
+      "discipline": "Jiu-jitsu",
+      "group": "Combat sports"
+    },
+    {
+      "file": "rowing-500s.pwf.json",
+      "discipline": "Rowing",
+      "group": "Endurance"
+    },
+    {
+      "file": "tabata-double.pwf.json",
+      "discipline": "Tabata",
+      "group": "HIIT and conditioning"
+    },
+    {
+      "file": "desk-break-mobility.pwf.json",
+      "discipline": "Mobility",
+      "group": "Mind and body"
+    },
+    {
+      "file": "tempo-run.pwf.json",
+      "discipline": "Running",
+      "group": "Endurance"
+    },
+    {
+      "file": "for-time-chipper.pwf.json",
+      "discipline": "For Time",
+      "group": "HIIT and conditioning"
+    },
+    {
+      "file": "seated-strength.pwf.json",
+      "discipline": "Low impact",
+      "group": "Mind and body"
+    }
+  ]
+}

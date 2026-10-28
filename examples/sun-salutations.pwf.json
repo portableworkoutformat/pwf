@@ -1,0 +1,151 @@
+{
+  "pwf": "0.1",
+  "name": "Morning sun salutations",
+  "description": "Four slow rounds of sun salutation A, held breath by breath, then rest in child’s pose and savasana.",
+  "activity": "yoga",
+  "level": "beginner",
+  "goals": [
+    "mobility",
+    "mindfulness"
+  ],
+  "tags": [
+    "yoga",
+    "flow"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "note",
+        "text": "Stand at the front of your mat. Breathe in through your nose, out through your nose.",
+        "end": {
+          "time": 15
+        }
+      },
+      {
+        "type": "block",
+        "name": "Sun salutation A",
+        "rounds": 4,
+        "format": "flow",
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Mountain pose"
+            },
+            "end": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Upward salute"
+            },
+            "end": {
+              "time": 10
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Standing forward fold"
+            },
+            "end": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Halfway lift"
+            },
+            "end": {
+              "time": 10
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Plank"
+            },
+            "end": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Low push-up (chaturanga)"
+            },
+            "end": {
+              "time": 10
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Upward-facing dog"
+            },
+            "end": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Downward-facing dog"
+            },
+            "end": {
+              "time": 30
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Standing forward fold"
+            },
+            "end": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Mountain pose"
+            },
+            "end": {
+              "time": 10
+            }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Rest",
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Child's pose"
+            },
+            "end": {
+              "time": 60
+            },
+            "phase": "cooldown"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Savasana"
+            },
+            "end": {
+              "time": 180
+            },
+            "phase": "cooldown"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "pwf": "0.1",
+  "name": "Barbell 5 × 5",
+  "description": "Five sets of five on three big lifts at 80% of your one-rep max. Rest fully between sets.",
+  "activity": "strength",
+  "level": "intermediate",
+  "goals": [
+    "strength"
+  ],
+  "tags": [
+    "strength",
+    "barbell"
+  ],
+  "equipment": {
+    "barbell": {
+      "name": "Barbell"
+    },
+    "rack": {
+      "name": "Squat rack"
+    },
+    "bench": {
+      "name": "Flat bench"
+    },
+    "plates": {
+      "name": "Weight plates"
+    }
+  },
+  "exercises": {
+    "squat": {
+      "name": "Back squat",
+      "equipment": [
+        "barbell",
+        "rack",
+        "plates"
+      ]
+    },
+    "bench": {
+      "name": "Bench press",
+      "equipment": [
+        "barbell",
+        "bench",
+        "plates"
+      ]
+    },
+    "row": {
+      "name": "Barbell row",
+      "equipment": [
+        "barbell",
+        "plates"
+      ]
+    }
+  },
+  "plan": {
+    "type": "block",
+    "format": "straight-sets",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": "squat",
+        "sets": 5,
+        "end": {
+          "reps": 5
+        },
+        "target": {
+          "load": {
+            "percent1RM": 80
+          }
+        },
+        "rest": {
+          "time": 180
+        },
+        "skipLastRest": true
+      },
+      {
+        "type": "rest",
+        "end": {
+          "time": 120
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": "bench",
+        "sets": 5,
+        "end": {
+          "reps": 5
+        },
+        "target": {
+          "load": {
+            "percent1RM": 80
+          }
+        },
+        "rest": {
+          "time": 150
+        },
+        "skipLastRest": true
+      },
+      {
+        "type": "rest",
+        "end": {
+          "time": 120
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": "row",
+        "sets": 5,
+        "end": {
+          "reps": 5
+        },
+        "target": {
+          "load": {
+            "percent1RM": 75
+          },
+          "rir": 2
+        },
+        "rest": {
+          "time": 120
+        }
+      }
+    ]
+  }
+}

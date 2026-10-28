@@ -1,0 +1,139 @@
+{
+  "pwf": "0.1",
+  "name": "Seated strength for beginners",
+  "description": "A gentle, low-impact session done from a sturdy chair. Good for first-timers, older adults or anyone easing back in.",
+  "activity": "mixed",
+  "level": "beginner",
+  "goals": [
+    "strength",
+    "balance"
+  ],
+  "tags": [
+    "low-impact",
+    "seated",
+    "seniors"
+  ],
+  "equipment": {
+    "chair": {
+      "name": "Sturdy chair without wheels"
+    }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Seated marching"
+        },
+        "end": {
+          "time": 60
+        },
+        "phase": "warmup"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Arm circles"
+        },
+        "end": {
+          "time": 30
+        },
+        "phase": "warmup"
+      },
+      {
+        "type": "block",
+        "name": "Circuit",
+        "format": "circuit",
+        "rounds": 2,
+        "restBetweenRounds": {
+          "time": 90,
+          "kind": "hydrate"
+        },
+        "defaults": {
+          "rest": {
+            "time": 20
+          }
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Sit-to-stand"
+            },
+            "end": {
+              "reps": 8
+            },
+            "alternatives": [
+              {
+                "label": "Easier",
+                "exercise": {
+                  "name": "Sit-to-stand with hands on knees"
+                }
+              }
+            ]
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Wall push-up"
+            },
+            "end": {
+              "reps": 10
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Seated knee extension"
+            },
+            "end": {
+              "reps": 10
+            },
+            "side": "each"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Standing heel raise"
+            },
+            "end": {
+              "reps": 12
+            },
+            "notes": "Hold the back of the chair for balance."
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Seated torso twist"
+            },
+            "end": {
+              "reps": 8
+            },
+            "side": "alternating"
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Seated forward fold"
+        },
+        "end": {
+          "time": 45
+        },
+        "phase": "cooldown"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Deep breathing"
+        },
+        "end": {
+          "time": 60
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

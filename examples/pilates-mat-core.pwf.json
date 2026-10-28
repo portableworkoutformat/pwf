@@ -1,0 +1,132 @@
+{
+  "pwf": "0.1",
+  "name": "Pilates mat core",
+  "description": "A classical mat sequence for the deep core. Move slowly and keep your breathing steady.",
+  "activity": "other",
+  "level": "beginner",
+  "goals": [
+    "core",
+    "posture"
+  ],
+  "tags": [
+    "pilates",
+    "mat"
+  ],
+  "plan": {
+    "type": "block",
+    "format": "flow",
+    "defaults": {
+      "rest": {
+        "time": 10,
+        "kind": "transition"
+      }
+    },
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "The hundred"
+        },
+        "end": {
+          "time": 60
+        },
+        "notes": "Pump the arms five times breathing in, five times breathing out."
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Roll-up"
+        },
+        "end": {
+          "reps": 8
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Single-leg circles"
+        },
+        "end": {
+          "reps": 5
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Rolling like a ball"
+        },
+        "end": {
+          "reps": 8
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Single-leg stretch"
+        },
+        "end": {
+          "reps": 10
+        },
+        "side": "alternating"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Double-leg stretch"
+        },
+        "end": {
+          "reps": 8
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Spine stretch forward"
+        },
+        "end": {
+          "reps": 5
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Saw"
+        },
+        "end": {
+          "reps": 4
+        },
+        "side": "alternating"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Swimming"
+        },
+        "end": {
+          "time": 30
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Side-lying leg lifts"
+        },
+        "end": {
+          "reps": 10
+        },
+        "side": "each"
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Seal"
+        },
+        "end": {
+          "reps": 8
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

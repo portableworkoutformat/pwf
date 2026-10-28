@@ -1,0 +1,132 @@
+{
+  "pwf": "0.1",
+  "name": "Pool session, 1,500 m",
+  "description": "Warm up, technique drills, eight 100 m repeats at a steady pace, then an easy swim down.",
+  "activity": "swim",
+  "level": "intermediate",
+  "goals": [
+    "endurance",
+    "technique"
+  ],
+  "tags": [
+    "swimming",
+    "pool"
+  ],
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy freestyle"
+        },
+        "end": {
+          "distance": {
+            "value": 200,
+            "unit": "m"
+          },
+          "estimate": 240
+        },
+        "phase": "warmup"
+      },
+      {
+        "type": "block",
+        "name": "Drills",
+        "rounds": 2,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Catch-up drill"
+            },
+            "end": {
+              "distance": {
+                "value": 50,
+                "unit": "m"
+              },
+              "estimate": 70
+            },
+            "rest": {
+              "time": 15
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Kick with a board"
+            },
+            "end": {
+              "distance": {
+                "value": 50,
+                "unit": "m"
+              },
+              "estimate": 80
+            },
+            "rest": {
+              "time": 15
+            }
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Main set",
+        "format": "intervals",
+        "rounds": 8,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Freestyle"
+            },
+            "end": {
+              "distance": {
+                "value": 100,
+                "unit": "m"
+              },
+              "estimate": 110
+            },
+            "target": {
+              "pace": {
+                "min": 105,
+                "max": 115,
+                "unit": "s/100m"
+              }
+            },
+            "rest": {
+              "time": 20
+            }
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Pull buoy freestyle"
+        },
+        "end": {
+          "distance": {
+            "value": 200,
+            "unit": "m"
+          },
+          "estimate": 250
+        }
+      },
+      {
+        "type": "exercise",
+        "exercise": {
+          "name": "Easy backstroke"
+        },
+        "end": {
+          "distance": {
+            "value": 100,
+            "unit": "m"
+          },
+          "estimate": 140
+        },
+        "phase": "cooldown"
+      }
+    ]
+  }
+}

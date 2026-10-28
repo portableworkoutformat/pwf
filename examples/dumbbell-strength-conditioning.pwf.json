@@ -1,0 +1,175 @@
+{
+  "pwf": "0.1",
+  "name": "Dumbbell strength and conditioning",
+  "description": "Two supersets for strength, then a short conditioning finisher. One pair of dumbbells is all you need.",
+  "activity": "strength",
+  "level": "intermediate",
+  "goals": [
+    "strength",
+    "conditioning"
+  ],
+  "tags": [
+    "strength-and-conditioning",
+    "dumbbells"
+  ],
+  "equipment": {
+    "dumbbells": {
+      "name": "Dumbbells",
+      "quantity": 2,
+      "notes": "A moderate pair, such as 10 to 20 kg each"
+    }
+  },
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "block",
+        "name": "Warm-up",
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Jumping jacks"
+            },
+            "end": {
+              "time": 45
+            },
+            "phase": "warmup"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Bodyweight squat"
+            },
+            "end": {
+              "time": 45
+            },
+            "phase": "warmup"
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Inchworm"
+            },
+            "end": {
+              "time": 45
+            },
+            "phase": "warmup"
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Superset A",
+        "format": "superset",
+        "rounds": 3,
+        "restBetweenRounds": {
+          "time": 90
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Goblet squat"
+            },
+            "end": {
+              "reps": {
+                "min": 8,
+                "max": 12
+              }
+            },
+            "label": "A1",
+            "target": {
+              "tempo": "3-1-1-0",
+              "rir": 2
+            },
+            "rest": {
+              "time": 30
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Push-up"
+            },
+            "end": {
+              "reps": 10
+            },
+            "label": "A2"
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Superset B",
+        "format": "superset",
+        "rounds": 3,
+        "restBetweenRounds": {
+          "time": 90
+        },
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Dumbbell Romanian deadlift"
+            },
+            "end": {
+              "reps": 10
+            },
+            "label": "B1",
+            "target": {
+              "rir": 2
+            },
+            "rest": {
+              "time": 30
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Single-arm dumbbell row"
+            },
+            "end": {
+              "reps": 10
+            },
+            "label": "B2",
+            "side": "each"
+          }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Finisher",
+        "format": "intervals",
+        "rounds": 3,
+        "skipLastRest": true,
+        "children": [
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Dumbbell thruster"
+            },
+            "end": {
+              "time": 40
+            },
+            "rest": {
+              "time": 20
+            }
+          },
+          {
+            "type": "exercise",
+            "exercise": {
+              "name": "Mountain climbers"
+            },
+            "end": {
+              "time": 40
+            },
+            "rest": {
+              "time": 20
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
