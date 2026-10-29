@@ -92,19 +92,19 @@ One format for every kind of workout. [Play any of them on the website](https://
 
 Describe a workout in plain words. Your AI writes it in PWF and gives you a link that plays it. Ask for changes as you go.
 
-**[Try with Claude](https://claude.ai/new?q=Help%20me%20make%20a%20workout%20in%20the%20Portable%20Workout%20Format%20%28PWF%29.%20First%20read%20https%3A%2F%2Fportableworkout.org%2Fllms-full.txt.%20Then%20ask%20me%20what%20I%E2%80%99d%20like.%20When%20it%E2%80%99s%20ready%2C%20give%20me%20the%20PWF%20JSON%20and%20a%20link%20to%20play%20it.)** · **[Try with ChatGPT](https://chatgpt.com/?q=Help%20me%20make%20a%20workout%20in%20the%20Portable%20Workout%20Format%20%28PWF%29.%20First%20read%20https%3A%2F%2Fportableworkout.org%2Fllms-full.txt.%20Then%20ask%20me%20what%20I%E2%80%99d%20like.%20When%20it%E2%80%99s%20ready%2C%20give%20me%20the%20PWF%20JSON%20and%20a%20link%20to%20play%20it.)**
+**[Try with Claude](https://claude.ai/new?q=I%E2%80%99d%20like%20to%20make%20a%20workout%20with%20the%20Portable%20Workout%20Format.%20Read%20https%3A%2F%2Fportableworkout.org%2Fai%2F%20first%2C%20then%20ask%20me%20what%20I%E2%80%99d%20like.%20When%20it%E2%80%99s%20ready%2C%20give%20me%20a%20link%20to%20play%20it.)** · **[Try with ChatGPT](https://chatgpt.com/?q=I%E2%80%99d%20like%20to%20make%20a%20workout%20with%20the%20Portable%20Workout%20Format.%20Read%20https%3A%2F%2Fportableworkout.org%2Fai%2F%20first%2C%20then%20ask%20me%20what%20I%E2%80%99d%20like.%20When%20it%E2%80%99s%20ready%2C%20give%20me%20a%20link%20to%20play%20it.)**
 
 1. **Start a chat.** The links open a new chat with a short prompt that points your assistant at the PWF guide. With any other assistant, paste the prompt below.
 2. **Describe your workout.** How long, what kit, how hard: "30 minutes, kettlebell and a mat, finish with core". Ask for changes as you go.
-3. **Play it.** Your assistant gives you a link that opens the workout in the [PWF player](https://portableworkout.org/play/), with timers, rounds and what's next. If it can't make a link, paste its JSON into the player.
+3. **Play it.** Your assistant gives you a link that opens the workout in the [PWF player](https://portableworkout.org/play/), with timers, rounds and what's next. Save it as a file to keep or share.
 
 ```text
-Help me make a workout in the Portable Workout Format (PWF). First read https://portableworkout.org/llms-full.txt. Then ask me what I'd like. When it's ready, give me the PWF JSON and a link to play it.
+I'd like to make a workout with the Portable Workout Format. Read https://portableworkout.org/ai/ first, then ask me what I'd like. When it's ready, give me a link to play it.
 ```
 
 ### Make your assistant fluent in PWF
 
-- **Skill for Claude and ChatGPT.** Download [portable-workout-format.zip](https://portableworkout.org/skill/portable-workout-format.zip) and upload it in your assistant's skills settings. It teaches the format and adds scripts that check each workout and build its play link. The source is in [`skills/portable-workout-format`](skills/portable-workout-format).
+- **Skill for Claude and ChatGPT.** Download [portable-workout-format.zip](https://portableworkout.org/skill/portable-workout-format.zip) and upload it in your assistant's skills settings. It teaches the format and adds a script that checks each workout and builds its play link in one step. The source is in [`skills/portable-workout-format`](skills/portable-workout-format).
 - **Claude Code.** Install the same skill as a plugin:
 
   ```text
@@ -113,7 +113,7 @@ Help me make a workout in the Portable Workout Format (PWF). First read https://
 
   If your version of Claude Code doesn't know `--marketplace`, add the marketplace first with `/plugin marketplace add portableworkoutformat/pwf`, then run `/plugin install pwf@pwf`.
 
-- **Any AI tool.** Point it at [`llms.txt`](https://portableworkout.org/llms.txt) or the full guide, [`llms-full.txt`](https://portableworkout.org/llms-full.txt).
+- **Any AI tool.** Ask it to read [portableworkout.org/ai](https://portableworkout.org/ai/), the guide for AI assistants. Tools that look for [`llms.txt`](https://portableworkout.org/llms.txt) find it there too, and the same guide is at [`llms-full.txt`](https://portableworkout.org/llms-full.txt).
 - **Coming soon: a PWF connector.** An MCP server that checks workouts and plays them inside the chat.
 
 ## Play and build in your browser

@@ -3,13 +3,15 @@
 
 Usage:
   python3 pwf.py check workout.pwf.json   Print "valid", or the problems and exit 1
-  python3 pwf.py link workout.pwf.json    Print a link that opens the workout in the player
+  python3 pwf.py link workout.pwf.json    Check the workout, then print a link that opens it in
+                                          the player, or the problems and exit 1
 
 Use "-" instead of a file name to read the workout from standard input.
 
 Only the Python standard library is needed, except for the schema check,
 which needs the jsonschema package (pip install jsonschema). Without it,
-`check` runs the other checks, never prints "valid", and exits 2.
+`check` runs the other checks, never prints "valid", and exits 2, while `link`
+runs the other checks and leaves the schema to the player.
 
 The player also checks the limits on one pass of the timeline (24 hours and
 100,000 segments), which this script doesn't.
@@ -152,7 +154,8 @@ def semantic_problems(doc):
     return problems
 
 
-def check(doc):
+def problems_in(doc):
+    """Prints the document's problems. Returns them, and whether the schema was checked."""
     problems = size_problems(doc)
     schema = None
     if not problems:
@@ -160,9 +163,14 @@ def check(doc):
         problems = (schema or []) + semantic_problems(doc)
     for path, message in problems:
         print(f"{path or '(document)'}: {message}")
+    return problems, schema is not None
+
+
+def check(doc):
+    problems, schema_checked = problems_in(doc)
     if problems:
         return 1
-    if schema is None:
+    if not schema_checked:
         print("not checked: the jsonschema package isn't installed, so the schema wasn't checked. "
               "Run pip install jsonschema and check again. If you can't install it, go through the "
               "guide's checklist; the PWF player checks the schema when it opens the link.")
@@ -176,6 +184,8 @@ def main(argv):
         sys.exit(__doc__.strip())
     doc = load(argv[2])
     if argv[1] == "link":
+        if problems_in(doc)[0]:
+            return 1
         print(link(doc))
         return 0
     return check(doc)

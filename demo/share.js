@@ -22,6 +22,7 @@ export async function encodeWorkout(doc) {
 }
 
 export async function decodeWorkout(text) {
+  if (/^(\{|%7B)/i.test(text)) return decodePlain(text);
   const [kind, data] = [text.slice(0, 2), text.slice(2)];
   if (kind !== 'z.' && kind !== 'j.') throw new Error('This link doesn’t hold a workout.');
   if (data.length > MAX_LINK_DATA) throw new Error(TOO_LARGE);
@@ -29,6 +30,25 @@ export async function decodeWorkout(text) {
   if (kind === 'z.') bytes = await inflate(bytes);
   if (bytes.length > MAX_BYTES) throw new Error(TOO_LARGE);
   return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+// A link can also hold the JSON itself, which an AI can write without running
+// code. Browsers percent-encode spaces and quotes in it. A % that doesn't start
+// an escape, as in "80% effort", stays as it is.
+function decodePlain(text) {
+  if (text.length > MAX_BYTES * 3) throw new Error(TOO_LARGE);
+  let json;
+  try {
+    json = decodeURIComponent(text.replace(/%(?![0-9a-f]{2})/gi, '%25'));
+  } catch {
+    throw new Error('This link’s workout is garbled: a %-escape in it isn’t valid.');
+  }
+  checkSize(json);
+  try {
+    return JSON.parse(json);
+  } catch (error) {
+    throw new Error(`This link’s workout isn’t valid JSON: ${error.message}`);
+  }
 }
 
 // Decompresses, stopping as soon as the output passes the size limit, so a

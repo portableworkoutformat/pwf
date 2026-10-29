@@ -2,7 +2,9 @@
 // "Try with Claude" buttons and the player's "Change it with AI" buttons
 // share them.
 
-export const GUIDE_URL = 'https://portableworkout.org/llms-full.txt';
+// The guide for AI assistants, at an address people can read in a prompt.
+// llms-full.txt holds the same text.
+export const GUIDE_URL = 'https://portableworkout.org/ai/';
 
 export const ASSISTANTS = [
   { name: 'Claude', link: (prompt) => `https://claude.ai/new?q=${encodeURIComponent(prompt)}`, home: 'https://claude.ai/new' },
@@ -13,17 +15,17 @@ export const ASSISTANTS = [
 const MAX_LINK = 8000;
 
 export const startPrompt = () =>
-  `Help me make a workout in the Portable Workout Format (PWF). First read ${GUIDE_URL}. ` +
-  'Then ask me what I’d like. When it’s ready, give me the PWF JSON and a link to play it.';
+  `I’d like to make a workout with the Portable Workout Format. Read ${GUIDE_URL} first, ` +
+  'then ask me what I’d like. When it’s ready, give me a link to play it.';
 
 export const changePrompt = (doc) =>
-  `Here’s a workout in the Portable Workout Format (PWF). Read ${GUIDE_URL} if you haven’t already, ` +
-  'then help me change it. When we’re done, give me the whole updated JSON and a new link to play it.\n\n' +
+  `Here’s a workout in the Portable Workout Format. Read ${GUIDE_URL} if you haven’t already, ` +
+  'then help me change it. When we’re done, give me a new link to play it.\n\n' +
   JSON.stringify(doc);
 
 export const fixPrompt = (problems) =>
   'The PWF player couldn’t open the workout you gave me. It found these problems:\n\n' +
-  `${problems}\n\nPlease fix them and give me the whole workout again with a new link.`;
+  `${problems}\n\nPlease fix them and give me a new link.`;
 
 /** The link to open an assistant with this prompt, and whether the prompt fits in it. */
 export function assistantLink(assistant, prompt) {

@@ -8,15 +8,21 @@ PWF is a draft (version 0.1). The full specification is at https://portableworko
 
 When someone asks for a workout:
 
-1. **Work out what they want.** If you can't make a sensible choice, ask one or two short questions, usually how long it should be, what equipment they have and their level. Otherwise choose, and say what you assumed.
-2. **Write one PWF document** using the patterns below.
-3. **Check it** against "Before you answer". If you can run code, also validate it (see "Checking a document").
-4. **Reply with:**
-   - two or three lines on the structure and the total time;
-   - the document in a `json` code block;
-   - a link to play it (see "Playing the workout"). If you can create files, also offer it as a `.pwf.json` file named after the workout.
+1. **Work out what they want.** If you can't make a sensible choice, ask one or two short questions, usually how long it should be, where they'll train, what equipment they have and their level. Otherwise choose, and say what you assumed.
+2. **Write one PWF document** using the patterns below, with exercises that suit where they'll train (see "Choosing exercises").
+3. **Check it** against "Before you answer". You don't need to run code: the player checks every workout when it opens and lists any problems.
+4. **Reply with** two or three lines on the structure and the total time, then the link to play it (see "Playing the workout"). The link holds the whole workout, and the player saves it as a `.pwf.json` file, so give the JSON as well only if they ask for it.
 
-When they ask for a change, change only what they asked for and keep everything else, including names and `id`s. Give back the whole updated document and a new link, and say in one line what changed. If they paste problems from the player, fix exactly those and send the whole document again.
+When they ask for a change, change only what they asked for and keep everything else, including names and `id`s. Give a new link and say in one line what changed. If they paste problems from the player, fix exactly those and give a new link.
+
+## Choosing exercises
+
+Fit the workout to where the person will train and what they have there.
+
+- **Use only the equipment they have.** If they don't say, ask, or keep to bodyweight.
+- **Running needs somewhere to run.** Most people train in a gym or at home. Program a run only when they say they're outdoors, on a track or on a treadmill. If the style calls for running, such as run intervals or a fitness race that mixes runs with stations, ask, or swap in a rower, ski erg or bike they have and say so.
+- **Warm up in place.** Raise the heart rate and loosen the joints the main part uses, building to its intensity: jumping jacks, high knees, butt kicks, inchworms, air squats, lunges with a twist and arm circles, or a few easy minutes on a rower, bike or ski erg they have.
+- **Cool down** with easy movement, then stretches for what the main part worked.
 
 ## The format on one screen
 
@@ -626,50 +632,21 @@ These are the mistakes that make a document invalid or play wrongly:
 - **Stations need group mode.** `stations` only in documents with `"mode": "group"`, and every station needs a fixed length.
 - **Plain text.** No HTML in any text field.
 - **Limits.** At most 1,000 rounds, sets or children; 16 levels of nesting; times up to 86,400 seconds.
+- **The link is one line.** No spaces between tokens, and every space inside a string written as `%20` (see "Playing the workout").
 
 ## Playing the workout
 
 The PWF player at https://portableworkout.org/play/ plays any valid PWF 0.1 workout except `parallel` lanes. It shows the total time and checks the document first.
 
-Give the person a link that opens the player with the workout in it. The link is:
+Give the person a link that opens the player with the workout in it. Write it yourself, without code: the player's address, then `#w=`, then the document as compact JSON on one line. Leave no spaces between tokens, and write every space inside a string as `%20`. Give it as a Markdown link:
 
 ```text
-https://portableworkout.org/play/#w=z.<data>
+[Play Quick Tabata](https://portableworkout.org/play/#w={"pwf":"0.1","name":"Quick%20Tabata","plan":{"type":"block","rounds":8,"skipLastRest":true,"children":[{"type":"exercise","exercise":{"name":"Air%20squat"},"end":{"time":20},"rest":{"time":10}}]}})
 ```
 
-where `<data>` is the document as compact UTF-8 JSON, compressed with raw DEFLATE (no zlib header), then base64url-encoded without `=` padding. If you can run code, build it like this:
-
-```python
-import base64, json, zlib
-
-def play_link(doc):
-    data = json.dumps(doc, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
-    deflate = zlib.compressobj(9, zlib.DEFLATED, -15)
-    packed = deflate.compress(data) + deflate.flush()
-    return "https://portableworkout.org/play/#w=z." + base64.urlsafe_b64encode(packed).decode().rstrip("=")
-```
-
-Never build the link by hand or guess its data. If you can't run code, give the document in a code block and tell the person: copy it, open https://portableworkout.org/play/ and paste it in.
-
-If the player can't open a workout, it lists the problems and offers to copy them. When the person pastes them back, fix each one and send the whole document and a new link.
+When it opens, the player checks the workout and shortens the link in the address bar, so the person can share it. If it finds problems, it lists them and offers to copy them. When the person pastes them back, fix each one and give a new link.
 
 The builder at https://portableworkout.org/build/ edits simple workouts by hand.
-
-## Checking a document
-
-If you can run Python with the `jsonschema` package and have network access, validate against the schema:
-
-```python
-import json, urllib.request
-from jsonschema import Draft202012Validator
-
-url = "https://portableworkout.org/schema/pwf-0.1.schema.json"
-schema = json.load(urllib.request.urlopen(url))
-for error in Draft202012Validator(schema).iter_errors(doc):
-    print("/" + "/".join(map(str, error.absolute_path)), error.message)
-```
-
-The schema can't check everything: also make sure keys resolve, `id`s are unique and `stations` only appear in group workouts. The player checks all of this when it opens the link.
 
 ## More
 

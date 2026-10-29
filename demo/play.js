@@ -48,6 +48,8 @@ async function init() {
     const linked = await workoutFromLocation();
     if (linked) {
       openDocument(linked);
+      // A link that holds the plain JSON becomes the shorter compressed one.
+      if (!/^#w=[zj]\./.test(location.hash)) history.replaceState(null, '', `${location.pathname}#w=${await encodeWorkout(doc)}`);
       return;
     }
   } catch (error) {
