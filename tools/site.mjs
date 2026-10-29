@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Builds the website in _site/: the home page with its examples gallery, the
-// player and builder, the AI guide (llms.txt and llms-full.txt), the spec, the
-// schema and the skill.
+// player and builder, the AI guide (/ai, llms.txt and llms-full.txt), the spec,
+// the schema and the skill.
 // GitHub Pages publishes _site/ from main (.github/workflows/pages.yml).
 //
 // Run `npm run site`, which builds the validator first.
@@ -55,7 +55,35 @@ for (const [marker, html] of [['<!-- example filters -->', filters.join('\n     
   home = home.replace(marker, () => html);
 }
 writeFileSync(at('index.html'), home);
-cpSync(new URL('skills/portable-workout-format/references/guide.md', root), at('llms-full.txt'));
+
+// The AI guide, as llms-full.txt and at /ai, the short address the site's
+// prompts use. GitHub Pages serves a folder only through index.html, so /ai
+// wraps the Markdown in a page.
+const guide = readFileSync(new URL('skills/portable-workout-format/references/guide.md', root), 'utf8');
+writeFileSync(at('llms-full.txt'), guide);
+mkdirSync(at('ai/'));
+writeFileSync(at('ai/index.html'), `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Writing workouts in PWF: a guide for AI assistants</title>
+  <meta name="description" content="How AI assistants write, change and share workouts in the Portable Workout Format.">
+  <link rel="icon" href="../favicon.ico" sizes="32x32">
+  <link rel="alternate" type="text/markdown" href="../llms-full.txt">
+  <style>
+    body { margin: 0 auto; max-width: 50rem; padding: 1.5rem 1rem 3rem; background: #f6f5f2; color: #1d1d1b; font: 0.9rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+    a { color: #d9481e; }
+    @media (prefers-color-scheme: dark) { body { background: #141413; color: #f1efe9; } a { color: #f0643a; } }
+  </style>
+</head>
+<body>
+  <p><a href="../">portableworkout.org</a> · <a href="../llms-full.txt">Plain text</a></p>
+  <pre>${escape(guide)}</pre>
+</body>
+</html>
+`);
 
 // /play/ and /build/ serve the demo pages at short URLs. A <base> element
 // points their relative links and scripts back at /demo/.

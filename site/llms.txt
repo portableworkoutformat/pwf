@@ -6,14 +6,15 @@ PWF is a draft (version 0.1). Documents need only `pwf`, `name` and `plan`. The 
 
 ## For AI assistants
 
-- [Writing workouts in PWF](https://portableworkout.org/llms-full.txt): everything an assistant needs to write, change, check and share PWF workouts, with worked examples and a checklist. Read this first.
-- [PWF skill](https://portableworkout.org/skill/portable-workout-format.zip): an Agent Skill for Claude and ChatGPT, with scripts to check a workout and build its play link.
+- [Writing workouts in PWF](https://portableworkout.org/llms-full.txt): everything an assistant needs to write, change, check and share PWF workouts, with worked examples and a checklist. Read this first. It's also at https://portableworkout.org/ai/.
+- Give the person a link that plays the workout: https://portableworkout.org/play/#w= then the compact JSON on one line, with every space inside a string written as %20. No code needed.
+- [PWF skill](https://portableworkout.org/skill/portable-workout-format.zip): an Agent Skill for Claude and ChatGPT, with a script that checks a workout and builds its play link.
 
 ## Reference
 
 - [Specification](https://portableworkout.org/spec.md): the normative spec, including the timing rules.
 - [JSON Schema](https://portableworkout.org/schema/pwf-0.1.schema.json): JSON Schema 2020-12.
-- [Player](https://portableworkout.org/play/): plays a workout from a link (`#w=z.` plus raw-DEFLATE, base64url JSON) or pasted JSON.
+- [Player](https://portableworkout.org/play/): plays a workout from a link (`#w=` plus the compact JSON, or the shorter `#w=z.` plus raw-DEFLATE, base64url JSON) or pasted JSON.
 
 ## Optional
 

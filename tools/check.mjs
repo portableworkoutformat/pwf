@@ -6,9 +6,10 @@
 // It also checks the demo's examples: each validates and survives a round
 // trip through the builder's model unchanged. The website's example workouts
 // in examples/ each validate and play. And it checks the AI material:
-// every workout in the skill's guide validates and plays, the skill's schema
-// matches, its link script produces links the player opens, and the
-// browser validator (lib/validate.js) agrees with the schema on every case.
+// every workout in the skill's guide validates and plays, the guide's play
+// links open valid workouts, the skill's schema matches, its link script
+// produces links the player opens, and the browser validator
+// (lib/validate.js) agrees with the schema on every case.
 //
 // `--write` regenerates the expected timelines from the draft expander.
 // Review every changed file by hand before committing it.
@@ -99,6 +100,22 @@ for (const [id, doc] of guideDocs) {
   }
 }
 
+// The guide's play links hold the plain JSON, the way AIs write them. Each must
+// open a valid workout. So must a link as a browser hands it to the player,
+// with quotes and spaces escaped and the bare % in "80% effort" left alone.
+const guideLinks = [...guide.matchAll(/\]\((https:\/\/portableworkout\.org\/play\/#w=\{.*\})\)$/gm)].map((m) => m[1]);
+if (!guideLinks.length) fail('guide.md', 'has no play link');
+const escapedLink = '%7B%22pwf%22:%220.1%22,%22name%22:%2280%%20effort%22,%22plan%22:%7B%22type%22:%22block%22,%22children%22:[%7B%22type%22:%22rest%22,%22end%22:%7B%22time%22:5%7D%7D]%7D%7D';
+for (const [id, data] of [...guideLinks.map((link, i) => [`guide.md link ${i + 1}`, link.split('#w=')[1]]), ['escaped link', escapedLink]]) {
+  try {
+    const doc = await decodeWorkout(data);
+    if (!validateDocument(doc).valid) fail(id, 'holds an invalid workout', validateDocument(doc).problems);
+    else if (id === 'escaped link' && doc.name !== '80% effort') fail(id, `decodes the name as ${JSON.stringify(doc.name)}`);
+  } catch (error) {
+    fail(id, `doesn't open: ${error.message}`);
+  }
+}
+
 // The workouts in the website's examples gallery: each validates and plays,
 // examples.json lists exactly the files in examples/, and the README's
 // table links to each one.
@@ -151,20 +168,22 @@ try {
     if (!isDeepStrictEqual(await decodeWorkout(data), load(file))) fail(file, 'the player decodes pwf.py\'s link differently');
     linkChecked += 1;
   }
-  // pwf.py check rejects a document beyond the depth limit, which needs no jsonschema.
-  try {
-    execFileSync('python3', [`${skill}/scripts/pwf.py`, 'check', 'conformance/invalid/007-too-deep.pwf.json'], { cwd: root, stdio: 'pipe' });
-    fail('pwf.py check', 'accepts conformance/invalid/007-too-deep.pwf.json');
-  } catch (error) {
-    if (error.status !== 1) throw error;
+  // pwf.py check and link reject a document beyond the depth limit, which needs no jsonschema.
+  for (const command of ['check', 'link']) {
+    try {
+      execFileSync('python3', [`${skill}/scripts/pwf.py`, command, 'conformance/invalid/007-too-deep.pwf.json'], { cwd: root, stdio: 'pipe' });
+      fail(`pwf.py ${command}`, 'accepts conformance/invalid/007-too-deep.pwf.json');
+    } catch (error) {
+      if (error.status !== 1) throw error;
+    }
+    linkChecked += 1;
   }
-  linkChecked += 1;
 } catch (error) {
   if (error.code === 'ENOENT') console.warn('python3 not found: skipped the skill\'s link script');
   else fail('pwf.py link', error.message);
 }
 
-const total = manifest.cases.length + manifest.invalid.length + examples.length + guideDocs.length + gallery.length + linkChecked + extraChecks;
+const total = manifest.cases.length + manifest.invalid.length + examples.length + guideDocs.length + guideLinks.length + 1 + gallery.length + linkChecked + extraChecks;
 if (failures.length) {
   for (const f of failures) {
     console.error(`FAIL ${f.id}: ${f.message}`);
