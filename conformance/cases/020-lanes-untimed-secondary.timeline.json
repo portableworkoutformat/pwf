@@ -1,0 +1,76 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 60,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 60,
+      "type": "parallel",
+      "path": "/plan",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 60,
+              "type": "work",
+              "end": {
+                "time": 60
+              },
+              "path": "/plan/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": null,
+              "type": "exercise",
+              "exercise": {
+                "name": "Burpee"
+              },
+              "end": {
+                "reps": 10
+              },
+              "path": "/plan/children/1/children/0"
+            },
+            {
+              "start": null,
+              "duration": 100,
+              "type": "work",
+              "end": {
+                "time": 100
+              },
+              "path": "/plan/children/1/children/1"
+            }
+          ]
+        },
+        {
+          "lane": 2,
+          "loop": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": null,
+              "type": "exercise",
+              "exercise": {
+                "name": "Squat"
+              },
+              "end": {
+                "reps": 5
+              },
+              "path": "/plan/children/2",
+              "iteration": {
+                "/plan/children/2/loop": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

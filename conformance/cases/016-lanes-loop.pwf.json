@@ -1,0 +1,27 @@
+{
+  "pwf": "0.1",
+  "name": "Looping lanes",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 100 } },
+      {
+        "type": "block",
+        "loop": true,
+        "children": [
+          { "type": "work", "end": { "time": 30 } },
+          { "type": "rest", "end": { "time": 10 } }
+        ]
+      },
+      {
+        "type": "block",
+        "loop": true,
+        "rounds": 2,
+        "children": [
+          { "type": "work", "end": { "time": 20 } }
+        ]
+      }
+    ]
+  }
+}

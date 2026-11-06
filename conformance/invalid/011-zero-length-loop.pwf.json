@@ -1,0 +1,18 @@
+{
+  "pwf": "0.1",
+  "name": "A looping lane with no length",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 60 } },
+      {
+        "type": "block",
+        "loop": true,
+        "children": [
+          { "type": "work", "end": { "time": 0 } }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes inside rounds",
+  "mode": "group",
+  "plan": {
+    "type": "block",
+    "rounds": 2,
+    "restBetweenRounds": { "time": 30 },
+    "skipLastRest": true,
+    "defaults": { "end": { "time": 20 } },
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          {
+            "type": "block",
+            "children": [
+              { "type": "exercise", "exercise": { "name": "Squat" } },
+              { "type": "rest", "end": { "time": 10 } }
+            ]
+          },
+          { "type": "exercise", "exercise": { "name": "Row" }, "end": { "time": 30 } }
+        ]
+      }
+    ]
+  }
+}

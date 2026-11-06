@@ -1,0 +1,26 @@
+{
+  "pwf": "0.1",
+  "name": "The primary lane has no fixed length",
+  "mode": "group",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Burpee" }, "end": { "reps": 10 } },
+          {
+            "type": "block",
+            "loop": true,
+            "children": [
+              { "type": "work", "end": { "time": 30 } },
+              { "type": "rest", "end": { "time": 30 } }
+            ]
+          },
+          { "type": "work", "end": { "time": 60 } }
+        ]
+      },
+      { "type": "rest", "end": { "time": 30 } }
+    ]
+  }
+}

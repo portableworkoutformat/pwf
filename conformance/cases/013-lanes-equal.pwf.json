@@ -1,0 +1,20 @@
+{
+  "pwf": "0.1",
+  "name": "Two lanes, same length",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      {
+        "type": "block",
+        "name": "Floor",
+        "rounds": 2,
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "time": 20 } },
+          { "type": "rest", "end": { "time": 10 } }
+        ]
+      },
+      { "type": "exercise", "name": "Rower", "exercise": { "name": "Row" }, "end": { "time": 60 } }
+    ]
+  }
+}

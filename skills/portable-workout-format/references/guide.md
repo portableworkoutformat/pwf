@@ -510,6 +510,40 @@ Only documents with `"mode": "group"` may use `stations`. Each child is a statio
 }
 ```
 
+### Two tracks at once: lanes
+
+"Half the class on the floor, half on the rowers." Use lanes only when different screens or people need different things at the same moment. The first lane is the primary, and the looping lane repeats until it ends.
+
+```json
+{
+  "pwf": "0.1",
+  "name": "Floor and rower",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      {
+        "type": "block",
+        "name": "Floor",
+        "rounds": 4,
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Kettlebell swing" }, "end": { "time": 40 }, "rest": { "time": 20 } }
+        ]
+      },
+      {
+        "type": "block",
+        "name": "Rowers",
+        "loop": true,
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Rowing machine" }, "end": { "time": 45 } },
+          { "type": "rest", "end": { "time": 15 } }
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## Field reference
 
 ### Document
@@ -581,7 +615,7 @@ A block with `"rounds": "max"` needs `end`. A task with `"rounds": "max"` needs 
 
 `stations` (group only) has `children` (the stations), `rotations` (default 1), `transition` (one rest or a list, default kind `transition`) and `skipLastRest`. A station may list its `equipment` and `capacity` (people). Stations inside stations are zones.
 
-`parallel` has `children` (1 to 10 lanes, played at the same time) and `primary` (the lane whose end ends the node, default 0). A lane with `"loop": true` repeats until then. The web player doesn't play parallel lanes yet.
+`parallel` has `children` (1 to 10 lanes, played at the same time) and `primary` (the lane whose end ends the node, default 0). Lanes can differ in length: a longer lane is cut when the primary lane ends, and a shorter one finishes early. A lane with `"loop": true` repeats until the primary lane ends. Use `"mode": "group"` when lanes give people different things to do. The web player follows one lane at a time, and the person picks which.
 
 ### End conditions
 
@@ -630,13 +664,14 @@ These are the mistakes that make a document invalid or play wrongly:
 - **Container `end` is time only.** A block or task can only use `{ "time": n }`.
 - **`format` doesn't change timing.** It's a label. The structure decides how the workout plays.
 - **Stations need group mode.** `stations` only in documents with `"mode": "group"`, and every station needs a fixed length.
+- **Lanes.** The primary lane can't have `loop`, a looping lane can't last zero seconds, and `parallel` can't go inside a `task`.
 - **Plain text.** No HTML in any text field.
 - **Limits.** At most 1,000 rounds, sets or children; 16 levels of nesting; times up to 86,400 seconds.
 - **The link is one line.** No spaces between tokens, and every space inside a string written as `%20` (see "Playing the workout").
 
 ## Playing the workout
 
-The PWF player at https://portableworkout.org/play/ plays any valid PWF 0.1 workout except `parallel` lanes. It shows the total time and checks the document first.
+The PWF player at https://portableworkout.org/play/ plays any valid PWF 0.1 workout, following one lane at a time if it has `parallel` lanes. It shows the total time and checks the document first.
 
 Give the person a link that opens the player with the workout in it. Write it yourself, without code: the player's address, then `#w=`, then the document as compact JSON on one line. Leave no spaces between tokens, and write every space inside a string as `%20`. Give it as a Markdown link:
 

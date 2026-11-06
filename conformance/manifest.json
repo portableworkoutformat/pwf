@@ -72,6 +72,72 @@
       "description": "Two stations, two rotations, transitions [15 s, 30 s water] used in turn. 120 + 135 + 120 + 105.",
       "rules": [6, 10],
       "totalSeconds": 480
+    },
+    {
+      "id": "013-lanes-equal",
+      "description": "Two lanes of the same length: a 2-round block and one 60 s row. 60.",
+      "rules": [11],
+      "totalSeconds": 60
+    },
+    {
+      "id": "014-lanes-shorter",
+      "description": "Individual mode: a whiteboard lane finishes 30 s early, and nothing is added to its list. A rest follows the node at 90. 90 + 30.",
+      "rules": [11],
+      "totalSeconds": 120
+    },
+    {
+      "id": "015-lanes-longer-cut",
+      "description": "Lanes longer than the primary. Sets of 40 s are cut at 60, so the second is marked cut and the third is gone. Steps of 30 s end exactly at 60, so nothing is marked. 60.",
+      "rules": [11],
+      "totalSeconds": 60
+    },
+    {
+      "id": "016-lanes-loop",
+      "description": "Looping lanes written out in full. A 40 s pass repeats to 100, with its last work cut to 20 s and its rest gone. A lane with its own rounds keeps rounds and repeats apart in iteration. 100.",
+      "rules": [11],
+      "totalSeconds": 100
+    },
+    {
+      "id": "017-lanes-primary-second",
+      "description": "primary: 1. The first lane's 120 s is cut at the second lane's 90 s. 90.",
+      "rules": [11],
+      "totalSeconds": 90
+    },
+    {
+      "id": "018-lanes-in-rounds",
+      "description": "Lanes in 2 rounds. The rest inside a lane doesn't end the round, so the rest between rounds is added rather than replacing it, skipLastRest leaves it alone, and outer defaults reach into the lane. 30 + 30 + 30.",
+      "rules": [5, 6, 11, 12],
+      "totalSeconds": 90
+    },
+    {
+      "id": "019-lanes-untimed-primary",
+      "description": "A rep-based primary lane. The node's length isn't known, so a looping lane shows one pass with loop: true, nothing is cut, and what follows the node has no start.",
+      "rules": [2, 11],
+      "totalSeconds": null
+    },
+    {
+      "id": "020-lanes-untimed-secondary",
+      "description": "A timed primary lane, with rep-based steps in other lanes. The total is known. Past the reps a lane's position isn't, so its 100 s step isn't cut, and a rep-based looping lane shows one pass with loop: true. 60.",
+      "rules": [2, 11],
+      "totalSeconds": 60
+    },
+    {
+      "id": "021-lanes-cut-from-outside",
+      "description": "A 50 s block cuts through a 60 s node 10 s in, which cuts every lane at 40 s. 10 + 40.",
+      "rules": [7, 11],
+      "totalSeconds": 50
+    },
+    {
+      "id": "022-lanes-nested",
+      "description": "Lanes inside a lane. The outer primary's 25 s cuts the inner node at 15 s, and each of its lanes with it. 25.",
+      "rules": [11],
+      "totalSeconds": 25
+    },
+    {
+      "id": "023-lanes-in-stations",
+      "description": "Lanes at a station count as one 40 s station. The rest inside a lane gets no cue and the transition is added after the node. The other station's 30 s is padded to 40. 40 + 10 + 40.",
+      "rules": [10, 11],
+      "totalSeconds": 90
     }
   ],
   "invalid": [
@@ -120,6 +186,60 @@
     {
       "id": "009-longer-than-a-day",
       "description": "One pass of the timeline lasts at most 24 hours, and this one lasts 25.",
+      "path": "/plan",
+      "by": "validator"
+    },
+    {
+      "id": "010-loop-on-primary",
+      "description": "The primary lane decides when the node ends, so it can't repeat until then.",
+      "path": "/plan/children/0/loop",
+      "by": "validator"
+    },
+    {
+      "id": "011-zero-length-loop",
+      "description": "A looping lane that plays for zero seconds would repeat forever.",
+      "path": "/plan/children/1",
+      "by": "validator"
+    },
+    {
+      "id": "012-too-many-segments-in-lane",
+      "description": "The segment limit counts every lane, even one that would be cut short.",
+      "path": "/plan",
+      "by": "validator"
+    },
+    {
+      "id": "013-looping-lanes-run-away",
+      "description": "Nine 1 s looping lanes for a day make 777,600 segments. A validator must stop expanding them early.",
+      "path": "/plan",
+      "by": "validator"
+    },
+    {
+      "id": "014-primary-lane-longer-than-a-day",
+      "description": "The 24-hour limit applies to the primary lane, which decides the length.",
+      "path": "/plan",
+      "by": "validator"
+    },
+    {
+      "id": "015-lanes-in-task",
+      "description": "A task is one list on one clock, so its list can't hold lanes.",
+      "path": "/plan/children/0",
+      "by": "validator"
+    },
+    {
+      "id": "016-lanes-in-clock",
+      "description": "A task's clock can't hold lanes.",
+      "path": "/plan/clock/children/0",
+      "by": "validator"
+    },
+    {
+      "id": "017-untimed-station",
+      "description": "Stations share one clock, so each needs a fixed length.",
+      "path": "/plan/children/0",
+      "by": "validator"
+    },
+    {
+      "id": "018-untimed-rounds-max",
+      "description": "A block with rounds: \"max\" needs timed content to know when to stop.",
       "path": "/plan",
       "by": "validator"
     }

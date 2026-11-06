@@ -146,7 +146,7 @@ The plan is a tree. Containers decide how the workout runs; steps say what to do
 | `display` | Presentation hints (section 4.6) |
 | `equipment` | On an exercise step, the equipment it uses when the exercise allows several. On a station, the equipment the station holds |
 | `capacity` | People per station. Only meaningful on a direct child of `stations` |
-| `loop` | `true` repeats this lane until the primary lane ends. Only meaningful on a lane of `parallel` |
+| `loop` | `true` repeats this lane until the primary lane ends (section 6, rule 11). Only meaningful on a lane of `parallel` |
 | `extensions` | Vendor data |
 
 ### 4.2 Steps
@@ -190,12 +190,12 @@ A `block` tells the athlete what to do now and moves on when each step ends. A `
 - A task's `clock` is a `block` of `work` and `rest` steps that runs the task's clock. A task MUST NOT have both `clock` and `end`.
 - A task's `score` says what to record: `time`, `rounds-reps`, `reps`, `load` or `none` (default).
 
-### 4.4 Group containers
+### 4.4 Stations and lanes
 
 | Type | What it does | Fields |
 | --- | --- | --- |
 | `stations` | Stations that different people use at the same time, rotating between them. Only allowed in group workouts | `children` (the stations, at least one), `rotations` (default 1), `transition`, `skipLastRest`, `format` |
-| `parallel` | Lanes that play at the same time: screens, tracks or partners | `children` (1–10 lanes), `primary` (default 0) |
+| `parallel` | Lanes that play at the same time: screens, tracks or partners. Not allowed inside a `task` | `children` (1–10 lanes), `primary` (default 0) |
 
 ### 4.5 Defaults
 
@@ -255,13 +255,18 @@ A renderer plays the plan depth-first, from the root, following these rules. The
 2. **Steps.** A step ends by its `end`. A `time` end advances automatically, and a step with no end waits for the athlete. Every other end advances when the athlete, or a sensor, says so, or at `timeCap`.
 3. **Sets.** `sets: n` plays the step `n` times. A list of sets plays one set per entry, and each entry can override the step's `end`, `target` and `rest`. `rest` follows every set, including the last, unless the step sets `skipLastRest`.
 4. **Sides.** With `side: "each"`, every set plays once per side, left then right, each lasting the full `end`. `rest` follows the pair.
-5. **Blocks.** A block plays its children in order, `rounds` times. Between rounds, `restBetweenRounds` plays in place of any rest that ends the round, however deeply nested, so "20 s off, 60 s between rounds" never stacks into 80 s. It never plays after the last round. One rest applies to every gap between rounds; a list gives each gap its own, in order, and starts again from the top if it runs out.
-6. **Skip last rest.** `skipLastRest: true` on a container, or on an exercise step with sets, drops a rest that would be its final segment, however deeply nested.
+5. **Blocks.** A block plays its children in order, `rounds` times. Between rounds, `restBetweenRounds` plays in place of any rest that ends the round, however deeply nested (but not inside a lane, rule 11), so "20 s off, 60 s between rounds" never stacks into 80 s. It never plays after the last round. One rest applies to every gap between rounds; a list gives each gap its own, in order, and starts again from the top if it runs out.
+6. **Skip last rest.** `skipLastRest: true` on a container, or on an exercise step with sets, drops a rest that would be its final segment, however deeply nested (but not inside a lane, rule 11).
 7. **Fixed-length containers.** `end: { "time": n }` makes a block or task last exactly `n` seconds. With `rounds: "max"` it repeats its content until the time is up. Otherwise, content that finishes early is followed by rest until the time is up, and content still running at the end is cut off.
 8. **Time caps.** `timeCap` ends a container when its content completes or at the cap, whichever comes first.
 9. **Tasks.** A task shows all its children together. Its clock is `clock` if given; otherwise a countdown of `end.time`; otherwise a count-up (to `timeCap`, if set) that stops when the athlete finishes. The athlete MAY mark each round complete, and `score` says what to record. Progress carries across the clock's work phases.
 10. **Stations (group workouts only).** All stations share one clock, so each MUST have a fixed duration. A station period lasts as long as the longest station. After each period everyone moves to the next station, wrapping round, and `transition` plays in place of any rest that ends the station. `rotations` counts full cycles. One transition applies to every move; a list gives each move its own, in order, and starts again from the top if it runs out. A transition's `kind` defaults to `transition`. A single-person renderer plays the stations in order from the first.
-11. **Parallel lanes.** Lanes start together, and the node ends when the `primary` lane ends. The other lanes stop there; a lane with `loop: true` repeats until then.
+11. **Parallel lanes.** Lanes start together, and the node ends when the `primary` lane ends. Each lane plays by these same rules, and outer `defaults` reach into it.
+    - Lanes MAY differ in length. A lane still running when the node ends stops there.
+    - A lane that finishes first has nothing more to play. A renderer decides what to show until the node ends.
+    - A lane with `loop: true` repeats until the node ends. The primary lane MUST NOT have `loop`, because the node would never end. A looping lane MUST NOT play for zero seconds, because it would repeat forever.
+    - Lanes are self-contained. A rest inside a lane doesn't end an outer round, container or station, so rules 5, 6 and 10 don't reach into it.
+    - A lane with no fixed length, or one that repeats in a node with no fixed length, can only be stopped while the workout plays.
 12. **Defaults.** `defaults` on a block or task applies to every exercise step below it that doesn't set that field. The nearest ancestor wins.
 13. **Loop.** `loop: true` on the document repeats the whole plan until stopped.
 14. **Units.** Times are whole seconds.
@@ -270,10 +275,12 @@ A renderer plays the plan depth-first, from the root, following these rules. The
 
 `mode` says whether everyone does the same thing at the same time.
 
-- **`individual`** (default): one person, or a whole class following along together, doing the same thing at every moment. A document in individual mode MUST NOT contain `stations`.
-- **`group`**: people can do different things at the same moment, such as starting at different stations.
+- **`individual`** (default): one person, or a whole class following along together, doing the same thing at every moment. A document in individual mode MUST NOT contain `stations`. It MAY contain `parallel`, whose lanes then show the same class on different screens, such as a timer on one and a whiteboard on another.
+- **`group`**: people can do different things at the same moment, such as starting at different stations or following different lanes.
 
-Any group workout can be played for one person, who follows one path through it, starting at the first station.
+Lanes that give people different things to do, such as partners or a floor track and a rower track, belong in a group workout. `mode` doesn't change the timeline.
+
+Any group workout can be played for one person, who follows one path through it, starting at the first station or on the primary lane.
 
 A `stations` container lists its stations in rotation order. Each child is one station: its `name` is the label people look for, and it MAY list its `equipment` and `capacity`. Zones are stations nested inside stations: people rotate through the stations in their zone, then each zone's group moves to the next zone.
 
@@ -294,7 +301,7 @@ Every document can be rewritten without shorthand: `defaults` copied into steps,
 
 ### 8.2 Timeline
 
-A timeline is the ordered list of segments one participant sees during one pass of the plan. The conformance suite expresses expected behaviour as timelines in this form:
+A timeline is the ordered list of segments one participant sees during one pass of the plan, with one list per lane wherever lanes play at the same time. The conformance suite expresses expected behaviour as timelines in this form:
 
 ```json
 {
@@ -311,11 +318,11 @@ A timeline is the ordered list of segments one participant sees during one pass 
 
 | Field | Meaning |
 | --- | --- |
-| `totalSeconds` | Length of one pass, or `null` when any segment has no fixed length |
+| `totalSeconds` | Length of one pass, or `null` when any segment has no fixed length. Only a `parallel` segment's own `duration` counts, not its lanes |
 | `loop` | `true` when the document repeats until stopped |
 | `start` | Seconds from the start, or `null` once an earlier segment has no fixed length |
 | `duration` | Seconds, or `null` for a segment that doesn't end on time |
-| `type` | `exercise`, `work`, `rest`, `note` or `task` |
+| `type` | `exercise`, `work`, `rest`, `note`, `task` or `parallel` |
 | `from` | For rests: `node` (a rest step), `rest` (a step's rest after a set), `restBetweenRounds`, `transition`, or `fill` (padding a fixed-length container or a shorter station) |
 | `kind` | For rests: the rest kind |
 | `cue` | Inside stations: `stay`, `move` or `move-zone` |
@@ -323,12 +330,31 @@ A timeline is the ordered list of segments one participant sees during one pass 
 | `side` | `left`, `right` or `alternating`, when not both |
 | `phase` | `warmup`, `recovery` or `cooldown`, when not work |
 | `end` | The end condition, as written or inherited |
-| `cut` | `true` when a fixed length or time cap cut the segment short; `duration` is the time it actually plays |
+| `cut` | `true` when a fixed length, a time cap or the end of a `parallel` node cut the segment short; `duration` is the time it actually plays |
 | `path` | JSON Pointer (RFC 6901) to the node that produced the segment |
 | `task` | For segments of a task's clock, the task's path |
-| `iteration` | Which round, set or rotation each repeating ancestor is on, keyed by its path |
+| `iteration` | Which round, set or rotation each repeating ancestor is on, keyed by its path. A repeat of a looping lane is keyed by the path of its `loop` field |
+| `lanes` | For `parallel`: one entry per lane, in document order |
 
 A task without a clock is one segment. A task with a clock produces its clock's segments, each carrying `task`.
+
+A `parallel` node is one segment, holding one list per lane:
+
+```json
+{
+  "start": 60, "duration": 300, "type": "parallel", "path": "/plan/children/1",
+  "lanes": [
+    { "lane": 0, "primary": true, "segments": [] },
+    { "lane": 1, "segments": [] }
+  ]
+}
+```
+
+- `duration` is the primary lane's length, or `null` if that isn't fixed.
+- Every segment's `start` counts from the start of the timeline, inside lanes too.
+- A lane that finishes first has a shorter list. Nothing is added to fill the time.
+- A lane still running when the node ends stops there. A segment it stops partway through is marked `cut`, and later ones are left out.
+- A looping lane is written out in full, repeat by repeat, when its length and the node's are both fixed. Otherwise its entry has `"loop": true` and its list holds one pass.
 
 ## 9. Extensions and versioning
 
@@ -365,7 +391,8 @@ PWF documents are shared between apps and MUST be treated as untrusted input. Va
 
 - Nesting depth counts the plan as level 1. Each child, and a task's `clock`, is one level below its parent. Nodes are the plan and everything under it through `children` and `clock`.
 - Renderers MUST build timelines as segments, never second by second. They MUST check every limit except those on one pass of the timeline before expanding anything. Those two can only be checked while expanding, so renderers MUST stop expanding once a pass can no longer stay within them, and refuse the document.
-- Expanding makes segments before a fixed length or time cap cuts them (section 6, rules 7 and 8), so a renderer MAY refuse a document whose content passes the segment limit before it is cut short.
+- The 24-hour limit applies to a `parallel` node's primary lane, which decides its length. The 100,000 segments count each `parallel` node, every lane and every repeat of a looping lane.
+- Expanding makes segments before a fixed length, a time cap or the end of a `parallel` node cuts them (section 6, rules 7, 8 and 11), so a renderer MAY refuse a document whose content passes the segment limit before it is cut short.
 - Renderers MUST NOT execute or inject markup from text fields.
 - Media URLs MUST use `https`. Loading them is OPTIONAL, and renderers MUST NOT send credentials with them.
 
@@ -376,6 +403,8 @@ A **conforming document** validates against the schema and also meets these rule
 - Only documents with `"mode": "group"` contain `stations`.
 - Node `id`s are unique, and every exercise key, equipment key and `previews` id resolves.
 - Every range has `min` ≤ `max`, and `primary` names an existing lane.
+- The primary lane doesn't have `loop`, and a looping lane plays for more than zero seconds.
+- A `task` has no `parallel` in its `children` or `clock`, however deeply nested.
 - Stations have fixed durations, and blocks with `rounds: "max"` have timed content.
 - It stays within the limits in section 10.
 
@@ -384,6 +413,8 @@ Renderers conform at one of three levels:
 1. **Viewer:** validates documents and displays every node type.
 2. **Player:** also plays blocks and steps with every end type, producing the conformance suite's timelines.
 3. **Full player:** also plays tasks, stations and parallel lanes, and records scores.
+
+A renderer that doesn't play lanes side by side SHOULD play the primary lane and tell the user that other lanes exist.
 
 The [conformance suite](conformance/) pairs documents with their expected timelines, and lists documents that MUST fail validation.
 

@@ -1,0 +1,44 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 90,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 90,
+      "type": "parallel",
+      "path": "/plan",
+      "lanes": [
+        {
+          "lane": 0,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 90,
+              "type": "work",
+              "end": {
+                "time": 120
+              },
+              "cut": true,
+              "path": "/plan/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 90,
+              "type": "work",
+              "end": {
+                "time": 90
+              },
+              "path": "/plan/children/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

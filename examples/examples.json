@@ -46,6 +46,11 @@
       "group": "Group classes"
     },
     {
+      "file": "floor-and-rower-class.pwf.json",
+      "discipline": "Group class",
+      "group": "Group classes"
+    },
+    {
       "file": "swim-1500.pwf.json",
       "discipline": "Swimming",
       "group": "Endurance"

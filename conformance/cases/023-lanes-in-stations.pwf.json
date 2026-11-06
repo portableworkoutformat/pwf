@@ -1,0 +1,25 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes at a station",
+  "mode": "group",
+  "plan": {
+    "type": "stations",
+    "transition": { "time": 10 },
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          { "type": "work", "end": { "time": 40 } },
+          {
+            "type": "block",
+            "children": [
+              { "type": "work", "end": { "time": 20 } },
+              { "type": "rest", "end": { "time": 10 } }
+            ]
+          }
+        ]
+      },
+      { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "time": 30 } }
+    ]
+  }
+}

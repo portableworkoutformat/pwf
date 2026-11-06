@@ -14,7 +14,8 @@ which needs the jsonschema package (pip install jsonschema). Without it,
 runs the other checks and leaves the schema to the player.
 
 The player also checks the limits on one pass of the timeline (24 hours and
-100,000 segments), which this script doesn't.
+100,000 segments) and the rules that depend on how long things last, which this
+script doesn't.
 """
 
 import base64
@@ -120,7 +121,7 @@ def semantic_problems(doc):
         if isinstance(definition, dict):
             check_equipment(definition.get("equipment"), f"/exercises/{key}/equipment")
 
-    def visit(node, path):
+    def visit(node, path, in_task=False):
         if not isinstance(node, dict):
             return
         if "id" in node:
@@ -135,16 +136,25 @@ def semantic_problems(doc):
                 if isinstance(alt, dict):
                     check_exercise(alt.get("exercise"), f"{path}/alternatives/{i}/exercise")
         check_equipment(node.get("equipment"), f"{path}/equipment")
+        if node.get("type") == "parallel":
+            lanes = node.get("children") or []
+            primary = node.get("primary", 0)
+            if isinstance(primary, int) and 0 <= primary < len(lanes) and isinstance(lanes[primary], dict) and lanes[primary].get("loop") is True:
+                problems.append((f"{path}/children/{primary}/loop", "is on the primary lane, which decides when the lanes end, so they would never end. "
+                                                                    "Take it off, or make another lane primary."))
+            if in_task:
+                problems.append((path, 'is a "parallel" container inside a task. A task is one list on one clock, so lanes can\'t go there.'))
         if node.get("type") == "note" and "previews" in node:
             previews.append((node["previews"], f"{path}/previews"))
         for key, value in node.items():
             if isinstance(value, dict) and "min" in value and "max" in value:
                 if isinstance(value["min"], (int, float)) and isinstance(value["max"], (int, float)) and value["min"] > value["max"]:
                     problems.append((f"{path}/{key}", 'has "min" larger than "max".'))
+        below = in_task or node.get("type") == "task"
         if "clock" in node:
-            visit(node["clock"], f"{path}/clock")
+            visit(node["clock"], f"{path}/clock", below)
         for i, child in enumerate(node.get("children") or []):
-            visit(child, f"{path}/children/{i}")
+            visit(child, f"{path}/children/{i}", below)
 
     visit(doc["plan"], "/plan")
     for value, path in previews:

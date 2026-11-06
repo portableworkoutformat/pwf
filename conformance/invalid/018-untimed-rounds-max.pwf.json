@@ -1,0 +1,12 @@
+{
+  "pwf": "0.1",
+  "name": "Max rounds with no fixed length",
+  "plan": {
+    "type": "block",
+    "rounds": "max",
+    "end": { "time": 300 },
+    "children": [
+      { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "reps": 10 } }
+    ]
+  }
+}

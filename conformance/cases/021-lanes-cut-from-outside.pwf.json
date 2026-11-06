@@ -1,0 +1,26 @@
+{
+  "pwf": "0.1",
+  "name": "A fixed length cuts through lanes",
+  "mode": "group",
+  "plan": {
+    "type": "block",
+    "end": { "time": 50 },
+    "children": [
+      { "type": "rest", "end": { "time": 10 } },
+      {
+        "type": "parallel",
+        "children": [
+          { "type": "work", "end": { "time": 60 } },
+          {
+            "type": "block",
+            "children": [
+              { "type": "work", "end": { "time": 20 } },
+              { "type": "work", "end": { "time": 30 } },
+              { "type": "work", "end": { "time": 20 } }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 120,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 90,
+      "type": "parallel",
+      "path": "/plan/children/0",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 90,
+              "type": "work",
+              "end": {
+                "time": 90
+              },
+              "path": "/plan/children/0/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 60,
+              "type": "note",
+              "end": {
+                "time": 60
+              },
+              "path": "/plan/children/0/children/1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 90,
+      "duration": 30,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/1"
+    }
+  ]
+}

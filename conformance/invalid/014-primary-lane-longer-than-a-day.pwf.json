@@ -1,0 +1,18 @@
+{
+  "pwf": "0.1",
+  "name": "A primary lane of 25 hours",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      {
+        "type": "block",
+        "rounds": 25,
+        "children": [
+          { "type": "work", "end": { "time": 3600 } }
+        ]
+      },
+      { "type": "work", "end": { "time": 60 } }
+    ]
+  }
+}

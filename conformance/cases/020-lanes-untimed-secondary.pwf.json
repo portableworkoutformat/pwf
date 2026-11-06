@@ -1,0 +1,19 @@
+{
+  "pwf": "0.1",
+  "name": "Other lanes have no fixed length",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 60 } },
+      {
+        "type": "block",
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Burpee" }, "end": { "reps": 10 } },
+          { "type": "work", "end": { "time": 100 } }
+        ]
+      },
+      { "type": "exercise", "loop": true, "exercise": { "name": "Squat" }, "end": { "reps": 5 } }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "pwf": "0.1",
+  "name": "A whiteboard that finishes first",
+  "plan": {
+    "type": "block",
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          { "type": "work", "end": { "time": 90 } },
+          { "type": "note", "name": "Whiteboard", "text": "Squats and presses", "end": { "time": 60 } }
+        ]
+      },
+      { "type": "rest", "end": { "time": 30 } }
+    ]
+  }
+}
