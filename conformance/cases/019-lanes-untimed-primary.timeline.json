@@ -1,0 +1,89 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": null,
+  "segments": [
+    {
+      "start": 0,
+      "duration": null,
+      "type": "parallel",
+      "path": "/plan/children/0",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": null,
+              "type": "exercise",
+              "exercise": {
+                "name": "Burpee"
+              },
+              "end": {
+                "reps": 10
+              },
+              "path": "/plan/children/0/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "loop": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 30,
+              "type": "work",
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/0/children/1/children/0",
+              "iteration": {
+                "/plan/children/0/children/1/loop": 1
+              }
+            },
+            {
+              "start": 30,
+              "duration": 30,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/0/children/1/children/1",
+              "iteration": {
+                "/plan/children/0/children/1/loop": 1
+              }
+            }
+          ]
+        },
+        {
+          "lane": 2,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 60,
+              "type": "work",
+              "end": {
+                "time": 60
+              },
+              "path": "/plan/children/0/children/2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": null,
+      "duration": 30,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/1"
+    }
+  ]
+}

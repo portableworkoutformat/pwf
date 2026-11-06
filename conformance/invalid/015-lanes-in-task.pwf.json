@@ -1,0 +1,18 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes in a task's list",
+  "mode": "group",
+  "plan": {
+    "type": "task",
+    "end": { "time": 300 },
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "reps": 10 } },
+          { "type": "exercise", "exercise": { "name": "Row" }, "end": { "reps": 10 } }
+        ]
+      }
+    ]
+  }
+}

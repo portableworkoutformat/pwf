@@ -1,4 +1,4 @@
-import { expandTimeline } from '../lib/timeline.js';
+import { expandTimeline, followLane } from '../lib/timeline.js';
 import { describeProblems, validateDocument } from '../lib/validate.js';
 import { assistantButtons, changePrompt, copyText, fixPrompt } from './ai.js';
 import { formatDuration, stateFromDocument } from './model.js';
@@ -10,6 +10,7 @@ const EXAMPLES = [
   ['Upper-body strength', 'examples/strength.pwf.json'],
   ['AMRAP, EMOM and For Time', '../conformance/cases/008-tasks.pwf.json'],
   ['Two-zone group class', '../conformance/cases/011-stations-two-zones.pwf.json'],
+  ['Floor and rower lanes', '../examples/floor-and-rower-class.pwf.json'],
 ];
 const FORMAT_LABELS = {
   amrap: 'AMRAP', emom: 'EMOM', 'for-time': 'For time', tabata: 'Tabata', timebox: 'Timebox',
@@ -19,7 +20,9 @@ const CONTAINERS = ['block', 'task', 'stations', 'parallel'];
 const $ = (id) => document.getElementById(id);
 
 let doc = null;
-let timeline = null;
+let whole = null; // The workout's full timeline, with every lane.
+let timeline = null; // What plays: the full timeline, following one lane.
+let lane = null; // The lane being followed. null is each node's primary lane.
 let run = null;
 let muted = false;
 let audio = null;
@@ -91,10 +94,40 @@ function openDocument(candidate) {
   }
   if (!expanded.segments.length) throw new Error('This workout has nothing to play.');
   doc = candidate;
-  timeline = expanded;
+  whole = expanded;
+  follow(null);
   $('load-error').classList.add('hidden');
   renderOverview();
   show('overview');
+}
+
+function follow(choice) {
+  lane = choice;
+  timeline = { ...whole, segments: followLane(whole.segments, lane) };
+}
+
+// The lanes someone can choose to follow. One parallel node offers its lanes by
+// name. With several, a choice picks the lane at that position in each of them.
+function laneOptions() {
+  const nodes = new Map();
+  const collect = (segments) => {
+    for (const s of segments) {
+      if (!s.lanes) continue;
+      nodes.set(s.path, s);
+      for (const l of s.lanes) collect(l.segments);
+    }
+  };
+  collect(whole.segments);
+  const most = Math.max(0, ...[...nodes.values()].map((s) => s.lanes.length));
+  if (most < 2) return [];
+  if (nodes.size > 1) {
+    return [{ value: '', label: 'The main lanes' }, ...Array.from({ length: most }, (_, i) => ({ value: String(i), label: `Lane ${i + 1}` }))];
+  }
+  const [node] = nodes.values();
+  return node.lanes.map((l) => {
+    const name = nodeAt(`${node.path}/children/${l.lane}`).name ?? `Lane ${l.lane + 1}`;
+    return { value: l.primary ? '' : String(l.lane), label: l.primary ? `${name} (main)` : name };
+  });
 }
 
 function renderOverview() {
@@ -108,9 +141,18 @@ function renderOverview() {
   $('ov-total').textContent = formatDuration(totalSeconds ?? timed);
   $('ov-total-note').textContent = open
     ? `plus ${open} ${open === 1 ? 'step' : 'steps'} at your own pace`
-    : `${segments.length} steps`;
-  $('ov-group').textContent = 'This is a group workout. The player follows one person’s path, starting at the first station.';
-  $('ov-group').classList.toggle('hidden', doc.mode !== 'group');
+    : `${segments.filter((s) => s.type !== 'wait').length} steps`;
+  const lanes = laneOptions();
+  $('ov-group').textContent = lanes.length
+    ? 'This workout has lanes that play at the same time, on different screens or for different people. The player follows one lane at a time.'
+    : 'This is a group workout. The player follows one person’s path, starting at the first station.';
+  $('ov-group').classList.toggle('hidden', doc.mode !== 'group' && !lanes.length);
+  $('ov-lane').replaceChildren(...lanes.map((option) => {
+    const item = el('option', { value: option.value }, option.label);
+    item.selected = option.value === (lane === null ? '' : String(lane));
+    return item;
+  }));
+  $('ov-lane-box').classList.toggle('hidden', !lanes.length);
 
   const equipment = Object.values(doc.equipment ?? {}).map((e) => e.name);
   $('ov-equipment').textContent = equipment.join(', ');
@@ -308,6 +350,13 @@ function describe(segment) {
         items: taskItems(node),
       };
     }
+    case 'wait':
+      return {
+        tone: 'rest',
+        kicker: context.join(' · '),
+        name: 'This lane has finished',
+        details: segment.duration === null ? 'Tap Done when the other lanes finish.' : 'Waiting for the other lanes to finish.',
+      };
     default:
       return { tone: 'work', kicker: '', name: segment.type };
   }
@@ -328,6 +377,10 @@ function contextFor(segment) {
     parts.push(node.name);
   }
   for (const [path, n] of Object.entries(segment.iteration ?? {})) {
+    if (path.endsWith('/loop')) {
+      parts.push(`Repeat ${n}`);
+      continue;
+    }
     const node = nodeAt(path);
     if (node.type === 'exercise') {
       const total = Array.isArray(node.sets) ? node.sets.length : node.sets;
@@ -533,6 +586,10 @@ function wireEvents() {
     notify(await copyText(JSON.stringify(doc, null, 2)) ? 'JSON copied.' : 'Your browser didn’t allow copying.');
   });
 
+  $('ov-lane').addEventListener('change', (e) => {
+    follow(e.target.value === '' ? null : Number(e.target.value));
+    renderOverview();
+  });
   $('start').addEventListener('click', start);
   $('load-another').addEventListener('click', openAnother);
   $('fin-another').addEventListener('click', openAnother);

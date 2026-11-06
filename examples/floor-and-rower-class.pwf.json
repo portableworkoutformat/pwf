@@ -1,0 +1,86 @@
+{
+  "pwf": "0.1",
+  "name": "Floor and rower class",
+  "description": "A class on two screens. One half works on the floor while the other rows, then they swap.",
+  "mode": "group",
+  "activity": "hiit",
+  "level": "intermediate",
+  "goals": [
+    "conditioning"
+  ],
+  "tags": [
+    "group-class",
+    "lanes"
+  ],
+  "plan": {
+    "type": "block",
+    "rounds": 2,
+    "restBetweenRounds": {
+      "time": 60
+    },
+    "children": [
+      {
+        "type": "parallel",
+        "children": [
+          {
+            "type": "block",
+            "name": "Floor",
+            "rounds": 4,
+            "children": [
+              {
+                "type": "exercise",
+                "exercise": {
+                  "name": "Kettlebell swing"
+                },
+                "end": {
+                  "time": 40
+                },
+                "rest": {
+                  "time": 20
+                }
+              },
+              {
+                "type": "exercise",
+                "exercise": {
+                  "name": "Push-up"
+                },
+                "end": {
+                  "time": 40
+                },
+                "rest": {
+                  "time": 20
+                }
+              }
+            ]
+          },
+          {
+            "type": "block",
+            "name": "Rowers",
+            "loop": true,
+            "children": [
+              {
+                "type": "exercise",
+                "exercise": {
+                  "name": "Rowing machine"
+                },
+                "end": {
+                  "time": 60
+                },
+                "target": {
+                  "rpe": 8
+                }
+              },
+              {
+                "type": "rest",
+                "kind": "recovery",
+                "end": {
+                  "time": 30
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

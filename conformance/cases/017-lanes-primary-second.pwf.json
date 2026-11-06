@@ -1,0 +1,13 @@
+{
+  "pwf": "0.1",
+  "name": "The second lane decides the end",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "primary": 1,
+    "children": [
+      { "type": "work", "end": { "time": 120 } },
+      { "type": "work", "end": { "time": 90 } }
+    ]
+  }
+}

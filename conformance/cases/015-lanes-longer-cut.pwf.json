@@ -1,0 +1,20 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes that run long",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 60 } },
+      { "type": "exercise", "exercise": { "name": "Row" }, "sets": 3, "end": { "time": 40 } },
+      {
+        "type": "block",
+        "children": [
+          { "type": "work", "end": { "time": 30 } },
+          { "type": "work", "end": { "time": 30 } },
+          { "type": "work", "end": { "time": 30 } }
+        ]
+      }
+    ]
+  }
+}

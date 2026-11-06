@@ -1,0 +1,90 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 90,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 40,
+      "type": "parallel",
+      "path": "/plan/children/0",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 40,
+              "type": "work",
+              "end": {
+                "time": 40
+              },
+              "path": "/plan/children/0/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 20,
+              "type": "work",
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/0/children/1/children/0"
+            },
+            {
+              "start": 20,
+              "duration": 10,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 10
+              },
+              "path": "/plan/children/0/children/1/children/1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 40,
+      "duration": 10,
+      "type": "rest",
+      "from": "transition",
+      "kind": "transition",
+      "cue": "move",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan"
+    },
+    {
+      "start": 50,
+      "duration": 30,
+      "type": "exercise",
+      "exercise": {
+        "name": "Squat"
+      },
+      "end": {
+        "time": 30
+      },
+      "path": "/plan/children/1"
+    },
+    {
+      "start": 80,
+      "duration": 10,
+      "type": "rest",
+      "from": "fill",
+      "kind": "rest",
+      "cue": "stay",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/1"
+    }
+  ]
+}

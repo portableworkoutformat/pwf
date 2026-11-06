@@ -1,0 +1,12 @@
+{
+  "pwf": "0.1",
+  "name": "A station with no fixed length",
+  "mode": "group",
+  "plan": {
+    "type": "stations",
+    "children": [
+      { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "reps": 10 } },
+      { "type": "work", "end": { "time": 30 } }
+    ]
+  }
+}

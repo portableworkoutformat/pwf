@@ -1,0 +1,24 @@
+{
+  "pwf": "0.1",
+  "name": "A million seconds in a lane",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 60 } },
+      {
+        "type": "block",
+        "rounds": 1000,
+        "children": [
+          {
+            "type": "block",
+            "rounds": 1000,
+            "children": [
+              { "type": "exercise", "exercise": { "name": "Jumping jacks" }, "end": { "time": 1 } }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

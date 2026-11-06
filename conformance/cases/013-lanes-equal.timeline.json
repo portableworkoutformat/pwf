@@ -1,0 +1,95 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 60,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 60,
+      "type": "parallel",
+      "path": "/plan",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 20,
+              "type": "exercise",
+              "exercise": {
+                "name": "Squat"
+              },
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/0/children/0",
+              "iteration": {
+                "/plan/children/0": 1
+              }
+            },
+            {
+              "start": 20,
+              "duration": 10,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 10
+              },
+              "path": "/plan/children/0/children/1",
+              "iteration": {
+                "/plan/children/0": 1
+              }
+            },
+            {
+              "start": 30,
+              "duration": 20,
+              "type": "exercise",
+              "exercise": {
+                "name": "Squat"
+              },
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/0/children/0",
+              "iteration": {
+                "/plan/children/0": 2
+              }
+            },
+            {
+              "start": 50,
+              "duration": 10,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 10
+              },
+              "path": "/plan/children/0/children/1",
+              "iteration": {
+                "/plan/children/0": 2
+              }
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 60,
+              "type": "exercise",
+              "exercise": {
+                "name": "Row"
+              },
+              "end": {
+                "time": 60
+              },
+              "path": "/plan/children/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

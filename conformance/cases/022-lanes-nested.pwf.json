@@ -1,0 +1,24 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes inside a lane",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "end": { "time": 25 } },
+      {
+        "type": "block",
+        "children": [
+          { "type": "work", "end": { "time": 10 } },
+          {
+            "type": "parallel",
+            "children": [
+              { "type": "work", "end": { "time": 20 } },
+              { "type": "work", "end": { "time": 30 } }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

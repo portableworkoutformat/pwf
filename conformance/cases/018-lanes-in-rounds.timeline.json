@@ -1,0 +1,152 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 90,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 30,
+      "type": "parallel",
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 1
+      },
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 20,
+              "type": "exercise",
+              "exercise": {
+                "name": "Squat"
+              },
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/0/children/0/children/0",
+              "iteration": {
+                "/plan": 1
+              }
+            },
+            {
+              "start": 20,
+              "duration": 10,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 10
+              },
+              "path": "/plan/children/0/children/0/children/1",
+              "iteration": {
+                "/plan": 1
+              }
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 30,
+              "type": "exercise",
+              "exercise": {
+                "name": "Row"
+              },
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/0/children/1",
+              "iteration": {
+                "/plan": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "start": 30,
+      "duration": 30,
+      "type": "rest",
+      "from": "restBetweenRounds",
+      "kind": "rest",
+      "end": {
+        "time": 30
+      },
+      "path": "/plan",
+      "iteration": {
+        "/plan": 1
+      }
+    },
+    {
+      "start": 60,
+      "duration": 30,
+      "type": "parallel",
+      "path": "/plan/children/0",
+      "iteration": {
+        "/plan": 2
+      },
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 60,
+              "duration": 20,
+              "type": "exercise",
+              "exercise": {
+                "name": "Squat"
+              },
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/0/children/0/children/0",
+              "iteration": {
+                "/plan": 2
+              }
+            },
+            {
+              "start": 80,
+              "duration": 10,
+              "type": "rest",
+              "from": "node",
+              "kind": "rest",
+              "end": {
+                "time": 10
+              },
+              "path": "/plan/children/0/children/0/children/1",
+              "iteration": {
+                "/plan": 2
+              }
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 60,
+              "duration": 30,
+              "type": "exercise",
+              "exercise": {
+                "name": "Row"
+              },
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/0/children/1",
+              "iteration": {
+                "/plan": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

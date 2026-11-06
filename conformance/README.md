@@ -31,11 +31,11 @@ Each case pairs a document with the timeline a conforming player must produce fo
 
 | Field | Meaning |
 | --- | --- |
-| `totalSeconds` | Length of one pass, or `null` when any segment has no fixed length |
+| `totalSeconds` | Length of one pass, or `null` when any segment has no fixed length. Only a `parallel` segment's own `duration` counts, not its lanes |
 | `loop` | `true` when the document repeats until stopped |
 | `start` | Seconds from the start, or `null` once an earlier segment has no fixed length |
 | `duration` | Seconds, or `null` for a segment that ends on reps, distance, calories, heart rate or the athlete |
-| `type` | `exercise`, `work`, `rest`, `note` or `task` |
+| `type` | `exercise`, `work`, `rest`, `note`, `task` or `parallel` |
 | `from` | For rests: `node` (a rest step), `rest` (a step's rest after a set), `restBetweenRounds`, `transition`, or `fill` (padding a fixed-length container or a shorter station) |
 | `kind` | For rests: `rest`, `recovery`, `transition`, `hydrate` or `prepare` |
 | `cue` | Inside stations: `stay`, `move` or `move-zone` |
@@ -43,10 +43,11 @@ Each case pairs a document with the timeline a conforming player must produce fo
 | `side` | `left`, `right` or `alternating`, when not both |
 | `phase` | `warmup`, `recovery` or `cooldown`, when not work |
 | `end` | The end condition, as written or inherited |
-| `cut` | `true` when a fixed length or time cap cut the segment short. `duration` is the time it actually plays |
+| `cut` | `true` when a fixed length, a time cap or the end of a `parallel` node cut the segment short. `duration` is the time it actually plays |
 | `path` | JSON Pointer to the node that produced the segment |
 | `task` | For segments of a task's clock, the task's path |
-| `iteration` | Which round, set or rotation each repeating ancestor is on, keyed by its path |
+| `iteration` | Which round, set or rotation each repeating ancestor is on, keyed by its path. A repeat of a looping lane is keyed by the path of its `loop` field |
+| `lanes` | For `parallel`: one entry per lane, in document order, with `lane` (its index), `primary` and `loop` (`true` where they apply) and `segments`. `loop` means the list holds one pass, because the lane's length or the node's isn't fixed |
 
 Timelines are compared for equality; field order doesn't matter.
 
@@ -66,8 +67,19 @@ Timelines are compared for equality; field order doesn't matter.
 | 010 | A task driven by a clock |
 | 011 | Group stations in two zones, with movement cues |
 | 012 | `transition` as a repeating list across two rotations |
+| 013 | Lanes of equal length |
+| 014 | A lane that finishes first, in individual mode |
+| 015 | Lanes cut at the primary lane's end, partway through a step and exactly between steps |
+| 016 | Looping lanes written out in full, one with rounds of its own |
+| 017 | A `primary` other than the first lane |
+| 018 | Lanes inside rounds: outer rest rules stop at the lane, outer defaults don't |
+| 019 | A primary lane with no fixed length, with a looping lane left at one pass |
+| 020 | Rep-based steps in other lanes of a timed node |
+| 021 | An outer fixed length cutting through lanes |
+| 022 | Lanes inside a lane, cut by the outer primary lane |
+| 023 | Lanes at a station |
 
-Not covered yet: parallel lanes, time caps on blocks, notes and previews, `estimate`, and documents with `loop`.
+Not covered yet: time caps on blocks, notes and previews, `estimate`, and documents with `loop`.
 
 ## Adding a case
 

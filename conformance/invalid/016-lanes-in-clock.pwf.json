@@ -1,0 +1,23 @@
+{
+  "pwf": "0.1",
+  "name": "Lanes in a task's clock",
+  "mode": "group",
+  "plan": {
+    "type": "task",
+    "clock": {
+      "type": "block",
+      "children": [
+        {
+          "type": "parallel",
+          "children": [
+            { "type": "work", "end": { "time": 60 } },
+            { "type": "work", "end": { "time": 30 } }
+          ]
+        }
+      ]
+    },
+    "children": [
+      { "type": "exercise", "exercise": { "name": "Squat" }, "end": { "reps": 10 } }
+    ]
+  }
+}

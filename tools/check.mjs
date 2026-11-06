@@ -21,7 +21,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { documentFromState, stateFromDocument } from '../demo/model.js';
 import { decodeWorkout } from '../demo/share.js';
-import { expandTimeline } from '../lib/timeline.js';
+import { expandTimeline, followLane } from '../lib/timeline.js';
 import { validateDocument } from '../lib/validate.js';
 
 const root = new URL('../', import.meta.url);
@@ -143,9 +143,10 @@ for (const file of gallery) {
   }
 }
 
-// Two more checks: the skill's copy of the schema, and the node limit, which
-// would need a large file to test as a conformance case.
-const extraChecks = 2;
+// More checks: the skill's copy of the schema, the node limit, which would need
+// a large file to test as a conformance case, the documents below and following
+// one lane through a timeline.
+const extraChecks = 7;
 if (!isDeepStrictEqual(load(`${skill}/references/pwf-0.1.schema.json`), load('schema/pwf-0.1.schema.json'))) {
   fail(`${skill}/references/pwf-0.1.schema.json`, 'differs from schema/pwf-0.1.schema.json; copy it over');
 }
@@ -156,6 +157,34 @@ const crowded = {
 };
 if (!validateDocument(crowded).problems.some((p) => p.path === '/plan' && /5,000 nodes/.test(p.message))) {
   fail('node limit', 'lib/validate.js accepts a plan with 6,007 nodes');
+}
+
+// Valid documents that the draft expander can't time, or only just: a validator
+// must not blame the document for what the expander can't work out.
+const squat = { type: 'exercise', exercise: { name: 'Squat' }, end: { reps: 10 } };
+const work = (time) => ({ type: 'work', end: { time } });
+const fine = {
+  'a fixed-length block of rep-based steps': { type: 'block', end: { time: 300 }, children: [squat] },
+  '"rounds": "max" past 1,000 short rounds': { type: 'block', rounds: 'max', end: { time: 1200 }, children: [work(1)] },
+  'a lane over 24 hours, cut by a shorter primary lane': { type: 'parallel', children: [work(60), { type: 'block', rounds: 25, children: [work(3600)] }] },
+};
+for (const [name, plan] of Object.entries(fine)) {
+  const checked = validateDocument({ pwf: '0.1', name, plan });
+  if (!checked.valid) fail(name, 'lib/validate.js rejects it', checked.problems);
+}
+
+// Following one lane: a lane that finishes first waits for the node to end, an
+// unknown wait has no duration, and the primary lane is the default.
+const shape = (segments) => segments.map((s) => [s.start, s.duration, s.type]);
+const following = [
+  ['014-lanes-shorter', null, [[0, 90, 'work'], [90, 30, 'rest']]],
+  ['014-lanes-shorter', 1, [[0, 60, 'note'], [60, 30, 'wait'], [90, 30, 'rest']]],
+  ['019-lanes-untimed-primary', 1, [[0, 30, 'work'], [30, 30, 'rest'], [null, null, 'wait'], [null, 30, 'rest']]],
+  ['015-lanes-longer-cut', 9, [[0, 60, 'work']]],
+];
+for (const [id, lane, want] of following) {
+  const got = shape(followLane(load(`conformance/cases/${id}.timeline.json`).segments, lane));
+  if (!isDeepStrictEqual(got, want)) fail(`followLane ${id} lane ${lane}`, 'gives the wrong segments', got);
 }
 
 let linkChecked = 0; // pwf.py checks run
@@ -173,6 +202,16 @@ try {
     try {
       execFileSync('python3', [`${skill}/scripts/pwf.py`, command, 'conformance/invalid/007-too-deep.pwf.json'], { cwd: root, stdio: 'pipe' });
       fail(`pwf.py ${command}`, 'accepts conformance/invalid/007-too-deep.pwf.json');
+    } catch (error) {
+      if (error.status !== 1) throw error;
+    }
+    linkChecked += 1;
+  }
+  // The lane rules pwf.py can check without a timeline.
+  for (const file of ['010-loop-on-primary', '015-lanes-in-task', '016-lanes-in-clock']) {
+    try {
+      execFileSync('python3', [`${skill}/scripts/pwf.py`, 'check', `conformance/invalid/${file}.pwf.json`], { cwd: root, stdio: 'pipe' });
+      fail('pwf.py check', `accepts conformance/invalid/${file}.pwf.json`);
     } catch (error) {
       if (error.status !== 1) throw error;
     }

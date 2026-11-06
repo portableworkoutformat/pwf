@@ -1,0 +1,12 @@
+{
+  "pwf": "0.1",
+  "name": "The primary lane never ends",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      { "type": "work", "loop": true, "end": { "time": 60 } },
+      { "type": "work", "end": { "time": 60 } }
+    ]
+  }
+}

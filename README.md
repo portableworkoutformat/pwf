@@ -75,6 +75,7 @@ One format for every kind of workout. [Play any of them on the website](https://
 | [Sweet spot ride](examples/sweet-spot-ride.pwf.json) | Cycling | 55 min | Intermediate |
 | [Kickboxing conditioning](examples/kickboxing-rounds.pwf.json) | Kickboxing | 19 min | Intermediate |
 | [Six-station circuit class](examples/six-station-class.pwf.json) | Group class | 12 min | Intermediate |
+| [Floor and rower class](examples/floor-and-rower-class.pwf.json) | Group class | 17 min | Intermediate |
 | [Pool session, 1,500 m](examples/swim-1500.pwf.json) | Swimming | Self-paced | Intermediate |
 | [20-minute EMOM](examples/emom-20.pwf.json) | EMOM | 20 min | Intermediate |
 | [Dumbbell strength and conditioning](examples/dumbbell-strength-conditioning.pwf.json) | Strength and conditioning | Self-paced | Intermediate |
@@ -172,7 +173,7 @@ node tools/timeline.mjs conformance/cases/003-circuit-defaults.pwf.json
 
 `npm run demo` builds the website into `_site/` and serves it at http://localhost:8080/. GitHub Pages publishes it to [portableworkout.org](https://portableworkout.org) from `main`. `tools/site.mjs` builds the home page's examples gallery, with a play link for each workout, from `examples/examples.json`.
 
-- **Player** (`/play/`): opens a link, pasted JSON, a file or an example. It checks the workout first and lists any problems in plain words, ready to paste back to the AI. It plays everything the expander supports, including tasks and group stations, but not parallel lanes. Its "Change it with AI" buttons open Claude or ChatGPT with the workout.
+- **Player** (`/play/`): opens a link, pasted JSON, a file or an example. It checks the workout first and lists any problems in plain words, ready to paste back to the AI. It plays everything the expander supports, including tasks and group stations, and follows one parallel lane at a time. Its "Change it with AI" buttons open Claude or ChatGPT with the workout.
 - **Builder** (`/build/`): sections with rounds, a rest between rounds and an optional skipped final rest, holding timed or rep-based exercises and rests. It covers a small part of PWF on purpose.
 
 Player links keep the whole workout in the URL fragment, which browsers never send to a server: `https://portableworkout.org/play/#w=z.` followed by the compact JSON, compressed with raw DEFLATE and base64url-encoded.

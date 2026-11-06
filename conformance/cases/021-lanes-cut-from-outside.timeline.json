@@ -1,0 +1,66 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 50,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 10,
+      "type": "rest",
+      "from": "node",
+      "kind": "rest",
+      "end": {
+        "time": 10
+      },
+      "path": "/plan/children/0"
+    },
+    {
+      "start": 10,
+      "duration": 40,
+      "type": "parallel",
+      "cut": true,
+      "path": "/plan/children/1",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 10,
+              "duration": 40,
+              "type": "work",
+              "end": {
+                "time": 60
+              },
+              "cut": true,
+              "path": "/plan/children/1/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 10,
+              "duration": 20,
+              "type": "work",
+              "end": {
+                "time": 20
+              },
+              "path": "/plan/children/1/children/1/children/0"
+            },
+            {
+              "start": 30,
+              "duration": 20,
+              "type": "work",
+              "end": {
+                "time": 30
+              },
+              "cut": true,
+              "path": "/plan/children/1/children/1/children/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

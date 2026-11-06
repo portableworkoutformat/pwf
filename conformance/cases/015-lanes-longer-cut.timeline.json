@@ -1,0 +1,88 @@
+{
+  "pwf": "0.1",
+  "totalSeconds": 60,
+  "segments": [
+    {
+      "start": 0,
+      "duration": 60,
+      "type": "parallel",
+      "path": "/plan",
+      "lanes": [
+        {
+          "lane": 0,
+          "primary": true,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 60,
+              "type": "work",
+              "end": {
+                "time": 60
+              },
+              "path": "/plan/children/0"
+            }
+          ]
+        },
+        {
+          "lane": 1,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 40,
+              "type": "exercise",
+              "exercise": {
+                "name": "Row"
+              },
+              "end": {
+                "time": 40
+              },
+              "path": "/plan/children/1",
+              "iteration": {
+                "/plan/children/1": 1
+              }
+            },
+            {
+              "start": 40,
+              "duration": 20,
+              "type": "exercise",
+              "exercise": {
+                "name": "Row"
+              },
+              "end": {
+                "time": 40
+              },
+              "cut": true,
+              "path": "/plan/children/1",
+              "iteration": {
+                "/plan/children/1": 2
+              }
+            }
+          ]
+        },
+        {
+          "lane": 2,
+          "segments": [
+            {
+              "start": 0,
+              "duration": 30,
+              "type": "work",
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/2/children/0"
+            },
+            {
+              "start": 30,
+              "duration": 30,
+              "type": "work",
+              "end": {
+                "time": 30
+              },
+              "path": "/plan/children/2/children/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

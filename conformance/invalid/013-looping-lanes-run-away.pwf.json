@@ -1,0 +1,79 @@
+{
+  "pwf": "0.1",
+  "name": "Nine one-second looping lanes for a day",
+  "mode": "group",
+  "plan": {
+    "type": "parallel",
+    "children": [
+      {
+        "type": "work",
+        "end": {
+          "time": 86400
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      },
+      {
+        "type": "work",
+        "loop": true,
+        "end": {
+          "time": 1
+        }
+      }
+    ]
+  }
+}
