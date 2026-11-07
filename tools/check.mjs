@@ -143,10 +143,8 @@ for (const file of gallery) {
   }
 }
 
-// More checks: the skill's copy of the schema, the node limit, which would need
-// a large file to test as a conformance case, the documents below and following
-// one lane through a timeline.
-const extraChecks = 7;
+// Two more checks: the skill's copy of the schema, and the node limit, which
+// would need a large file to test as a conformance case.
 if (!isDeepStrictEqual(load(`${skill}/references/pwf-0.1.schema.json`), load('schema/pwf-0.1.schema.json'))) {
   fail(`${skill}/references/pwf-0.1.schema.json`, 'differs from schema/pwf-0.1.schema.json; copy it over');
 }
@@ -173,19 +171,22 @@ for (const [name, plan] of Object.entries(fine)) {
   if (!checked.valid) fail(name, 'lib/validate.js rejects it', checked.problems);
 }
 
-// Following one lane: a lane that finishes first waits for the node to end, an
-// unknown wait has no duration, and the primary lane is the default.
+// Following one lane: a lane that finishes first waits for the node to end, the
+// wait has no duration when it can't be worked out, even in a node of fixed
+// length, and the primary lane is the default.
 const shape = (segments) => segments.map((s) => [s.start, s.duration, s.type]);
 const following = [
   ['014-lanes-shorter', null, [[0, 90, 'work'], [90, 30, 'rest']]],
   ['014-lanes-shorter', 1, [[0, 60, 'note'], [60, 30, 'wait'], [90, 30, 'rest']]],
   ['019-lanes-untimed-primary', 1, [[0, 30, 'work'], [30, 30, 'rest'], [null, null, 'wait'], [null, 30, 'rest']]],
+  ['020-lanes-untimed-secondary', 1, [[0, null, 'exercise'], [null, 100, 'work'], [null, null, 'wait']]],
   ['015-lanes-longer-cut', 9, [[0, 60, 'work']]],
 ];
 for (const [id, lane, want] of following) {
   const got = shape(followLane(load(`conformance/cases/${id}.timeline.json`).segments, lane));
   if (!isDeepStrictEqual(got, want)) fail(`followLane ${id} lane ${lane}`, 'gives the wrong segments', got);
 }
+const extraChecks = 2 + Object.keys(fine).length + following.length;
 
 let linkChecked = 0; // pwf.py checks run
 try {

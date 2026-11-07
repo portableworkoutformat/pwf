@@ -1,7 +1,7 @@
 {
   "pwf": "0.1",
   "name": "Floor and rower class",
-  "description": "A class on two screens. One half works on the floor while the other rows, then they swap.",
+  "description": "A class on two screens. One half works on the floor while the other rows. They swap during the minute's rest between rounds.",
   "mode": "group",
   "activity": "hiit",
   "level": "intermediate",
