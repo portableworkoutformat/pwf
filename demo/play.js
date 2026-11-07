@@ -137,11 +137,13 @@ function renderOverview() {
   $('ov-description').textContent = doc.description ?? '';
   const { segments, totalSeconds } = timeline;
   const timed = segments.reduce((sum, s) => sum + (s.duration ?? 0), 0);
-  const open = segments.filter((s) => s.duration === null).length;
+  const steps = segments.filter((s) => s.type !== 'wait');
+  const open = steps.filter((s) => s.duration === null).length;
+  const waits = segments.some((s) => s.type === 'wait' && s.duration === null);
   $('ov-total').textContent = formatDuration(totalSeconds ?? timed);
   $('ov-total-note').textContent = open
     ? `plus ${open} ${open === 1 ? 'step' : 'steps'} at your own pace`
-    : `${segments.filter((s) => s.type !== 'wait').length} steps`;
+    : `${steps.length} ${steps.length === 1 ? 'step' : 'steps'}${waits ? ', plus a wait for the other lanes' : ''}`;
   const lanes = laneOptions();
   $('ov-group').textContent = lanes.length
     ? 'This workout has lanes that play at the same time, on different screens or for different people. The player follows one lane at a time.'

@@ -796,7 +796,8 @@
           "description": "Index of the lane whose end ends the node."
         }
       },
-      "unevaluatedProperties": false
+      "unevaluatedProperties": false,
+      "description": "Lanes that play at the same time. Must not appear anywhere inside a task, which only a validator can check."
     }
   }
 }

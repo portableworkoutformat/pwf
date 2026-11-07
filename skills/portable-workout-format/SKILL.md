@@ -26,4 +26,4 @@ If you can't run code, write the link yourself, as the guide's "Playing the work
 
 - `references/guide.md`: the format, worked patterns, a field reference and a checklist.
 - `references/pwf-0.1.schema.json`: the JSON Schema.
-- `scripts/pwf.py`: `link` checks a workout and prints its link; `check` only checks it. It needs only the Python standard library. The schema check also uses the `jsonschema` package when it's installed. Without it, the player checks the schema when it opens the link.
+- `scripts/pwf.py`: `link` checks a workout and prints its link; `check` only checks it. The player also checks what the script can't: the limits on a workout's length, and rules that depend on how long things last, such as a looping lane that lasts zero seconds. It needs only the Python standard library. The schema check also uses the `jsonschema` package when it's installed. Without it, the player checks the schema when it opens the link.

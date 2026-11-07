@@ -57,11 +57,17 @@ All decided on 2026-10-27 unless noted.
 | D26 | Movement cues (stay, move, move zone, drink) are derived from the structure, not written in the file | Less to write, and cues stay consistent with the timing |
 | D27 | Zones are stations nested inside stations | No new node type needed |
 | D28 | Any group workout can be played for one person, starting at the first station or on the primary lane | Single-person apps can still run group workouts |
+
+### Parallel lanes
+
+| ID | Decision | Why |
+| --- | --- | --- |
 | D42 | Lanes may differ in length. The primary lane decides when the node ends, and other lanes are cut there. Closes Q3. Decided 2026-11-07 | CloudFit, the one multi-screen player checked, warns the author and plays them this way. Requiring equal lengths would reject workouts it accepts |
-| D43 | A lane that finishes first isn't padded: its list just ends, and the renderer decides what to show until the node ends. Decided 2026-11-07 | CloudFit's screens drop to an empty state, not a rest. It keeps "nothing is implicit" (D8), and a lane with no fixed length couldn't be padded anyway. Rejected: a `fill` rest, as in stations, and a new `from: "ended"` |
+| D43 | A lane that finishes first isn't padded: its list just ends, and the renderer decides what to show until the node ends. Decided 2026-11-07 | A CloudFit display whose track has ended shows its standby screen, or an idle state on a repeating workout, not a rest. It keeps "nothing is implicit" (D8), and a lane with no fixed length couldn't be padded anyway. Rejected: a `fill` rest, as in stations, and a new `from: "ended"` |
 | D44 | `parallel` doesn't require `mode: "group"`. Lanes in individual mode show one class on several screens, and lanes that give people different things to do belong in group mode. Decided 2026-11-07 | `mode` never changes timing, so requiring it would catch nothing, and a whiteboard on a second screen really is one class |
 | D45 | A `parallel` node is one segment in the timeline, holding one list per lane. A looping lane is written out in full when its length and the node's are fixed, and otherwise as one pass with `loop: true`. Decided 2026-11-07 | The shape handles nesting with no special cases. A flat list would overlap in time, and separate timelines per lane only work when `parallel` is the root |
 | D46 | Lanes are self-contained: outer rest rules stop at the lane, though outer `defaults` reach into it. `parallel` can't go inside a `task`. A renderer that doesn't play lanes side by side should play the primary lane and say others exist. Decided 2026-11-07 | One lane's rest must not change another's timing. A task is one list on one clock, so lanes have no meaning there |
+| D47 | `lib/validate.js` reports the rules that depend on how long things last, through a separate error type from the expander. Other expander errors stay unreported. Decided 2026-11-07 | Looping lanes, and stations or `rounds: "max"` with untimed content, can't be checked without expanding. A fixed-length block of rep-based steps is valid, though this draft can't time it, so not every expander error is the document's fault |
 
 ### Schema and AI
 
@@ -76,7 +82,6 @@ All decided on 2026-10-27 unless noted.
 | D38 | A player link carries the whole workout in the URL fragment: `#w=z.` plus the compact JSON, compressed with raw DEFLATE and base64url-encoded. ~~AIs build links with code, never by hand; without code they hand over the JSON to paste~~. Partly superseded by D41 | Fragments never reach a server, so links need no backend and share nothing. Models can't compress or encode reliably in their heads |
 | D39 | The player checks every workout before playing it: the schema, the limits in SPEC.md section 10, and the section 11 rules (D47 added those that need a timeline). It lists problems in plain words that can be pasted back to the AI. Links, pasted text and files are capped at 1 MiB before parsing, and links stop inflating at 1 MiB | Closes the loop when an AI writes an invalid workout, and keeps untrusted input bounded |
 | D41 | A link can also carry the compact JSON itself after `#w=`, with spaces inside strings written as `%20`. AIs write this link without code and give it instead of the JSON, unless the person asks for the JSON. The player shortens it to the `#w=z.` form once it opens. The site's prompts point AIs at `portableworkout.org/ai/`, which serves the guide | Building the compressed link cost an AI several code steps, and one without code couldn't give a link at all. Models write JSON reliably, and the player checks it anyway (D39). A short address reads better in a prompt than `llms-full.txt` |
-| D47 | `lib/validate.js` reports the rules that depend on how long things last, through a separate error type from the expander. Other expander errors stay unreported. Decided 2026-11-07 | Looping lanes, and stations or `rounds: "max"` with untimed content, can't be checked without expanding. A fixed-length block of rep-based steps is valid, though this draft can't time it, so not every expander error is the document's fault |
 
 ## Limits
 
@@ -112,7 +117,7 @@ These are normative in v0.1. Validators reject documents beyond them, and render
 
 ### Limits of this draft's tools
 
-- The player shows one lane at a time, and a lane that repeats with no fixed length plays one pass.
+- The player shows one lane at a time, and a lane that repeats with no fixed length plays one pass. A secondary lane with no fixed length doesn't stop when the node ends: it plays to its end, then waits for Done.
 - The expander stops `rounds: "max"` at 1,000 rounds, so a long block of very short content can't be played even though it's valid.
 - The expander needs fully timed content for fixed-length containers and stations, and applies a block's time cap only when its content is fully timed.
 - `lib/validate.js` explains problems in plain words, with fixes for common mistakes, but its errors have no stable codes yet. The skill's Python script reports the `jsonschema` package's messages. Without that package it skips the schema check and says so, never printing `valid`.

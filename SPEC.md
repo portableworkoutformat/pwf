@@ -195,7 +195,7 @@ A `block` tells the athlete what to do now and moves on when each step ends. A `
 | Type | What it does | Fields |
 | --- | --- | --- |
 | `stations` | Stations that different people use at the same time, rotating between them. Only allowed in group workouts | `children` (the stations, at least one), `rotations` (default 1), `transition`, `skipLastRest`, `format` |
-| `parallel` | Lanes that play at the same time: screens, tracks or partners. Not allowed inside a `task` | `children` (1–10 lanes), `primary` (default 0) |
+| `parallel` | Lanes that play at the same time: screens, tracks or partners. MUST NOT appear anywhere inside a `task` | `children` (1–10 lanes), `primary` (default 0) |
 
 ### 4.5 Defaults
 
